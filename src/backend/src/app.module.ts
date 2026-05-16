@@ -6,7 +6,6 @@ import { configValidationSchema } from './config/config.schema';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
-import { ProductsModule } from './modules/products/products.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { CacheModule } from '@nestjs/cache-manager';
 import { APP_GUARD } from '@nestjs/core';
@@ -45,7 +44,6 @@ import { RolesGuard } from './common/guards/roles.guard';
     PrismaModule,
     AuthModule,
     UsersModule,
-    ProductsModule,
   ],
   providers: [
     {
