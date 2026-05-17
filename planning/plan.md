@@ -7,26 +7,26 @@
 
 ## Quyết định kiến trúc quan trọng
 
-| Vấn đề | Quyết định | Lý do |
-|---|---|---|
-| Build order | **Frontend trước, backend sau** | Validate UX sớm, không bị block bởi API |
-| Mock data | File `src/lib/mock/` — shape khớp 100% với API response | Dễ swap sang real API, không cần refactor component |
-| Admin app | Tích hợp vào `src/frontend/` dưới route group `(admin)/` | Boilerplate đã có pattern `cms/`; tránh quản lý 2 Next.js process |
-| Prisma field naming | **camelCase** trong model, `@map("snake_case")` cho DB | Nhất quán với boilerplate và TypeScript idioms |
-| UUID generation | `@default(uuid())` (Prisma-side) | Prisma 7 + adapter-pg pattern hiện tại |
-| Refresh token | Lưu `refreshTokenHash` vào bảng `users` (bcrypt hash) | PRD yêu cầu stateful refresh để có thể revoke |
-| File storage | MinIO (thêm vào docker-compose) | PRD spec; S3-compatible, tự host |
-| Monorepo | Không dùng Turborepo — giữ cấu trúc `src/backend` + `src/frontend` | Tránh refactor lớn boilerplate hiện tại |
+| Vấn đề              | Quyết định                                                         | Lý do                                                             |
+| ------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| Build order         | **Frontend trước, backend sau**                                    | Validate UX sớm, không bị block bởi API                           |
+| Mock data           | File `src/lib/mock/` — shape khớp 100% với API response            | Dễ swap sang real API, không cần refactor component               |
+| Admin app           | Tích hợp vào `src/frontend/` dưới route group `(admin)/`           | Boilerplate đã có pattern `cms/`; tránh quản lý 2 Next.js process |
+| Prisma field naming | **camelCase** trong model, `@map("snake_case")` cho DB             | Nhất quán với boilerplate và TypeScript idioms                    |
+| UUID generation     | `@default(uuid())` (Prisma-side)                                   | Prisma 7 + adapter-pg pattern hiện tại                            |
+| Refresh token       | Lưu `refreshTokenHash` vào bảng `users` (bcrypt hash)              | PRD yêu cầu stateful refresh để có thể revoke                     |
+| File storage        | MinIO (thêm vào docker-compose)                                    | PRD spec; S3-compatible, tự host                                  |
+| Monorepo            | Không dùng Turborepo — giữ cấu trúc `src/backend` + `src/frontend` | Tránh refactor lớn boilerplate hiện tại                           |
 
 ---
 
-## Phase 0 — Foundation & Setup
+## Phase 0 — Foundation & Setup ✅
 
 **Mục tiêu:** Định nghĩa data shapes (Prisma schema + TypeScript types) làm nền cho mock data frontend. Infrastructure chưa cần chạy đầy đủ.
 
-### 0.1 Infrastructure
+### 0.1 Infrastructure ✅
 
-- [ ] **`docker-compose.yml`** — Thêm service MinIO:
+- [x] **`docker-compose.yml`** — Thêm service MinIO:
   ```yaml
   minio:
     image: minio/minio
@@ -42,12 +42,12 @@
   ```
   Thêm `minio_data` vào `volumes`. Đổi `POSTGRES_DB: homestay`, `POSTGRES_USER: homestay_user`.
 
-### 0.2 Backend cleanup
+### 0.2 Backend cleanup ✅
 
-- [ ] Xóa `src/backend/src/modules/products/` toàn bộ
-- [ ] Xóa `Post` model và `Product` model khỏi `prisma/schema.prisma`
-- [ ] Xóa `ProductsModule` khỏi `app.module.ts`
-- [ ] Cập nhật `src/backend/.env`:
+- [x] Xóa `src/backend/src/modules/products/` toàn bộ
+- [x] Xóa `Post` model và `Product` model khỏi `prisma/schema.prisma`
+- [x] Xóa `ProductsModule` khỏi `app.module.ts`
+- [x] Cập nhật `src/backend/.env`:
   ```env
   DATABASE_URL=postgresql://homestay_user:@localhost:5432/homestay
   MINIO_ENDPOINT=localhost
@@ -63,7 +63,7 @@
   VNPAY_IPN_URL=http://localhost:4000/api/v1/payments/vnpay/ipn
   ```
 
-### 0.3 Prisma Schema — Viết lại hoàn toàn
+### 0.3 Prisma Schema — Viết lại hoàn toàn ✅
 
 File: `src/backend/prisma/schema.prisma`
 
@@ -72,6 +72,7 @@ File: `src/backend/prisma/schema.prisma`
 Giữ Prisma 7 conventions (adapter-pg, camelCase, `@default(uuid())`).
 
 **Enums cần tạo:**
+
 ```
 RoomStatus { active, maintenance, inactive }
 BookingType { hourly, daily }
@@ -83,6 +84,7 @@ UserRole { customer, admin }
 ```
 
 **Models cần tạo** (theo thứ tự dependency):
+
 1. `Branch` — `@@map("branches")` — `name`, `nameEn`, `address`, `city`, `latitude`, `longitude`, `phone`, `description`, `descriptionEn`, `isActive`
 2. `Room` — `@@map("rooms")` — đầy đủ fields từ PRD, thêm `deletedAt DateTime?`
 3. `RoomImage` — `@@map("room_images")` — `roomId`, `url`, `sortOrder`, `isCover`
@@ -95,24 +97,26 @@ UserRole { customer, admin }
 10. `Payment` — `@@map("payments")` — `1:1` với `Booking`
 11. `Review` — `@@map("reviews")` — `1:1` với `Booking`, `1:N` với `Room`
 
-### 0.4 Frontend Types
+### 0.4 Frontend Types ✅
 
 File: `src/frontend/src/types/index.ts` — export đầy đủ TypeScript types tương ứng với Prisma models (Room, Branch, Booking, v.v.). Đây là contract giữa frontend mock và backend API thật.
 
 ---
 
-## Phase 1 — Frontend: Design System + Layout + Mock Data
+## Phase 1 — Frontend: Design System + Layout + Mock Data ✅
 
 **Mục tiêu:** Setup toàn bộ nền tảng frontend. Sau phase này có thể code UI không cần backend.
 
-### 1.1 Setup i18n
+### 1.1 Setup i18n ✅
 
 **Package:** `next-intl`
+
 ```bash
 cd src/frontend && pnpm add next-intl
 ```
 
 Cấu trúc:
+
 ```
 src/frontend/src/
 ├── messages/
@@ -125,32 +129,32 @@ src/frontend/src/
 
 Route structure: `src/app/[locale]/` — wrap tất cả routes trong locale segment.
 
-### 1.2 Design Tokens — Ocean Blue Theme
+### 1.2 Design Tokens — Ocean Blue Theme ✅
 
 File: `src/frontend/src/app/globals.css`
 
 ```css
 :root {
-  --color-primary:        #00B4D8;
-  --color-primary-dark:   #0077B6;
-  --color-primary-light:  #90E0EF;
-  --color-hero-bg:        #0D1B2A;
-  --color-surface:        #F5F8FA;
-  --color-border:         #DCE8F0;
-  --color-text-primary:   #1A2A3A;
-  --color-text-secondary: #8EA3B3;
-  --color-success:        #2ECC71;
-  --color-danger:         #E24B4A;
-  --color-warning:        #FF9500;
-  --radius-card:   12px;
-  --radius-pill:   24px;
-  --radius-btn:     9px;
+  --color-primary: #00b4d8;
+  --color-primary-dark: #0077b6;
+  --color-primary-light: #90e0ef;
+  --color-hero-bg: #0d1b2a;
+  --color-surface: #f5f8fa;
+  --color-border: #dce8f0;
+  --color-text-primary: #1a2a3a;
+  --color-text-secondary: #8ea3b3;
+  --color-success: #2ecc71;
+  --color-danger: #e24b4a;
+  --color-warning: #ff9500;
+  --radius-card: 12px;
+  --radius-pill: 24px;
+  --radius-btn: 9px;
 }
 ```
 
 Thêm font Inter qua `next/font/google` vào `layout.tsx`.
 
-### 1.3 Mock Data Layer
+### 1.3 Mock Data Layer ✅
 
 File: `src/frontend/src/lib/mock/` — dữ liệu mẫu thực tế, shape khớp 100% với API response:
 
@@ -165,30 +169,36 @@ src/lib/mock/
 ```
 
 File: `src/frontend/src/lib/api-client.ts` — wrapper dùng `NEXT_PUBLIC_USE_MOCK=true/false`:
+
 ```typescript
 // Nếu NEXT_PUBLIC_USE_MOCK=true → trả mock data (async, delay 200ms để simulate latency)
 // Nếu NEXT_PUBLIC_USE_MOCK=false → gọi api.ts thật
 export const apiClient = {
-  getRooms: (query) => isMock ? mockDelay(filterMockRooms(query)) : api.get('/rooms', query),
-  getRoom: (id) => isMock ? mockDelay(findMockRoom(id)) : api.get(`/rooms/${id}`),
+  getRooms: (query) =>
+    isMock ? mockDelay(filterMockRooms(query)) : api.get("/rooms", query),
+  getRoom: (id) =>
+    isMock ? mockDelay(findMockRoom(id)) : api.get(`/rooms/${id}`),
   // ... tất cả endpoints
 };
 ```
 
 > **Quy tắc:** Tất cả components chỉ gọi `apiClient`, không bao giờ gọi `api` trực tiếp. Khi backend xong chỉ cần bật `NEXT_PUBLIC_USE_MOCK=false`.
 
-### 1.4 Shared Layout Components
+### 1.4 Shared Layout Components ✅
 
 **Navbar** (`src/components/marketing/Navbar.tsx`):
+
 - Logo + links (Tìm phòng, Về chúng tôi)
 - Language toggle `VI | EN` → `useRouter` của next-intl
 - Auth: đăng nhập → avatar dropdown (Lịch sử đặt phòng, Đăng xuất); chưa đăng nhập → nút `Đăng nhập`
 - Mobile: hamburger → sheet/drawer
 
 **Footer** (`src/components/marketing/Footer.tsx`):
+
 - Links, địa chỉ, hotline, social icons, copyright
 
 **Shared UI:**
+
 - `ImageCarousel.tsx` — full-width carousel với CSS scroll snap, counter `1/N`, swipe mobile
 - `GoogleMapsEmbed.tsx` — `<iframe>` embed bản đồ
 - `PriceDisplay.tsx` — giá với strike-through giá gốc, định dạng VNĐ
@@ -196,13 +206,14 @@ export const apiClient = {
 
 ---
 
-## Phase 2 — Frontend: Trang chủ + Rooms + Room Detail
+## Phase 2 — Frontend: Trang chủ + Rooms + Room Detail ✅
 
-### 2.1 HomePage (`/`)
+### 2.1 HomePage (`/`) ✅
 
 File: `src/app/[locale]/(marketing)/page.tsx`
 
 **HeroSection** (`src/components/marketing/HeroSection.tsx`):
+
 - Nền `#0D1B2A`, eyebrow `🌊 Đặt phòng linh hoạt theo giờ & ngày` màu `#90E0EF`
 - Tab `[Theo giờ]` / `[Theo ngày]` — pill button, active bg `#00B4D8`
 - Search form (nền `rgba(255,255,255,0.06)`, border `rgba(144,224,239,0.2)`):
@@ -212,12 +223,15 @@ File: `src/app/[locale]/(marketing)/page.tsx`
 - Nút `Tìm phòng trống` → `/rooms?branchId=...&type=...&checkIn=...`
 
 **FilterChips** (scroll ngang, ẩn scrollbar):
+
 ```
 [Tất cả] [Theo giờ] [Theo ngày] [Dưới 500k] [Ban công] [Bồn tắm] [Duplex] [Gác xép]
 ```
+
 - Default: border `#DCE8F0`, bg white; Active: border `#00B4D8`, bg `#E6F4FB`
 
 **RoomCard** (`src/components/marketing/RoomCard.tsx`):
+
 - Ảnh tỷ lệ 1:1, `border-radius: 12px`, carousel dots, heart button
 - Badge `Được khách yêu thích` nếu `isGuestFavorite`
 - Badge loại thuê overlay góc dưới trái: `Theo giờ` (blue) / `Theo ngày` (green)
@@ -225,7 +239,7 @@ File: `src/app/[locale]/(marketing)/page.tsx`
 
 **Featured Rooms**: `apiClient.getRooms({ isFeatured: true, limit: 6 })`
 
-### 2.2 RoomsPage (`/rooms`)
+### 2.2 RoomsPage (`/rooms`) ✅
 
 File: `src/app/[locale]/(marketing)/rooms/page.tsx`
 
@@ -235,7 +249,7 @@ File: `src/app/[locale]/(marketing)/rooms/page.tsx`
 - Filter sidebar (desktop) / bottom sheet (mobile): chi nhánh, loại, giá max, tiện nghi
 - Pagination component
 
-### 2.3 RoomDetailPage (`/rooms/[id]`)
+### 2.3 RoomDetailPage (`/rooms/[id]`) ✅
 
 File: `src/app/[locale]/(marketing)/rooms/[id]/page.tsx` — Server Component
 
@@ -254,6 +268,7 @@ File: `src/app/[locale]/(marketing)/rooms/[id]/page.tsx` — Server Component
 11. **StickyBookingBar** — `position: fixed` bottom, giá + `[Đặt phòng]`
 
 **SEO:**
+
 ```typescript
 export async function generateMetadata({ params }) {
   const room = await apiClient.getRoom(params.id);
@@ -267,22 +282,25 @@ export async function generateMetadata({ params }) {
 
 ---
 
-## Phase 3 — Frontend: Booking Flow + Auth
+## Phase 3 — Frontend: Booking Flow + Auth ✅
 
-### 3.1 BookingPage (`/booking/[roomId]`)
+### 3.1 BookingPage (`/booking/[roomId]`) ✅
 
 File: `src/app/[locale]/(marketing)/booking/[roomId]/page.tsx` — Client Component
 
 `react-hook-form` + `zod` schema. Hai tab:
+
 - **Theo giờ**: date + time picker + num_hours stepper + num_guests stepper
 - **Theo ngày**: check-in + check-out date + num_guests stepper
 
 **Pricing calculator** (realtime, client-side):
+
 ```typescript
 const calcPrice = (room, { type, numHours, numNights, numGuests }) => {
-  const base = type === 'hourly'
-    ? room.pricePerHour * numHours
-    : room.pricePerDay * numNights;
+  const base =
+    type === "hourly"
+      ? room.pricePerHour * numHours
+      : room.pricePerDay * numNights;
   const extra = Math.max(0, numGuests - 1) * (room.extraPersonPrice ?? 0);
   return { base, extra, discount, total: base + extra - discount };
 };
@@ -291,6 +309,7 @@ const calcPrice = (room, { type, numHours, numNights, numGuests }) => {
 **VoucherInput**: debounced 500ms → `apiClient.validateVoucher({ code, bookingAmount })`, hiển thị số tiền giảm ngay
 
 **Order summary box:**
+
 ```
 Giá phòng:     490.000₫
 Giảm giá:      -49.000₫
@@ -301,31 +320,31 @@ Tổng cộng:     541.000₫
 
 Submit → `apiClient.createBooking(dto)` → redirect `/booking/[id]/confirm`
 
-### 3.2 ConfirmPage (`/booking/[id]/confirm`)
+### 3.2 ConfirmPage (`/booking/[id]/confirm`) ✅
 
 - Summary đơn readonly
 - Chọn thanh toán: `[VNPay]` / `[Tiền mặt]`
 - VNPay: `apiClient.createVnpayPayment(bookingId)` → `window.location = paymentUrl`
 - Cash: cập nhật status → redirect `/booking/[id]/success`
 
-### 3.3 PaymentCallbackPage (`/payment/callback`)
+### 3.3 PaymentCallbackPage (`/payment/callback`) ✅
 
 - Đọc search params từ VNPay redirect
 - `vnp_ResponseCode === '00'` → redirect `/booking/[id]/success`
 - Khác → hiển thị error + link thử lại
 
-### 3.4 SuccessPage (`/booking/[id]/success`)
+### 3.4 SuccessPage (`/booking/[id]/success`) ✅
 
 - Hiển thị `bookingCode` to và nổi bật
 - Chi tiết đặt phòng
 - Nếu guest: gợi ý đăng ký tài khoản
 
-### 3.5 TrackBookingPage (`/track`)
+### 3.5 TrackBookingPage (`/track`) ✅
 
 - Input mã `HMS-XXXX` + nút `Tra cứu`
 - `apiClient.getBookingByCode(code)` → hiển thị trạng thái, phòng, thời gian
 
-### 3.6 MyBookingsPage + BookingDetailPage
+### 3.6 MyBookingsPage + BookingDetailPage ✅
 
 - `GET /bookings/my` → list lịch sử (auth required, redirect `/login` nếu chưa đăng nhập)
 - Detail: có nút `Hủy đặt phòng` nếu status còn `pending/confirmed`
@@ -333,10 +352,12 @@ Submit → `apiClient.createBooking(dto)` → redirect `/booking/[id]/confirm`
 ### 3.7 Auth Pages
 
 `src/app/[locale]/(auth)/login/page.tsx`:
+
 - Login bằng email hoặc số điện thoại
 - zod validation
 
 `src/app/[locale]/(auth)/register/page.tsx`:
+
 - `fullName`, `email` hoặc `phone`, `password`, `confirmPassword`
 
 ---
@@ -352,6 +373,7 @@ File: `src/app/[locale]/(admin)/layout.tsx`
 - Topbar: breadcrumb + avatar + logout
 
 Route structure:
+
 ```
 src/app/[locale]/(admin)/
 ├── dashboard/page.tsx
@@ -386,6 +408,7 @@ pnpm add recharts
 ### 4.3 Bookings Management (`/bookings`)
 
 **DataTable** (mở rộng `src/components/cms/DataTable.tsx`):
+
 - Columns: Mã booking | Khách | Phòng | Chi nhánh | Check-in | Check-out | Tổng | TT thanh toán | TT booking | Actions
 - Filter bar: chi nhánh, phòng, status, payment method, date range
 - Row actions: Xác nhận / Check-in / Check-out / Hủy (dialog) / Export CSV
@@ -393,6 +416,7 @@ pnpm add recharts
 ### 4.4 Room Management (`/rooms/[id]`)
 
 Form nhiều sections (tabs hoặc accordion):
+
 1. **Thông tin cơ bản** — tên VI/EN, mô tả VI/EN, chi nhánh, số phòng, tầng, sức chứa
 2. **Giá** — giá/giờ, giá gốc, giá/ngày, giá gốc, thêm giờ, thêm người, giờ tối thiểu
 3. **Cài đặt** — allow hourly, giờ check-in/out, status, featured, guest_favorite
@@ -422,6 +446,7 @@ CRUD với form: code, discountType, discountValue, maxDiscount, minBookingAmoun
 ## Phase 5 — Backend: Auth + Branches + Rooms
 
 > Bắt đầu phase này khi frontend đã hoàn chỉnh với mock data. Chạy migration lần đầu ở đây.
+>
 > ```bash
 > cd src/backend && npx prisma migrate dev --name init_homestay_schema
 > ```
@@ -473,11 +498,12 @@ src/backend/src/modules/rooms/
 ```
 
 **Availability check** (`GET /rooms/:id/availability`):
+
 ```typescript
 const conflicts = await bookingRepo.findMany({
   where: {
     roomId: id,
-    bookingStatus: { notIn: ['cancelled'] },
+    bookingStatus: { notIn: ["cancelled"] },
     OR: [{ checkIn: { lt: checkOut }, checkOut: { gt: checkIn } }],
   },
 });
@@ -497,6 +523,7 @@ src/backend/src/modules/image/
 ```
 
 **Packages:**
+
 ```bash
 cd src/backend
 npm install @aws-sdk/client-s3 @aws-sdk/lib-storage sharp multer @types/multer
@@ -505,6 +532,7 @@ npm install @aws-sdk/client-s3 @aws-sdk/lib-storage sharp multer @types/multer
 ### 5.5 Prisma Seed
 
 File: `src/backend/prisma/seed.ts`:
+
 - 1 admin user
 - 2-3 branch mẫu
 - 5-6 phòng mẫu với ảnh placeholder, amenities, time slots
@@ -530,6 +558,7 @@ src/backend/src/modules/bookings/
 ```
 
 **`create()` logic:**
+
 1. Verify room `status === 'active'`
 2. Kiểm tra availability (không overlap)
 3. Tính `baseAmount`, `extraAmount`, `discountAmount`
@@ -538,6 +567,7 @@ src/backend/src/modules/bookings/
 6. Prisma transaction: tạo `Booking` + `Payment` cùng lúc
 
 **Packages:**
+
 ```bash
 npm install nanoid fast-csv @types/fast-csv
 ```
@@ -555,6 +585,7 @@ src/backend/src/modules/payments/
 ```
 
 **`vnpay.service.ts` — tạo URL:**
+
 ```typescript
 createPaymentUrl(booking: Booking): string {
   const params = {
@@ -574,11 +605,13 @@ createPaymentUrl(booking: Booking): string {
 ```
 
 Endpoints:
+
 - `POST /payments/vnpay/create` (@Public) → `{ paymentUrl }`
 - `GET /payments/vnpay/callback` (@Public) → verify chữ ký → update DB → redirect frontend
 - `POST /payments/vnpay/ipn` (@Public) → xử lý IPN → trả `{ RspCode: '00', Message: 'Confirm Success' }`
 
 **Packages:**
+
 ```bash
 npm install date-fns
 ```
@@ -599,6 +632,7 @@ src/backend/src/modules/vouchers/
 ```
 
 **`validate()` logic:**
+
 1. Tìm voucher, check `isActive`, `validFrom ≤ now ≤ validUntil`, `usedCount < usageLimit`
 2. Check `bookingAmount ≥ minBookingAmount`
 3. Tính discount: `percentage` (cap tại `maxDiscountAmount`) hoặc `fixed_amount`
@@ -634,6 +668,7 @@ src/backend/src/modules/reports/
 ```
 
 Dùng `prisma.$queryRaw` cho aggregation queries:
+
 ```typescript
 // Doanh thu theo ngày
 prisma.$queryRaw`
@@ -644,10 +679,11 @@ prisma.$queryRaw`
   WHERE booking_status = 'confirmed'
     AND DATE(created_at) = ${date}
   GROUP BY DATE(created_at)
-`
+`;
 ```
 
 Endpoints (tất cả `@Roles(Role.ADMIN)`):
+
 - `GET /reports/revenue/daily?date=`
 - `GET /reports/revenue/monthly?year=&month=`
 - `GET /reports/revenue/yearly?year=`
@@ -673,9 +709,10 @@ Endpoints (tất cả `@Roles(Role.ADMIN)`):
 ### 8.2 API shape verification
 
 Với mỗi endpoint, so sánh response thật vs mock:
+
 ```typescript
 // Dùng Zod để parse và phát hiện mismatch
-import { RoomSchema } from '@/types/schemas';
+import { RoomSchema } from "@/types/schemas";
 const room = RoomSchema.parse(await api.get(`/rooms/${id}`));
 ```
 
@@ -684,6 +721,7 @@ Tạo `src/types/schemas.ts` với Zod schemas tương ứng với Prisma models
 ### 8.3 Error handling
 
 Thay `mockDelay()` → xử lý `ApiError` thật:
+
 - 401 → redirect `/login`
 - 404 → Next.js `notFound()`
 - 500 → boundary `error.tsx`
@@ -711,10 +749,12 @@ Thay `mockDelay()` → xử lý `ApiError` thật:
 **`docker-compose.prod.yml`** tại root — services: postgres, redis, minio, api, web, nginx
 
 **Dockerfiles:**
+
 - `src/backend/Dockerfile.prod`: multi-stage, `node:20-alpine`
 - `src/frontend/Dockerfile.prod`: multi-stage, `output: 'standalone'` trong `next.config.ts`
 
 **Nginx** (`nginx/nginx.conf`):
+
 ```nginx
 # yourdomain.vn       → web:3000
 # admin.yourdomain.vn → web:3000  (same Next.js app, admin route group)
@@ -725,6 +765,7 @@ Thay `mockDelay()` → xử lý `ApiError` thật:
 ### 9.4 GitHub Actions
 
 File: `.github/workflows/deploy.yml`
+
 - Trigger: push `main`
 - Steps: checkout → setup Node 20 → install → build → SSH deploy
 - SSH: pull → docker compose build → up -d → prisma migrate deploy → prune
@@ -772,6 +813,7 @@ Phase 9 — SEO + Performance + Deploy                   (2-3 ngày)
 ```
 
 **Phụ thuộc nghiêm ngặt:**
+
 - Phase 0 phải xong trước tất cả (data types là nền tảng của mock)
 - Phase 1 (mock layer) phải xong trước Phase 2-4
 - Phase 5-7 (backend) có thể chạy song song với Phase 2-4 nếu có 2 người
@@ -782,11 +824,13 @@ Phase 9 — SEO + Performance + Deploy                   (2-3 ngày)
 ## Packages cần cài thêm
 
 ### Backend (`src/backend/`)
+
 ```bash
 npm install @aws-sdk/client-s3 @aws-sdk/lib-storage sharp multer @types/multer nanoid fast-csv @types/fast-csv date-fns
 ```
 
 ### Frontend (`src/frontend/`)
+
 ```bash
 pnpm add next-intl recharts react-dropzone @dnd-kit/core @dnd-kit/sortable zod
 ```

@@ -19,22 +19,37 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto) {
-    const user = await this.usersService.findByEmail(loginDto.email);
+    if (!loginDto.email && !loginDto.phone) {
+      throw new UnauthorizedException('Vui lòng nhập email hoặc số điện thoại');
+    }
 
-    if (!user || !(await bcrypt.compare(loginDto.password, user.password))) {
-      throw new UnauthorizedException('Email hoặc mật khẩu không đúng');
+    const user = loginDto.email
+      ? await this.usersService.findByEmail(loginDto.email)
+      : await this.usersService.findByPhone(loginDto.phone!);
+
+    if (!user || !user.password || !(await bcrypt.compare(loginDto.password, user.password))) {
+      throw new UnauthorizedException('Thông tin đăng nhập không đúng');
     }
 
     if (!user.isActive) {
       throw new UnauthorizedException('Tài khoản đã bị vô hiệu hóa');
     }
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.id, email: user.email ?? '' };
     const accessToken = this.signAccess(payload);
     const refreshToken = this.signRefresh(user.id);
 
-    const { password: _pw, ...userResult } = user;
+    // Lưu hash của refresh token để có thể revoke
+    const hash = await bcrypt.hash(refreshToken, 10);
+    await this.usersService.saveRefreshTokenHash(user.id, hash);
+
+    const { password: _pw, refreshTokenHash: _rth, ...userResult } = user;
     return { user: userResult, accessToken, refreshToken };
+  }
+
+  async logout(userId: string) {
+    await this.usersService.saveRefreshTokenHash(userId, null);
+    return { success: true };
   }
 
   async refresh(refreshToken: string) {
@@ -50,19 +65,27 @@ export class AuthService {
         throw new UnauthorizedException('Token không hợp lệ');
       }
 
-      const user = await this.usersService.findOne(payload.sub);
+      const user = await this.usersService.findByIdWithHash(payload.sub);
       if (!user?.isActive) {
-        throw new UnauthorizedException(
-          'Tài khoản không tồn tại hoặc đã bị vô hiệu hóa',
-        );
+        throw new UnauthorizedException('Tài khoản không tồn tại hoặc đã bị vô hiệu hóa');
       }
 
-      const accessToken = this.signAccess({ sub: user.id, email: user.email });
-      return { accessToken };
-    } catch {
-      throw new UnauthorizedException(
-        'Refresh token không hợp lệ hoặc đã hết hạn',
-      );
+      // Verify token hash matches stored hash
+      if (!user.refreshTokenHash || !(await bcrypt.compare(refreshToken, user.refreshTokenHash))) {
+        throw new UnauthorizedException('Refresh token đã bị thu hồi');
+      }
+
+      const newAccessToken = this.signAccess({ sub: user.id, email: user.email ?? '' });
+      const newRefreshToken = this.signRefresh(user.id);
+
+      // Rotate: save new hash
+      const newHash = await bcrypt.hash(newRefreshToken, 10);
+      await this.usersService.saveRefreshTokenHash(user.id, newHash);
+
+      return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+    } catch (err) {
+      if (err instanceof UnauthorizedException) throw err;
+      throw new UnauthorizedException('Refresh token không hợp lệ hoặc đã hết hạn');
     }
   }
 
@@ -80,12 +103,8 @@ export class AuthService {
   private signRefresh(userId: string): string {
     const options: any = {
       secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
-      expiresIn:
-        this.configService.get<string>('JWT_REFRESH_EXPIRATION') || '7d',
+      expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION') || '7d',
     };
-    return this.jwtService.sign(
-      { sub: userId, type: 'refresh' },
-      options as JwtSignOptions,
-    );
+    return this.jwtService.sign({ sub: userId, type: 'refresh' }, options as JwtSignOptions);
   }
 }

@@ -12,16 +12,17 @@ import { CreateUserDto } from '../interface/dto/create-user.dto';
 import { UpdateUserDto } from '../interface/dto/update-user.dto';
 import { UserQueryDto } from '../interface/dto/user-query.dto';
 import * as bcrypt from 'bcrypt';
-import { Prisma, Role } from '@prisma/client';
+import { Prisma, UserRole } from '@prisma/client';
 
 /** Public user shape — no password, no deletedAt. Used by guards and auth service. */
 export interface AuthUser {
   id: string;
-  email: string;
-  firstName: string | null;
-  lastName: string | null;
-  role: Role;
+  email: string | null;
+  phone: string | null;
+  fullName: string;
+  role: UserRole;
   isActive: boolean;
+  isVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -37,14 +38,20 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const existingUser = await this.findByEmail(createUserDto.email);
-    if (existingUser) {
-      throw new ConflictException('Email đã tồn tại');
+    if (createUserDto.email) {
+      const existingEmail = await this.findByEmail(createUserDto.email);
+      if (existingEmail) throw new ConflictException('Email đã tồn tại');
+    }
+    if (createUserDto.phone) {
+      const existingPhone = await this.findByPhone(createUserDto.phone);
+      if (existingPhone) throw new ConflictException('Số điện thoại đã tồn tại');
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const { fullName, ...rest } = createUserDto;
     const user = await this.repository.create({
-      ...createUserDto,
+      ...rest,
+      fullName: fullName ?? createUserDto.email ?? createUserDto.phone ?? 'Người dùng',
       password: hashedPassword,
     });
 
@@ -75,8 +82,7 @@ export class UsersService {
     if (search) {
       where.OR = [
         { email: { contains: search, mode: 'insensitive' } },
-        { firstName: { contains: search, mode: 'insensitive' } },
-        { lastName: { contains: search, mode: 'insensitive' } },
+        { fullName: { contains: search, mode: 'insensitive' } },
       ];
     }
     if (email) where.email = email;
@@ -152,6 +158,21 @@ export class UsersService {
   /** Finds an active, non-deleted user by email. Used for authentication. */
   async findByEmail(email: string) {
     return this.repository.findFirst({ email, deletedAt: null } as any);
+  }
+
+  /** Finds an active, non-deleted user by phone. Used for authentication. */
+  async findByPhone(phone: string) {
+    return this.repository.findFirst({ phone, deletedAt: null } as any);
+  }
+
+  /** Saves hashed refresh token for stateful refresh revocation. */
+  async saveRefreshTokenHash(id: string, hash: string | null) {
+    return this.repository.update({ where: { id }, data: { refreshTokenHash: hash } as any });
+  }
+
+  /** Returns user including refreshTokenHash — used only by auth.service for refresh verification. */
+  async findByIdWithHash(id: string) {
+    return this.repository.findOne({ id });
   }
 
   private async invalidateUserCache(id: string) {

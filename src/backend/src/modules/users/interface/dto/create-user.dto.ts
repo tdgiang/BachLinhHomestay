@@ -1,34 +1,27 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  MinLength,
-  IsOptional,
+  IsEmail, IsNotEmpty, IsOptional, IsString, MinLength,
 } from 'class-validator';
 
 export class CreateUserDto {
-  @ApiProperty({ description: 'Địa chỉ email', example: 'user@example.com' })
+  @ApiPropertyOptional({ description: 'Địa chỉ email', example: 'user@example.com' })
   @IsEmail()
-  @IsNotEmpty()
-  email: string;
+  @IsOptional()
+  email?: string;
 
-  @ApiProperty({
-    description: 'Mật khẩu (tối thiểu 6 ký tự)',
-    example: 'Secret@123',
-  })
+  @ApiPropertyOptional({ description: 'Số điện thoại', example: '0901234567' })
+  @IsString()
+  @IsOptional()
+  phone?: string;
+
+  @ApiProperty({ description: 'Mật khẩu (tối thiểu 6 ký tự)', example: 'Secret@123' })
   @IsString()
   @MinLength(6)
   @IsNotEmpty()
   password: string;
 
-  @ApiPropertyOptional({ description: 'Tên', example: 'Văn A' })
+  @ApiPropertyOptional({ description: 'Họ và tên', example: 'Nguyễn Văn A' })
   @IsString()
   @IsOptional()
-  firstName?: string;
-
-  @ApiPropertyOptional({ description: 'Họ', example: 'Nguyễn' })
-  @IsString()
-  @IsOptional()
-  lastName?: string;
+  fullName?: string;
 }
