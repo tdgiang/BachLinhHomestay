@@ -12,8 +12,8 @@
 | Trạng thái | Draft — Sẵn sàng để dev |
 | Tech Stack | Next.js 14 + NestJS + PostgreSQL |
 | Deploy | VPS Ubuntu (Nginx + PM2 + Docker) |
-| Domain chính | yourdomain.vn |
-| Domain admin | admin.yourdomain.vn |
+| Domain chính | bachlinh.com.vn |
+| Domain admin | admin.bachlinh.com.vn |
 
 ---
 
@@ -117,10 +117,10 @@ homestay-app/
 
 | Domain | Proxy đến | Ghi chú |
 |---|---|---|
-| `yourdomain.vn` | `web:3000` | Website khách hàng (Next.js) |
-| `admin.yourdomain.vn` | `admin:3001` | Admin dashboard (Next.js) |
-| `api.yourdomain.vn` | `api:4000` | NestJS REST API |
-| `cdn.yourdomain.vn` | `minio:9000` | Static files / ảnh phòng |
+| `bachlinh.com.vn` | `web:3000` | Website khách hàng (Next.js) |
+| `admin.bachlinh.com.vn` | `admin:3001` | Admin dashboard (Next.js) |
+| `api.bachlinh.com.vn` | `api:4000` | NestJS REST API |
+| `cdn.bachlinh.com.vn` | `minio:9000` | Static files / ảnh phòng |
 
 ---
 
@@ -433,7 +433,7 @@ model Review {
 
 ## 4. API ENDPOINTS (NestJS)
 
-> **Base URL:** `https://api.yourdomain.vn/api`
+> **Base URL:** `https://api.bachlinh.com.vn/api`
 > **Auth:** `Bearer <access_token>` trong header `Authorization`
 
 ### 4.1 Authentication — `/auth`
@@ -702,7 +702,7 @@ Tổng cộng:     541.000₫
 
 ---
 
-## 6. ADMIN DASHBOARD (`admin.yourdomain.vn`)
+## 6. ADMIN DASHBOARD (`admin.bachlinh.com.vn`)
 
 ### 6.1 Routes
 
@@ -801,8 +801,8 @@ Backend tạo VNPay URL:
   - vnp_Amount = total_amount × 100 (VNPay tính đơn vị VND × 100)
   - vnp_OrderInfo = "Dat phong [booking_code]"
   - vnp_TxnRef = booking_code
-  - vnp_ReturnUrl = https://yourdomain.vn/payment/callback
-  - vnp_IpnUrl = https://api.yourdomain.vn/api/payments/vnpay/ipn
+  - vnp_ReturnUrl = https://bachlinh.com.vn/payment/callback
+  - vnp_IpnUrl = https://api.bachlinh.com.vn/api/payments/vnpay/ipn
   - vnp_SecureHash = HMAC-SHA512(queryString, VNPAY_HASH_SECRET)
       ↓
 Backend trả về { paymentUrl }
@@ -832,8 +832,8 @@ Frontend hiển thị /booking/[id]/success
 | `VNPAY_TMN_CODE` | Mã TMN code từ VNPay merchant portal |
 | `VNPAY_HASH_SECRET` | Secret key để tạo và verify chữ ký HMAC-SHA512 |
 | `VNPAY_URL` | `https://pay.vnpay.vn/vpcpay.html` (production) |
-| `VNPAY_RETURN_URL` | `https://yourdomain.vn/payment/callback` |
-| `VNPAY_IPN_URL` | `https://api.yourdomain.vn/api/payments/vnpay/ipn` |
+| `VNPAY_RETURN_URL` | `https://bachlinh.com.vn/payment/callback` |
+| `VNPAY_IPN_URL` | `https://api.bachlinh.com.vn/api/payments/vnpay/ipn` |
 
 > **Lưu ý:** Test với sandbox URL `https://sandbox.vnpayment.vn/paymentv2/vpcpay.html` trước khi go-live.
 
@@ -941,7 +941,7 @@ upstream api_app   { server api:4000; }
 
 server {
     listen 443 ssl;
-    server_name yourdomain.vn;
+    server_name bachlinh.com.vn;
     ssl_certificate /etc/nginx/ssl/fullchain.pem;
     ssl_certificate_key /etc/nginx/ssl/privkey.pem;
     location / { proxy_pass http://web_app; }
@@ -949,14 +949,14 @@ server {
 
 server {
     listen 443 ssl;
-    server_name admin.yourdomain.vn;
+    server_name admin.bachlinh.com.vn;
     # ... ssl config
     location / { proxy_pass http://admin_app; }
 }
 
 server {
     listen 443 ssl;
-    server_name api.yourdomain.vn;
+    server_name api.bachlinh.com.vn;
     # ... ssl config
     location / { proxy_pass http://api_app; }
 }
@@ -1044,18 +1044,18 @@ MINIO_BUCKET=homestay-images
 VNPAY_TMN_CODE=YOUR_TMN_CODE
 VNPAY_HASH_SECRET=YOUR_HASH_SECRET
 VNPAY_URL=https://pay.vnpay.vn/vpcpay.html
-VNPAY_RETURN_URL=https://yourdomain.vn/payment/callback
-VNPAY_IPN_URL=https://api.yourdomain.vn/api/payments/vnpay/ipn
+VNPAY_RETURN_URL=https://bachlinh.com.vn/payment/callback
+VNPAY_IPN_URL=https://api.bachlinh.com.vn/api/payments/vnpay/ipn
 
 # CORS
-CORS_ORIGINS=https://yourdomain.vn,https://admin.yourdomain.vn
+CORS_ORIGINS=https://bachlinh.com.vn,https://admin.bachlinh.com.vn
 ```
 
 ### 10.2 Web Frontend (`apps/web/.env`)
 
 ```env
-NEXT_PUBLIC_API_URL=https://api.yourdomain.vn/api
-NEXT_PUBLIC_SITE_URL=https://yourdomain.vn
+NEXT_PUBLIC_API_URL=https://api.bachlinh.com.vn/api
+NEXT_PUBLIC_SITE_URL=https://bachlinh.com.vn
 NEXT_PUBLIC_GOOGLE_MAPS_KEY=AIzaSy...your-key
 NEXT_PUBLIC_VNPAY_ENV=production
 ```
@@ -1063,8 +1063,8 @@ NEXT_PUBLIC_VNPAY_ENV=production
 ### 10.3 Admin Frontend (`apps/admin/.env`)
 
 ```env
-NEXT_PUBLIC_API_URL=https://api.yourdomain.vn/api
-NEXT_PUBLIC_SITE_URL=https://admin.yourdomain.vn
+NEXT_PUBLIC_API_URL=https://api.bachlinh.com.vn/api
+NEXT_PUBLIC_SITE_URL=https://admin.bachlinh.com.vn
 ```
 
 ---
