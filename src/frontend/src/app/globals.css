@@ -2,33 +2,33 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* Bach Linh Homestay — Deep Navy Blue Design Tokens */
+/* Ocean Blue Homestay — Korean Cozy Design Tokens */
 :root {
-  /* Brand — Deep Navy Blue */
-  --color-primary: #1A4A7A;
-  --color-primary-dark: #0F2D50;
-  --color-primary-light: #2E6FAA;
+  /* Bach Linh Homestay — Deep Navy Blue Design Tokens */
+  --color-primary: #1a4a7a;
+  --color-primary-dark: #0f2d50;
+  --color-primary-light: #2e6faa;
 
   /* Hero — Light Blue-White */
-  --color-hero-bg: #F0F5FA;
+  --color-hero-bg: #f0f5fa;
   --color-hero-card: rgba(255, 255, 255, 0.92);
-  --color-hero-border: #C5D5E8;
+  --color-hero-border: #c5d5e8;
 
   /* Surface */
   --color-card-bg: #ffffff;
-  --color-surface: #F5F8FC;
-  --color-surface-alt: #EDF2F8;
-  --color-border: #C5D5E8;
+  --color-surface: #f5f8fc;
+  --color-surface-alt: #edf2f8;
+  --color-border: #c5d5e8;
 
   /* Text */
-  --color-text-primary: #0D1F33;
-  --color-text-secondary: #3D5A78;
-  --color-text-muted: #7A9BB5;
+  --color-text-primary: #0d1f33;
+  --color-text-secondary: #3d5a78;
+  --color-text-muted: #7a9bb5;
 
   /* Status */
-  --color-success: #2E7D52;
-  --color-danger: #C0392B;
-  --color-warning: #D4860A;
+  --color-success: #2e7d52;
+  --color-danger: #c0392b;
+  --color-warning: #d4860a;
 
   /* Radius */
   --radius-card: 20px;
@@ -39,7 +39,7 @@
   /* Shadow — cool blue-tinted soft */
   --shadow-sm: 0 1px 4px rgba(26, 74, 122, 0.06);
   --shadow-md: 0 4px 16px rgba(26, 74, 122, 0.08);
-  --shadow-lg: 0 8px 32px rgba(26, 74, 122, 0.10);
+  --shadow-lg: 0 8px 32px rgba(26, 74, 122, 0.1);
   --shadow-hover: 0 12px 40px rgba(26, 74, 122, 0.14);
 
   /* Font */
@@ -74,6 +74,36 @@ html {
   opacity: 0.028;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
   border-radius: inherit;
+}
+
+.hero-bg-overlay {
+  background: radial-gradient(
+    circle at top,
+    rgba(24, 59, 103, 0.48),
+    rgba(10, 22, 42, 0.78) 42%,
+    rgba(8, 16, 30, 0.96) 100%
+  );
+}
+
+.hero-grid-pattern {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.hero-mesh {
+  background:
+    radial-gradient(
+      circle at 20% 18%,
+      rgba(255, 255, 255, 0.12),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 82% 25%,
+      rgba(255, 255, 255, 0.08),
+      transparent 22%
+    );
 }
 
 /* Soft navy blob decorations */
@@ -154,15 +184,15 @@ html {
   --secondary: oklch(0.95 0.02 250);
   --secondary-foreground: oklch(0.25 0.09 250);
   --muted: oklch(0.96 0.01 250);
-  --muted-foreground: oklch(0.50 0.06 250);
+  --muted-foreground: oklch(0.5 0.06 250);
   --accent: oklch(0.93 0.03 250);
   --accent-foreground: oklch(0.25 0.09 250);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.88 0.03 250);
-  --input: oklch(0.90 0.02 250);
+  --input: oklch(0.9 0.02 250);
   --ring: oklch(0.55 0.09 250);
   --chart-1: oklch(0.44 0.09 250);
-  --chart-2: oklch(0.58 0.10 250);
+  --chart-2: oklch(0.58 0.1 250);
   --chart-3: oklch(0.68 0.09 220);
   --chart-4: oklch(0.75 0.08 200);
   --chart-5: oklch(0.82 0.06 185);
@@ -180,11 +210,11 @@ html {
 .dark {
   --background: oklch(0.15 0.02 250);
   --foreground: oklch(0.95 0.01 250);
-  --card: oklch(0.20 0.03 250);
+  --card: oklch(0.2 0.03 250);
   --card-foreground: oklch(0.95 0.01 250);
-  --popover: oklch(0.20 0.03 250);
+  --popover: oklch(0.2 0.03 250);
   --popover-foreground: oklch(0.95 0.01 250);
-  --primary: oklch(0.72 0.10 250);
+  --primary: oklch(0.72 0.1 250);
   --primary-foreground: oklch(0.15 0.05 250);
   --secondary: oklch(0.26 0.04 250);
   --secondary-foreground: oklch(0.95 0.01 250);
@@ -193,17 +223,17 @@ html {
   --accent: oklch(0.26 0.04 250);
   --accent-foreground: oklch(0.95 0.01 250);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 12%);
+  --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.65 0.09 250);
-  --chart-1: oklch(0.72 0.10 250);
-  --chart-2: oklch(0.62 0.10 220);
+  --chart-1: oklch(0.72 0.1 250);
+  --chart-2: oklch(0.62 0.1 220);
   --chart-3: oklch(0.55 0.09 200);
   --chart-4: oklch(0.68 0.08 185);
   --chart-5: oklch(0.75 0.07 170);
   --sidebar: oklch(0.18 0.03 250);
   --sidebar-foreground: oklch(0.95 0.01 250);
-  --sidebar-primary: oklch(0.72 0.10 250);
+  --sidebar-primary: oklch(0.72 0.1 250);
   --sidebar-primary-foreground: oklch(0.15 0.05 250);
   --sidebar-accent: oklch(0.26 0.04 250);
   --sidebar-accent-foreground: oklch(0.95 0.01 250);

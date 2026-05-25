@@ -81,7 +81,7 @@ export function RoomCard({ room, className }: RoomCardProps) {
                 background: 'rgba(255,255,255,0.90)',
                 backdropFilter: 'blur(6px)',
                 color: 'var(--color-primary)',
-                border: '1px solid rgba(160,117,80,0.2)',
+                border: '1px solid rgba(46,111,170,0.25)',
               }}
             >
               {t('guestFavorite')}
@@ -93,14 +93,14 @@ export function RoomCard({ room, className }: RoomCardProps) {
             {room.allowHourly && (
               <span
                 className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium"
-                style={{ background: 'rgba(160,117,80,0.88)', color: '#fff', backdropFilter: 'blur(4px)' }}
+                style={{ background: 'rgba(26,74,122,0.88)', color: '#fff', backdropFilter: 'blur(4px)' }}
               >
                 <Clock className="w-2.5 h-2.5" />{t('hourly')}
               </span>
             )}
             <span
               className="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium"
-              style={{ background: 'rgba(90,138,107,0.88)', color: '#fff', backdropFilter: 'blur(4px)' }}
+              style={{ background: 'rgba(46,111,170,0.88)', color: '#fff', backdropFilter: 'blur(4px)' }}
             >
               <CalendarDays className="w-2.5 h-2.5" />{t('daily')}
             </span>
@@ -119,7 +119,7 @@ export function RoomCard({ room, className }: RoomCardProps) {
             </h3>
             {room.ratingAvg > 0 && (
               <div className="flex items-center gap-0.5 shrink-0 mt-0.5">
-                <Star className="w-3.5 h-3.5" style={{ fill: '#C9A882', color: '#C9A882' }} />
+                <Star className="w-3.5 h-3.5" style={{ fill: '#f59e0b', color: '#f59e0b' }} />
                 <span className="text-xs font-semibold" style={{ color: 'var(--color-text-primary)' }}>
                   {room.ratingAvg.toFixed(1)}
                 </span>
