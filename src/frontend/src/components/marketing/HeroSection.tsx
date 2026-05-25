@@ -5,6 +5,8 @@ import Image from "next/image";
 import { format, startOfDay } from "date-fns";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
+
+const HERO_BG_IMAGE = "/images/hero-bg.jpg";
 import {
   HeroFormField,
   HeroSelect,
@@ -24,8 +26,6 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import type { Branch } from "@/types";
-
-const HERO_BG_IMAGE = "/images/hero-bg.jpg";
 
 const TIME_OPTIONS = [
   "07:00",
@@ -98,50 +98,34 @@ export function HeroSection({ branches }: HeroSectionProps) {
   ];
 
   return (
-    <section className="relative overflow-hidden hero-mesh grain-overlay min-h-[min(100vh,920px)]">
-      {/* Background photo */}
+    <section className="relative overflow-hidden min-h-[560px] md:min-h-[620px] grain-overlay">
+      {/* Background image */}
       <div className="absolute inset-0 z-0" aria-hidden>
         <Image
           src={HERO_BG_IMAGE}
           alt=""
           fill
           priority
-          sizes="100vw"
+          quality={85}
           className="object-cover object-center"
-        />
-        <div className="absolute inset-0 hero-bg-overlay" />
-      </div>
-
-      <div
-        className="absolute inset-0 z-1 hero-grid-pattern pointer-events-none opacity-40"
-        aria-hidden
-      />
-      <div
-        className="absolute inset-0 pointer-events-none overflow-hidden"
-        aria-hidden
-      >
-        <div
-          className="warm-blob absolute -top-24 -right-20 w-130 h-130 rounded-full opacity-30"
-          style={{
-            background:
-              "radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.08) 42%, transparent 72%)",
-          }}
+          sizes="100vw"
         />
         <div
-          className="warm-blob-delay absolute -bottom-28 -left-24 w-105 h-105 rounded-full opacity-24"
+          className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle at 55% 55%, rgba(255, 255, 255, 0.18) 0%, transparent 68%)",
+              "linear-gradient(180deg, rgba(13,31,51,0.72) 0%, rgba(26,74,122,0.45) 28%, rgba(237,242,248,0.82) 58%, rgba(245,248,252,0.96) 100%)",
           }}
         />
+        <div className="absolute inset-0 hero-grid-pattern opacity-[0.15]" />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-28 pb-16 md:pt-32 md:pb-20 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pt-28 pb-14 md:pt-32 md:pb-20 text-center">
         <div
           className="hero-fade-up inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-6 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.14em] backdrop-blur-sm"
           style={{
-            background: "rgba(255, 255, 255, 0.16)",
-            border: "1px solid rgba(255, 255, 255, 0.35)",
+            background: "rgba(255, 255, 255, 0.12)",
+            border: "1px solid rgba(255, 255, 255, 0.28)",
             color: "#fff",
           }}
         >
@@ -156,12 +140,14 @@ export function HeroSection({ branches }: HeroSectionProps) {
           <span className="block">{t("heroTitle")}</span>
         </h1>
 
-        <p className="hero-fade-up-d2 text-base md:text-lg mb-10 leading-relaxed max-w-2xl mx-auto text-white/90">
+        <p
+          className="hero-fade-up-d2 text-base md:text-lg mb-8 leading-relaxed max-w-2xl mx-auto text-white/90 drop-shadow-sm"
+        >
           {t("heroSubtitle")}
         </p>
 
         <form
-          className="hero-fade-up-d3 hero-search-card rounded-[28px] overflow-hidden text-left max-w-4xl mx-auto border border-white/20 bg-white/85 shadow-[0_32px_80px_rgba(15,23,42,0.18)] backdrop-blur-xl"
+          className="hero-fade-up-d3 hero-search-card rounded-2xl overflow-hidden text-left max-w-3xl mx-auto shadow-xl"
           onSubmit={(e) => {
             e.preventDefault();
             handleSearch();
@@ -170,9 +156,9 @@ export function HeroSection({ branches }: HeroSectionProps) {
           {/* Booking type tabs */}
           <div className="p-3 pb-0">
             <div
-              className="flex gap-1 p-1 rounded-2xl"
+              className="flex gap-1 p-1 rounded-xl"
               role="tablist"
-              style={{ background: "rgba(255,255,255,0.92)" }}
+              style={{ background: "var(--color-surface-alt)" }}
             >
               {(["hourly", "daily"] as const).map((type) => (
                 <button
@@ -182,10 +168,10 @@ export function HeroSection({ branches }: HeroSectionProps) {
                   aria-selected={tab === type}
                   onClick={() => setTab(type)}
                   className={cn(
-                    "flex-1 flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 cursor-pointer",
+                    "flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 cursor-pointer",
                     tab === type
-                      ? "text-white shadow-lg"
-                      : "text-(--color-text-secondary) hover:text-(--color-text-primary)",
+                      ? "text-white shadow-md"
+                      : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]",
                   )}
                   style={
                     tab === type
@@ -193,7 +179,7 @@ export function HeroSection({ branches }: HeroSectionProps) {
                           background:
                             "linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-light) 100%)",
                         }
-                      : { background: "transparent" }
+                      : undefined
                   }
                 >
                   {type === "hourly" ? (
@@ -208,10 +194,10 @@ export function HeroSection({ branches }: HeroSectionProps) {
           </div>
 
           <div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-y border-t-0 my-3 mx-3 rounded-b-[28px] overflow-hidden"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-y my-3 mx-3 rounded-xl overflow-hidden"
             style={{
               borderColor: "var(--color-border)",
-              background: "rgba(255,255,255,0.88)",
+              background: "rgba(255,255,255,0.6)",
             }}
           >
             <HeroFormField
@@ -268,7 +254,7 @@ export function HeroSection({ branches }: HeroSectionProps) {
                     <button
                       type="button"
                       onClick={() => setNumHours((n) => Math.max(1, n - 1))}
-                      className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors cursor-pointer hover:bg-(--color-surface-alt)"
+                      className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors cursor-pointer hover:bg-[var(--color-surface-alt)]"
                       style={{ color: "var(--color-primary)" }}
                       aria-label={t("decreaseHours")}
                     >
@@ -283,7 +269,7 @@ export function HeroSection({ branches }: HeroSectionProps) {
                     <button
                       type="button"
                       onClick={() => setNumHours((n) => Math.min(24, n + 1))}
-                      className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors cursor-pointer hover:bg-(--color-surface-alt)"
+                      className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors cursor-pointer hover:bg-[var(--color-surface-alt)]"
                       style={{ color: "var(--color-primary)" }}
                       aria-label={t("increaseHours")}
                     >
@@ -313,11 +299,11 @@ export function HeroSection({ branches }: HeroSectionProps) {
           <div className="px-4 pb-4">
             <Button
               type="submit"
-              className="w-full h-14 font-semibold rounded-2xl gap-2 text-white border-0 cursor-pointer transition-all duration-200 hover:brightness-105 hover:shadow-xl"
+              className="w-full h-12 font-semibold rounded-xl gap-2 text-white border-0 cursor-pointer transition-all duration-200 hover:brightness-105 hover:shadow-lg"
               style={{
                 background:
                   "linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 45%, var(--color-primary-light) 100%)",
-                boxShadow: "0 10px 30px rgba(26, 74, 122, 0.25)",
+                boxShadow: "0 8px 28px rgba(26, 74, 122, 0.3)",
               }}
             >
               <Search className="w-4 h-4" />
@@ -327,14 +313,14 @@ export function HeroSection({ branches }: HeroSectionProps) {
         </form>
 
         {/* Stats */}
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl mx-auto">
+        <div className="mt-8 grid grid-cols-3 gap-2 sm:gap-3 max-w-md mx-auto">
           {stats.map(({ value, label, icon: Icon }) => (
             <div
               key={label}
-              className="flex flex-col items-center gap-0.5 px-4 py-4 rounded-3xl transition-shadow hover:shadow-lg"
+              className="flex flex-col items-center gap-0.5 px-2 sm:px-4 py-3 rounded-xl transition-shadow hover:shadow-md"
               style={{
-                background: "rgba(255,255,255,0.92)",
-                border: "1px solid rgba(255,255,255,0.8)",
+                background: "rgba(255,255,255,0.75)",
+                border: "1px solid var(--color-border)",
               }}
             >
               <Icon
@@ -356,6 +342,25 @@ export function HeroSection({ branches }: HeroSectionProps) {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Bottom wave divider */}
+      <div
+        className="absolute bottom-0 left-0 right-0 pointer-events-none"
+        aria-hidden
+      >
+        <svg
+          viewBox="0 0 1440 48"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-8 md:h-12"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0 48L60 40C120 32 240 16 360 10.7C480 5.3 600 10.7 720 16C840 21.3 960 26.7 1080 26.7C1200 26.7 1320 21.3 1380 18.7L1440 16V48H0Z"
+            fill="var(--color-surface)"
+          />
+        </svg>
       </div>
     </section>
   );

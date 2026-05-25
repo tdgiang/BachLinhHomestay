@@ -2,33 +2,33 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* Ocean Blue Homestay — Korean Cozy Design Tokens */
+/* Bach Linh Homestay — Deep Navy Blue Design Tokens */
 :root {
-  /* Bach Linh Homestay — Deep Navy Blue Design Tokens */
-  --color-primary: #1a4a7a;
-  --color-primary-dark: #0f2d50;
-  --color-primary-light: #2e6faa;
+  /* Brand — Deep Navy Blue */
+  --color-primary: #1A4A7A;
+  --color-primary-dark: #0F2D50;
+  --color-primary-light: #2E6FAA;
 
   /* Hero — Light Blue-White */
-  --color-hero-bg: #f0f5fa;
+  --color-hero-bg: #F0F5FA;
   --color-hero-card: rgba(255, 255, 255, 0.92);
-  --color-hero-border: #c5d5e8;
+  --color-hero-border: #C5D5E8;
 
   /* Surface */
   --color-card-bg: #ffffff;
-  --color-surface: #f5f8fc;
-  --color-surface-alt: #edf2f8;
-  --color-border: #c5d5e8;
+  --color-surface: #F5F8FC;
+  --color-surface-alt: #EDF2F8;
+  --color-border: #C5D5E8;
 
   /* Text */
-  --color-text-primary: #0d1f33;
-  --color-text-secondary: #3d5a78;
-  --color-text-muted: #7a9bb5;
+  --color-text-primary: #0D1F33;
+  --color-text-secondary: #3D5A78;
+  --color-text-muted: #7A9BB5;
 
   /* Status */
-  --color-success: #2e7d52;
-  --color-danger: #c0392b;
-  --color-warning: #d4860a;
+  --color-success: #2E7D52;
+  --color-danger: #C0392B;
+  --color-warning: #D4860A;
 
   /* Radius */
   --radius-card: 20px;
@@ -39,7 +39,7 @@
   /* Shadow — cool blue-tinted soft */
   --shadow-sm: 0 1px 4px rgba(26, 74, 122, 0.06);
   --shadow-md: 0 4px 16px rgba(26, 74, 122, 0.08);
-  --shadow-lg: 0 8px 32px rgba(26, 74, 122, 0.1);
+  --shadow-lg: 0 8px 32px rgba(26, 74, 122, 0.10);
   --shadow-hover: 0 12px 40px rgba(26, 74, 122, 0.14);
 
   /* Font */
@@ -76,36 +76,6 @@ html {
   border-radius: inherit;
 }
 
-.hero-bg-overlay {
-  background: radial-gradient(
-    circle at top,
-    rgba(24, 59, 103, 0.48),
-    rgba(10, 22, 42, 0.78) 42%,
-    rgba(8, 16, 30, 0.96) 100%
-  );
-}
-
-.hero-grid-pattern {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-  background-size: 42px 42px;
-}
-
-.hero-mesh {
-  background:
-    radial-gradient(
-      circle at 20% 18%,
-      rgba(255, 255, 255, 0.12),
-      transparent 24%
-    ),
-    radial-gradient(
-      circle at 82% 25%,
-      rgba(255, 255, 255, 0.08),
-      transparent 22%
-    );
-}
-
 /* Soft navy blob decorations */
 @keyframes blob-drift {
   0%,
@@ -124,6 +94,56 @@ html {
 }
 .warm-blob-delay {
   animation: blob-drift 22s ease-in-out infinite 3s;
+}
+
+/* Hero section */
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-fade-up {
+  animation: hero-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-fade-up-d1 {
+  animation: hero-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+.hero-fade-up-d2 {
+  animation: hero-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both;
+}
+.hero-fade-up-d3 {
+  animation: hero-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
+}
+
+.hero-mesh {
+  background-color: var(--color-hero-bg);
+  background-image:
+    radial-gradient(ellipse 85% 65% at 5% 15%, rgba(46, 111, 170, 0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 55% at 95% 85%, rgba(26, 74, 122, 0.12) 0%, transparent 50%),
+    linear-gradient(165deg, #eef4fa 0%, #e4edf7 40%, #f5f8fc 100%);
+}
+
+.hero-grid-pattern {
+  background-image:
+    linear-gradient(rgba(26, 74, 122, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 74, 122, 0.018) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 8%, transparent 78%);
+}
+
+.hero-search-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(197, 213, 232, 0.9);
+  box-shadow:
+    0 4px 6px rgba(26, 74, 122, 0.06),
+    0 20px 50px rgba(26, 74, 122, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -184,15 +204,15 @@ html {
   --secondary: oklch(0.95 0.02 250);
   --secondary-foreground: oklch(0.25 0.09 250);
   --muted: oklch(0.96 0.01 250);
-  --muted-foreground: oklch(0.5 0.06 250);
+  --muted-foreground: oklch(0.50 0.06 250);
   --accent: oklch(0.93 0.03 250);
   --accent-foreground: oklch(0.25 0.09 250);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.88 0.03 250);
-  --input: oklch(0.9 0.02 250);
+  --input: oklch(0.90 0.02 250);
   --ring: oklch(0.55 0.09 250);
   --chart-1: oklch(0.44 0.09 250);
-  --chart-2: oklch(0.58 0.1 250);
+  --chart-2: oklch(0.58 0.10 250);
   --chart-3: oklch(0.68 0.09 220);
   --chart-4: oklch(0.75 0.08 200);
   --chart-5: oklch(0.82 0.06 185);
@@ -210,11 +230,11 @@ html {
 .dark {
   --background: oklch(0.15 0.02 250);
   --foreground: oklch(0.95 0.01 250);
-  --card: oklch(0.2 0.03 250);
+  --card: oklch(0.20 0.03 250);
   --card-foreground: oklch(0.95 0.01 250);
-  --popover: oklch(0.2 0.03 250);
+  --popover: oklch(0.20 0.03 250);
   --popover-foreground: oklch(0.95 0.01 250);
-  --primary: oklch(0.72 0.1 250);
+  --primary: oklch(0.72 0.10 250);
   --primary-foreground: oklch(0.15 0.05 250);
   --secondary: oklch(0.26 0.04 250);
   --secondary-foreground: oklch(0.95 0.01 250);
@@ -223,17 +243,17 @@ html {
   --accent: oklch(0.26 0.04 250);
   --accent-foreground: oklch(0.95 0.01 250);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
+  --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.65 0.09 250);
-  --chart-1: oklch(0.72 0.1 250);
-  --chart-2: oklch(0.62 0.1 220);
+  --chart-1: oklch(0.72 0.10 250);
+  --chart-2: oklch(0.62 0.10 220);
   --chart-3: oklch(0.55 0.09 200);
   --chart-4: oklch(0.68 0.08 185);
   --chart-5: oklch(0.75 0.07 170);
   --sidebar: oklch(0.18 0.03 250);
   --sidebar-foreground: oklch(0.95 0.01 250);
-  --sidebar-primary: oklch(0.72 0.1 250);
+  --sidebar-primary: oklch(0.72 0.10 250);
   --sidebar-primary-foreground: oklch(0.15 0.05 250);
   --sidebar-accent: oklch(0.26 0.04 250);
   --sidebar-accent-foreground: oklch(0.95 0.01 250);
