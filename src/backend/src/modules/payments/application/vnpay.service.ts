@@ -52,7 +52,8 @@ export class VnpayService {
 
   verifyCallback(query: Record<string, string>): { valid: boolean; responseCode: string } {
     const hashSecret = this.config.get<string>('VNPAY_HASH_SECRET', '');
-    const { vnp_SecureHash, ...rest } = query;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { vnp_SecureHash, vnp_SecureHashType, ...rest } = query;
 
     const sorted = Object.keys(rest)
       .filter((k) => k.startsWith('vnp_'))

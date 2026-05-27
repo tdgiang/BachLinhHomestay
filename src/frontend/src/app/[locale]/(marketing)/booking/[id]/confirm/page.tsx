@@ -29,7 +29,9 @@ export default function ConfirmPage({ params }: { params: Promise<{ id: string }
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    apiClient.getBooking(id).then((b) => { setBooking(b); setLoading(false); });
+    apiClient.getBooking(id)
+      .then((b) => { setBooking(b); setLoading(false); })
+      .catch(() => setLoading(false));
   }, [id]);
 
   const handleConfirm = async () => {

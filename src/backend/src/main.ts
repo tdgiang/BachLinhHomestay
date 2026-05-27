@@ -1,7 +1,10 @@
 import { NestFactory, HttpAdapterHost } from '@nestjs/core';
 import { ValidationPipe, Logger } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
+import * as path from 'path';
+import * as fs from 'fs';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { PrismaClientExceptionFilter } from './common/filters/prisma-client-exception.filter';
@@ -26,11 +29,16 @@ async function bootstrap() {
     ],
   });
 
-  const app = await NestFactory.create(AppModule, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger,
   });
 
   const httpAdapterHost = app.get(HttpAdapterHost);
+
+  // Serve uploaded images as static files
+  const uploadsDir = path.join(process.cwd(), 'uploads');
+  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+  app.useStaticAssets(uploadsDir, { prefix: '/uploads' });
 
   // Security: Enable CORS
   app.enableCors({

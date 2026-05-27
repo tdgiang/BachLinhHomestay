@@ -1,5 +1,5 @@
 import {
-  Injectable, NotFoundException, Inject, Logger,
+  Injectable, NotFoundException, BadRequestException, Inject, Logger,
 } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import type { Cache } from 'cache-manager';
@@ -86,7 +86,14 @@ export class BranchesService {
 
   async remove(id: string) {
     await this.findOne(id);
-    await this.repository.remove({ id });
+    try {
+      await this.repository.remove({ id });
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2003') {
+        throw new BadRequestException('Không thể xóa chi nhánh vì vẫn còn phòng liên kết. Hãy xóa hoặc chuyển phòng trước.');
+      }
+      throw err;
+    }
     await this.invalidateBranchCache(id);
     this.logger.log(`Branch deleted: ${id}`);
     return { id };

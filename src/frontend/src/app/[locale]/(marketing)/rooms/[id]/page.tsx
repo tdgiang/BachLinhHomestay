@@ -1,17 +1,24 @@
-import { notFound } from 'next/navigation';
-import { setRequestLocale, getTranslations } from 'next-intl/server';
-import type { Metadata } from 'next';
-import { Users, Layers, Key, Clock, CalendarDays, ShieldCheck } from 'lucide-react';
-import { ImageCarousel } from '@/components/shared/ImageCarousel';
-import { GoogleMapsEmbed } from '@/components/shared/GoogleMapsEmbed';
-import { PriceDisplay } from '@/components/shared/PriceDisplay';
-import { RatingStars } from '@/components/shared/RatingStars';
-import { AmenitiesSection } from '@/components/marketing/AmenitiesSection';
-import { DescriptionSection } from '@/components/marketing/DescriptionSection';
-import { ReviewsSection } from '@/components/marketing/ReviewsSection';
-import { TimeSlotsSection } from '@/components/marketing/TimeSlotsSection';
-import { StickyBookingBar } from '@/components/marketing/StickyBookingBar';
-import { apiClient } from '@/lib/api-client';
+import { notFound } from "next/navigation";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+import {
+  Users,
+  Layers,
+  Key,
+  Clock,
+  CalendarDays,
+  ShieldCheck,
+} from "lucide-react";
+import { ImageCarousel } from "@/components/shared/ImageCarousel";
+import { GoogleMapsEmbed } from "@/components/shared/GoogleMapsEmbed";
+import { PriceDisplay } from "@/components/shared/PriceDisplay";
+import { RatingStars } from "@/components/shared/RatingStars";
+import { AmenitiesSection } from "@/components/marketing/AmenitiesSection";
+import { DescriptionSection } from "@/components/marketing/DescriptionSection";
+import { ReviewsSection } from "@/components/marketing/ReviewsSection";
+import { TimeSlotsSection } from "@/components/marketing/TimeSlotsSection";
+import { StickyBookingBar } from "@/components/marketing/StickyBookingBar";
+import { apiClient } from "@/lib/api-client";
 
 // ISR: revalidate room detail every hour
 export const revalidate = 3600;
@@ -34,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     };
   } catch {
-    return { title: 'Phòng không tìm thấy' };
+    return { title: "Phòng không tìm thấy" };
   }
 }
 
@@ -44,8 +51,8 @@ export default async function RoomDetailPage({ params }: Props) {
 
   const [room, t, tr] = await Promise.all([
     apiClient.getRoom(id).catch(() => null),
-    getTranslations('room'),
-    getTranslations('room'),
+    getTranslations("room"),
+    getTranslations("room"),
   ]);
 
   if (!room) notFound();
@@ -56,37 +63,41 @@ export default async function RoomDetailPage({ params }: Props) {
   const reviewsRes = await apiClient.getReviews(id, 1);
 
   const branch = room.branch;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
   const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'LodgingBusiness',
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
     name: room.name,
     description: room.description ?? undefined,
     image: images[0]?.url,
-    priceRange: `${room.pricePerHour.toLocaleString('vi-VN')}₫/giờ`,
-    aggregateRating: room.ratingCount > 0
-      ? {
-          '@type': 'AggregateRating',
-          ratingValue: room.ratingAvg.toFixed(1),
-          reviewCount: room.ratingCount,
-          bestRating: '5',
-          worstRating: '1',
-        }
-      : undefined,
+    priceRange: `${room.pricePerHour.toLocaleString("vi-VN")}₫/giờ`,
+    aggregateRating:
+      room.ratingCount > 0
+        ? {
+            "@type": "AggregateRating",
+            ratingValue: room.ratingAvg.toFixed(1),
+            reviewCount: room.ratingCount,
+            bestRating: "5",
+            worstRating: "1",
+          }
+        : undefined,
     address: branch
       ? {
-          '@type': 'PostalAddress',
+          "@type": "PostalAddress",
           streetAddress: branch.address,
           addressLocality: branch.city,
-          addressCountry: 'VN',
+          addressCountry: "VN",
         }
       : undefined,
     url: `${siteUrl}/${locale}/rooms/${id}`,
   };
 
   return (
-    <div className="pt-16 pb-24 lg:pb-8 min-h-screen" style={{ background: 'var(--color-surface)' }}>
+    <div
+      className="pt-16 pb-24 lg:pb-8 min-h-screen"
+      style={{ background: "var(--color-surface)" }}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -110,22 +121,42 @@ export default async function RoomDetailPage({ params }: Props) {
           <div className="space-y-8">
             {/* ── 2. Title + specs ── */}
             <div>
-              <h1 className="text-2xl font-bold leading-tight mb-2" style={{ color: 'var(--color-text-primary)' }}>
+              <h1
+                className="text-2xl font-bold leading-tight mb-2"
+                style={{ color: "var(--color-text-primary)" }}
+              >
                 {room.name}
               </h1>
               <div className="flex items-center gap-3 flex-wrap">
                 <RatingStars rating={room.ratingAvg} count={room.ratingCount} />
                 {branch && (
-                  <span className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+                  <span
+                    className="text-sm"
+                    style={{ color: "var(--color-text-secondary)" }}
+                  >
                     {branch.name} · {branch.city}
                   </span>
                 )}
               </div>
               <div className="flex items-center gap-4 mt-3 flex-wrap">
-                <Spec icon={<Users className="w-4 h-4" />} label={t('capacity', { count: room.capacity })} />
-                {room.floor && <Spec icon={<Layers className="w-4 h-4" />} label={t('floor', { floor: room.floor })} />}
-                <Spec icon={<Clock className="w-4 h-4" />} label={`Check-in ${room.checkInTime}`} />
-                <Spec icon={<CalendarDays className="w-4 h-4" />} label={`Check-out ${room.checkOutTime}`} />
+                <Spec
+                  icon={<Users className="w-4 h-4" />}
+                  label={t("capacity", { count: room.capacity })}
+                />
+                {room.floor && (
+                  <Spec
+                    icon={<Layers className="w-4 h-4" />}
+                    label={t("floor", { floor: room.floor })}
+                  />
+                )}
+                <Spec
+                  icon={<Clock className="w-4 h-4" />}
+                  label={`Check-in ${room.checkInTime}`}
+                />
+                <Spec
+                  icon={<CalendarDays className="w-4 h-4" />}
+                  label={`Check-out ${room.checkOutTime}`}
+                />
               </div>
             </div>
 
@@ -135,16 +166,25 @@ export default async function RoomDetailPage({ params }: Props) {
             <div className="flex items-center gap-4">
               <div
                 className="w-12 h-12 rounded-full flex items-center justify-center text-white text-lg font-bold shrink-0"
-                style={{ background: 'var(--color-primary)' }}
+                style={{ background: "var(--color-primary)" }}
               >
                 O
               </div>
               <div>
-                <p className="font-semibold text-base" style={{ color: 'var(--color-text-primary)' }}>
+                <p
+                  className="font-semibold text-base"
+                  style={{ color: "var(--color-text-primary)" }}
+                >
                   Host: Ocean Blue Homestay
                 </p>
-                <p className="text-sm flex items-center gap-1" style={{ color: 'var(--color-text-secondary)' }}>
-                  <ShieldCheck className="w-3.5 h-3.5" style={{ color: 'var(--color-success)' }} />
+                <p
+                  className="text-sm flex items-center gap-1"
+                  style={{ color: "var(--color-text-secondary)" }}
+                >
+                  <ShieldCheck
+                    className="w-3.5 h-3.5"
+                    style={{ color: "var(--color-success)" }}
+                  />
                   Superhost · Kinh nghiệm 5+ năm
                 </p>
               </div>
@@ -155,21 +195,36 @@ export default async function RoomDetailPage({ params }: Props) {
             {/* ── 4. Highlights ── */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <HighlightCard
-                icon={<Key className="w-6 h-6" style={{ color: 'var(--color-primary)' }} />}
-                title={t('selfCheckin')}
-                desc={t('selfCheckinDesc')}
+                icon={
+                  <Key
+                    className="w-6 h-6"
+                    style={{ color: "var(--color-primary)" }}
+                  />
+                }
+                title={t("selfCheckin")}
+                desc={t("selfCheckinDesc")}
               />
               {room.allowHourly && (
                 <HighlightCard
-                  icon={<Clock className="w-6 h-6" style={{ color: 'var(--color-primary)' }} />}
-                  title={t('hourlyBooking')}
-                  desc={t('hourlyBookingDesc')}
+                  icon={
+                    <Clock
+                      className="w-6 h-6"
+                      style={{ color: "var(--color-primary)" }}
+                    />
+                  }
+                  title={t("hourlyBooking")}
+                  desc={t("hourlyBookingDesc")}
                 />
               )}
               <HighlightCard
-                icon={<CalendarDays className="w-6 h-6" style={{ color: 'var(--color-primary)' }} />}
-                title={t('checkTime')}
-                desc={`${t('checkinTime', { time: room.checkInTime })} · ${t('checkoutTime', { time: room.checkOutTime })}`}
+                icon={
+                  <CalendarDays
+                    className="w-6 h-6"
+                    style={{ color: "var(--color-primary)" }}
+                  />
+                }
+                title={t("checkTime")}
+                desc={`${t("checkinTime", { time: room.checkInTime })} · ${t("checkoutTime", { time: room.checkOutTime })}`}
               />
             </div>
 
@@ -195,10 +250,16 @@ export default async function RoomDetailPage({ params }: Props) {
             {branch?.latitude && branch?.longitude && (
               <>
                 <div>
-                  <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>
-                    {t('location')}
+                  <h2
+                    className="text-xl font-semibold mb-4"
+                    style={{ color: "var(--color-text-primary)" }}
+                  >
+                    {t("location")}
                   </h2>
-                  <p className="text-sm mb-3" style={{ color: 'var(--color-text-secondary)' }}>
+                  <p
+                    className="text-sm mb-3"
+                    style={{ color: "var(--color-text-secondary)" }}
+                  >
                     {branch.address}
                   </p>
                   <GoogleMapsEmbed
@@ -215,19 +276,30 @@ export default async function RoomDetailPage({ params }: Props) {
             {cancellationPolicies.length > 0 && (
               <>
                 <div>
-                  <h2 className="text-xl font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>
-                    {t('cancellationPolicy')}
+                  <h2
+                    className="text-xl font-semibold mb-4"
+                    style={{ color: "var(--color-text-primary)" }}
+                  >
+                    {t("cancellationPolicy")}
                   </h2>
                   <div className="space-y-2">
                     {cancellationPolicies
                       .sort((a, b) => b.daysBefore - a.daysBefore)
                       .map((policy) => (
-                        <div key={policy.id} className="flex items-start gap-3 text-sm">
+                        <div
+                          key={policy.id}
+                          className="flex items-start gap-3 text-sm"
+                        >
                           <ShieldCheck
                             className="w-4 h-4 mt-0.5 shrink-0"
-                            style={{ color: policy.refundPercentage > 0 ? 'var(--color-success)' : 'var(--color-danger)' }}
+                            style={{
+                              color:
+                                policy.refundPercentage > 0
+                                  ? "var(--color-success)"
+                                  : "var(--color-danger)",
+                            }}
                           />
-                          <p style={{ color: 'var(--color-text-primary)' }}>
+                          <p style={{ color: "var(--color-text-primary)" }}>
                             {policy.description}
                           </p>
                         </div>
@@ -255,7 +327,10 @@ export default async function RoomDetailPage({ params }: Props) {
           <aside className="hidden lg:block">
             <div
               className="sticky top-24 rounded-2xl border p-6 shadow-sm"
-              style={{ borderColor: 'var(--color-border)', background: 'white' }}
+              style={{
+                borderColor: "var(--color-border)",
+                background: "white",
+              }}
             >
               <div className="mb-4">
                 <div className="flex items-baseline gap-2 flex-wrap mb-1">
@@ -263,7 +338,7 @@ export default async function RoomDetailPage({ params }: Props) {
                     <PriceDisplay
                       price={room.pricePerHour}
                       originalPrice={room.pricePerHourOriginal}
-                      suffix={t('perHour')}
+                      suffix={t("perHour")}
                       size="md"
                     />
                   )}
@@ -271,27 +346,37 @@ export default async function RoomDetailPage({ params }: Props) {
                 <PriceDisplay
                   price={room.pricePerDay}
                   originalPrice={room.pricePerDayOriginal}
-                  suffix={t('perDay')}
+                  suffix={t("perDay")}
                   size="md"
                 />
-                <RatingStars rating={room.ratingAvg} count={room.ratingCount} className="mt-2" />
+                <RatingStars
+                  rating={room.ratingAvg}
+                  count={room.ratingCount}
+                  className="mt-2"
+                />
               </div>
 
               <a
                 href={`/booking/${room.id}`}
                 className="block w-full text-center py-3 rounded-xl text-white font-semibold transition-opacity hover:opacity-90"
-                style={{ background: 'var(--color-primary)' }}
+                style={{ background: "var(--color-primary)" }}
               >
-                {t('bookNow')}
+                {t("bookNow")}
               </a>
 
-              <p className="text-xs text-center mt-3" style={{ color: 'var(--color-text-secondary)' }}>
+              <p
+                className="text-xs text-center mt-3"
+                style={{ color: "var(--color-text-secondary)" }}
+              >
                 Chưa bị tính phí
               </p>
 
               {room.allowHourly && room.minHours > 0 && (
-                <p className="text-xs text-center mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-                  {t('minHours', { hours: room.minHours })}
+                <p
+                  className="text-xs text-center mt-1"
+                  style={{ color: "var(--color-text-secondary)" }}
+                >
+                  {t("minHours", { hours: room.minHours })}
                 </p>
               )}
             </div>
@@ -313,29 +398,45 @@ export default async function RoomDetailPage({ params }: Props) {
     </div>
   );
 }
-
 function Divider() {
-  return <hr style={{ borderColor: 'var(--color-border)' }} />;
+  return <hr style={{ borderColor: "var(--color-border)" }} />;
 }
 
 function Spec({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <span className="flex items-center gap-1.5 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
+    <span
+      className="flex items-center gap-1.5 text-sm"
+      style={{ color: "var(--color-text-secondary)" }}
+    >
       {icon}
       {label}
     </span>
   );
 }
 
-function HighlightCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
+function HighlightCard({
+  icon,
+  title,
+  desc,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) {
   return (
     <div className="flex gap-3">
       <div className="shrink-0 mt-0.5">{icon}</div>
       <div>
-        <p className="text-sm font-semibold" style={{ color: 'var(--color-text-primary)' }}>
+        <p
+          className="text-sm font-semibold"
+          style={{ color: "var(--color-text-primary)" }}
+        >
           {title}
         </p>
-        <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-secondary)' }}>
+        <p
+          className="text-xs mt-0.5"
+          style={{ color: "var(--color-text-secondary)" }}
+        >
           {desc}
         </p>
       </div>

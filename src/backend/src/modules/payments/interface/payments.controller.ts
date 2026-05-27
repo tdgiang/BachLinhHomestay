@@ -2,7 +2,7 @@ import {
   Controller, Post, Get, Body, Query, Req, Res, HttpCode, HttpStatus,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { PaymentsService } from '../application/payments.service';
 import { CreateVnpayPaymentDto } from './dto/create-vnpay-payment.dto';
 import { Public } from '../../../common/decorators/public.decorator';
@@ -13,7 +13,7 @@ export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
   @Post('vnpay/create')
-  @ApiBearerAuth()
+  @Public()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Tạo URL thanh toán VNPay' })
   @ApiResponse({ status: 200, description: '{ paymentUrl }' })

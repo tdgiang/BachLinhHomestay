@@ -8,6 +8,8 @@ import { RoomsRepository } from '../infrastructure/rooms.repository';
 import { CreateRoomDto } from '../interface/dto/create-room.dto';
 import { UpdateRoomDto } from '../interface/dto/update-room.dto';
 import { RoomQueryDto } from '../interface/dto/room-query.dto';
+import { ImageService } from '../../image/application/image.service';
+import { PrismaService } from '../../../prisma/prisma.service';
 
 @Injectable()
 export class RoomsService {
@@ -17,6 +19,8 @@ export class RoomsService {
   constructor(
     private readonly repository: RoomsRepository,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly imageService: ImageService,
+    private readonly prisma: PrismaService,
   ) {}
 
   async create(dto: CreateRoomDto) {
@@ -146,6 +150,51 @@ export class RoomsService {
     await this.findOne(id);
     const dayOfWeek = new Date(date).getDay(); // 0=Sun, 1=Mon, ...
     return this.repository.getTimeSlotsForDate(id, dayOfWeek);
+  }
+
+  async addImage(roomId: string, file: Express.Multer.File) {
+    await this.findOne(roomId);
+    const { url } = await this.imageService.upload(file, 'rooms');
+    const existing = await this.prisma.roomImage.findMany({ where: { roomId } });
+    const image = await this.prisma.roomImage.create({
+      data: {
+        roomId,
+        url,
+        sortOrder: existing.length,
+        isCover: existing.length === 0, // first image is cover by default
+      },
+    });
+    await this.invalidateRoomCache(roomId);
+    return image;
+  }
+
+  async deleteImage(roomId: string, imageId: string) {
+    const image = await this.prisma.roomImage.findFirst({ where: { id: imageId, roomId } });
+    if (!image) throw new NotFoundException('Không tìm thấy ảnh');
+    // Try to delete from storage (best-effort)
+    try {
+      const key = image.url.split(`homestay-images/`)[1];
+      if (key) await this.imageService.delete(key);
+    } catch { /* ignore storage error */ }
+    await this.prisma.roomImage.delete({ where: { id: imageId } });
+    // If deleted image was cover, make the first remaining image cover
+    if (image.isCover) {
+      const first = await this.prisma.roomImage.findFirst({
+        where: { roomId }, orderBy: { sortOrder: 'asc' },
+      });
+      if (first) await this.prisma.roomImage.update({ where: { id: first.id }, data: { isCover: true } });
+    }
+    await this.invalidateRoomCache(roomId);
+  }
+
+  async setCoverImage(roomId: string, imageId: string) {
+    await this.findOne(roomId);
+    const image = await this.prisma.roomImage.findFirst({ where: { id: imageId, roomId } });
+    if (!image) throw new NotFoundException('Không tìm thấy ảnh');
+    await this.prisma.roomImage.updateMany({ where: { roomId }, data: { isCover: false } });
+    const updated = await this.prisma.roomImage.update({ where: { id: imageId }, data: { isCover: true } });
+    await this.invalidateRoomCache(roomId);
+    return updated;
   }
 
   private async invalidateRoomCache(id: string) {

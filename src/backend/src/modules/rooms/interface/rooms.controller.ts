@@ -22,7 +22,6 @@ export class RoomsController {
   @Public()
   @Get()
   @ApiOperation({ summary: 'Danh sách phòng (hỗ trợ lọc, phân trang)' })
-  @ApiResponse({ status: 200 })
   async findAll(@Query() query: RoomQueryDto) {
     const data = await this.roomsService.findAll(query);
     return { message: 'Lấy danh sách phòng thành công', data };
@@ -30,10 +29,8 @@ export class RoomsController {
 
   @Public()
   @Get(':id')
-  @ApiOperation({ summary: 'Chi tiết phòng (với amenities, time slots, policies)' })
+  @ApiOperation({ summary: 'Chi tiết phòng' })
   @ApiParam({ name: 'id' })
-  @ApiResponse({ status: 200 })
-  @ApiResponse({ status: 404 })
   async findOne(@Param('id') id: string) {
     const data = await this.roomsService.findOne(id);
     return { message: 'Lấy thông tin phòng thành công', data };
@@ -41,7 +38,6 @@ export class RoomsController {
 
   @Public()
   @Get(':id/availability')
-  @ApiOperation({ summary: 'Kiểm tra phòng có trống trong khoảng thời gian' })
   @ApiParam({ name: 'id' })
   async availability(
     @Param('id') id: string,
@@ -54,12 +50,8 @@ export class RoomsController {
 
   @Public()
   @Get(':id/time-slots')
-  @ApiOperation({ summary: 'Lấy khung giờ gợi ý theo ngày' })
   @ApiParam({ name: 'id' })
-  async timeSlots(
-    @Param('id') id: string,
-    @Query('date') date: string,
-  ) {
+  async timeSlots(@Param('id') id: string, @Query('date') date: string) {
     const data = await this.roomsService.getTimeSlots(id, date);
     return { message: 'Lấy time slots thành công', data };
   }
@@ -76,7 +68,6 @@ export class RoomsController {
   @Patch(':id')
   @Roles(UserRole.admin)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Cập nhật phòng (Admin)' })
   @ApiParam({ name: 'id' })
   async update(@Param('id') id: string, @Body() dto: UpdateRoomDto) {
     const data = await this.roomsService.update(id, dto);
@@ -87,12 +78,13 @@ export class RoomsController {
   @Roles(UserRole.admin)
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Xóa mềm phòng (Admin)' })
   @ApiParam({ name: 'id' })
   async remove(@Param('id') id: string) {
     const data = await this.roomsService.remove(id);
     return { message: 'Xóa phòng thành công', data };
   }
+
+  // ── Image endpoints ─────────────────────────────────────────────────────
 
   @Post(':id/images')
   @Roles(UserRole.admin)
@@ -105,10 +97,28 @@ export class RoomsController {
     @Param('id') id: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    // Image service will be wired in Phase 5.4
-    return {
-      message: 'Upload ảnh thành công',
-      data: { url: `/uploads/${file?.originalname ?? 'image'}` },
-    };
+    const data = await this.roomsService.addImage(id, file);
+    return { message: 'Upload ảnh thành công', data };
+  }
+
+  @Delete(':id/images/:imageId')
+  @Roles(UserRole.admin)
+  @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'id' })
+  @ApiParam({ name: 'imageId' })
+  async deleteImage(@Param('id') id: string, @Param('imageId') imageId: string) {
+    await this.roomsService.deleteImage(id, imageId);
+    return { message: 'Xóa ảnh thành công', data: null };
+  }
+
+  @Patch(':id/images/:imageId/cover')
+  @Roles(UserRole.admin)
+  @ApiBearerAuth()
+  @ApiParam({ name: 'id' })
+  @ApiParam({ name: 'imageId' })
+  async setCover(@Param('id') id: string, @Param('imageId') imageId: string) {
+    const data = await this.roomsService.setCoverImage(id, imageId);
+    return { message: 'Đặt ảnh bìa thành công', data };
   }
 }

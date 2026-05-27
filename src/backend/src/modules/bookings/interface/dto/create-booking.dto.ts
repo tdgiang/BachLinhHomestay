@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
-  IsDateString, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, Min,
+  IsDateString, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, Matches, Min, MinLength,
 } from 'class-validator';
 import { BookingType, PaymentMethod } from '@prisma/client';
 
@@ -36,12 +36,12 @@ export class CreateBookingDto {
 
   @ApiProperty({ example: 'Nguyễn Văn An' })
   @IsString()
-  @IsNotEmpty()
+  @MinLength(2, { message: 'Họ tên tối thiểu 2 ký tự' })
   guestName: string;
 
   @ApiProperty({ example: '0901234567' })
   @IsString()
-  @IsNotEmpty()
+  @Matches(/^0\d{9}$/, { message: 'Số điện thoại không hợp lệ (VD: 0901234567)' })
   guestPhone: string;
 
   @ApiPropertyOptional({ example: 'guest@email.com' })

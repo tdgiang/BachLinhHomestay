@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useTranslations } from 'next-intl';
-import { useRouter } from '@/i18n/navigation';
-import { Button } from '@/components/ui/button';
-import { PriceDisplay } from '@/components/shared/PriceDisplay';
-import { RatingStars } from '@/components/shared/RatingStars';
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
+import { PriceDisplay } from "@/components/shared/PriceDisplay";
+import { RatingStars } from "@/components/shared/RatingStars";
 
 interface StickyBookingBarProps {
   roomId: string;
@@ -27,15 +27,15 @@ export function StickyBookingBar({
   ratingAvg,
   ratingCount,
 }: StickyBookingBarProps) {
-  const t = useTranslations('room');
+  const t = useTranslations("room");
   const router = useRouter();
 
   return (
     <div
       className="fixed bottom-0 inset-x-0 z-40 border-t px-4 py-3 flex items-center justify-between gap-4 backdrop-blur-sm lg:hidden"
       style={{
-        background: 'rgba(255,255,255,0.96)',
-        borderColor: 'var(--color-border)',
+        background: "rgba(255,255,255,0.96)",
+        borderColor: "var(--color-border)",
       }}
     >
       <div>
@@ -44,14 +44,14 @@ export function StickyBookingBar({
             <PriceDisplay
               price={pricePerHour}
               originalPrice={pricePerHourOriginal}
-              suffix={t('perHour')}
+              suffix={t("perHour")}
               size="sm"
             />
           )}
           <PriceDisplay
             price={pricePerDay}
             originalPrice={pricePerDayOriginal}
-            suffix={t('perDay')}
+            suffix={t("perDay")}
             size="sm"
           />
         </div>
@@ -60,9 +60,9 @@ export function StickyBookingBar({
       <Button
         onClick={() => router.push(`/booking/${roomId}`)}
         className="text-white font-semibold shrink-0"
-        style={{ background: 'var(--color-primary)' }}
+        style={{ background: "var(--color-primary)" }}
       >
-        {t('bookNow')}
+        {t("bookNow")}
       </Button>
     </div>
   );

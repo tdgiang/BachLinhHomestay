@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsIn, IsOptional, IsString } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import { PaginationDto } from '../../../../common/dto/pagination.dto';
 
 const BRANCH_SORT_FIELDS = ['createdAt', 'updatedAt', 'name', 'city'] as const;
@@ -17,6 +17,11 @@ export class BranchQueryDto extends PaginationDto {
   @ApiPropertyOptional()
   @IsBoolean()
   @IsOptional()
-  @Type(() => Boolean)
+  @Transform(({ obj, key }) => {
+    const raw = obj[key];
+    if (raw === 'true' || raw === true) return true;
+    if (raw === 'false' || raw === false) return false;
+    return undefined;
+  })
   isActive?: boolean;
 }

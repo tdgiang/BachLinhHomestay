@@ -1,8 +1,11 @@
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function RoomDetailLoading() {
   return (
-    <div className="pt-16 pb-24 min-h-screen" style={{ background: 'var(--color-surface)' }}>
+    <div
+      className="pt-16 pb-24 min-h-screen"
+      style={{ background: "var(--color-surface)" }}
+    >
       <div className="max-w-5xl mx-auto px-4">
         <Skeleton className="aspect-video rounded-[12px] mb-6" />
         <div className="lg:grid lg:grid-cols-[1fr_360px] lg:gap-10">

@@ -62,6 +62,7 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
   const [voucherResult, setVoucherResult] = useState<{ valid: boolean; discountAmount: number; message?: string } | null>(null);
   const [voucherLoading, setVoucherLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const { register, handleSubmit, formState: { errors } } = useForm<GuestFormData>({
     resolver: zodResolver(schema),
@@ -90,15 +91,12 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
 
   const onSubmit = async (guestData: GuestFormData) => {
     setSubmitting(true);
+    setSubmitError(null);
     try {
       const checkIn = tab === 'hourly'
         ? new Date(`${date}T${time}:00`).toISOString()
         : new Date(`${date}T14:00:00`).toISOString();
       const checkOut = tab === 'hourly'
-        ? new Date(`${date}T${time}:00`).setHours(new Date(`${date}T${time}:00`).getHours() + numHours)
-        : new Date(`${checkoutDate}T11:00:00`).toISOString();
-
-      const checkOutStr = tab === 'hourly'
         ? new Date(new Date(`${date}T${time}:00`).getTime() + numHours * 3600000).toISOString()
         : new Date(`${checkoutDate}T11:00:00`).toISOString();
 
@@ -106,7 +104,7 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
         roomId: room.id,
         bookingType: tab,
         checkIn,
-        checkOut: checkOutStr,
+        checkOut,
         numHours: tab === 'hourly' ? numHours : undefined,
         numGuests,
         guestName: guestData.guestName,
@@ -118,8 +116,10 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
       });
 
       router.push(`/booking/${booking.id}/confirm`);
-    } catch {
+    } catch (err: unknown) {
       setSubmitting(false);
+      const message = err instanceof Error ? err.message : 'Đặt phòng thất bại. Vui lòng thử lại.';
+      setSubmitError(message);
     }
   };
 
@@ -339,6 +339,12 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
               </span>
             </div>
 
+            {submitError && (
+              <div className="flex items-start gap-2 rounded-lg p-3 text-sm" style={{ background: '#FEF2F2', color: 'var(--color-danger)' }}>
+                <XCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                <span>{submitError}</span>
+              </div>
+            )}
             <Button
               type="submit"
               form="booking-form"

@@ -63,7 +63,7 @@ export class BookingsController {
   }
 
   @Get(':id')
-  @ApiBearerAuth()
+  @Public()
   @ApiOperation({ summary: 'Chi tiết booking' })
   @ApiParam({ name: 'id' })
   async findOne(@Param('id') id: string) {

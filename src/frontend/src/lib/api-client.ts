@@ -1,6 +1,6 @@
 import { api } from './api';
 import type {
-  Branch, Room, Booking, Voucher, Review,
+  Branch, Room, RoomImage, Booking, Voucher, Review,
   RoomQuery, RoomAvailability, TimeSlotSuggestion,
   CreateBookingDto, ValidateVoucherDto, ValidateVoucherResult,
   PaginatedResult, BookingSummary, RevenueData,
@@ -84,6 +84,20 @@ async function getBranch(id: string): Promise<Branch> {
   return coerceBranch(res.data);
 }
 
+async function createBranch(dto: Partial<Branch>, token: string): Promise<Branch> {
+  const res = await api.post<Branch>('/api/v1/branches', dto, token);
+  return coerceBranch(res.data);
+}
+
+async function updateBranch(id: string, dto: Partial<Branch>, token: string): Promise<Branch> {
+  const res = await api.patch<Branch>(`/api/v1/branches/${id}`, dto, token);
+  return coerceBranch(res.data);
+}
+
+async function deleteBranch(id: string, token: string): Promise<void> {
+  await api.delete(`/api/v1/branches/${id}`, token);
+}
+
 // ─── Rooms ────────────────────────────────────────────────────────────────────
 
 async function getRooms(query: RoomQuery = {}): Promise<PaginatedResult<Room>> {
@@ -124,6 +138,43 @@ async function getTimeSlots(roomId: string, date: string): Promise<TimeSlotSugge
     priceOverride: nn(ts.priceOverride),
     priceOriginal: nn(ts.priceOriginal),
   }));
+}
+
+async function createRoom(dto: Partial<Room>, token: string): Promise<Room> {
+  const res = await api.post<Room>('/api/v1/rooms', dto, token);
+  return coerceRoom(res.data);
+}
+
+async function updateRoom(id: string, dto: Partial<Room>, token: string): Promise<Room> {
+  const res = await api.patch<Room>(`/api/v1/rooms/${id}`, dto, token);
+  return coerceRoom(res.data);
+}
+
+async function deleteRoom(id: string, token: string): Promise<void> {
+  await api.delete(`/api/v1/rooms/${id}`, token);
+}
+
+async function uploadRoomImage(roomId: string, file: File, token: string): Promise<RoomImage> {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
+  const form = new FormData();
+  form.append('file', file);
+  const res = await fetch(`${API_URL}/api/v1/rooms/${roomId}/images`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+    body: form,
+  });
+  const body = await res.json();
+  if (!res.ok) throw new Error(body.message ?? 'Upload thất bại');
+  return body.data as RoomImage;
+}
+
+async function deleteRoomImage(roomId: string, imageId: string, token: string): Promise<void> {
+  await api.delete(`/api/v1/rooms/${roomId}/images/${imageId}`, token);
+}
+
+async function setRoomImageCover(roomId: string, imageId: string, token: string): Promise<RoomImage> {
+  const res = await api.patch<RoomImage>(`/api/v1/rooms/${roomId}/images/${imageId}/cover`, {}, token);
+  return res.data;
 }
 
 // ─── Bookings ─────────────────────────────────────────────────────────────────
@@ -288,6 +339,9 @@ async function getRevenueMonthly(year: number, month: number, token: string): Pr
 export const apiClient = {
   getBranches,
   getBranch,
+  createBranch,
+  updateBranch,
+  deleteBranch,
   getRooms,
   getRoom,
   getRoomAvailability,
@@ -301,6 +355,12 @@ export const apiClient = {
   validateVoucher,
   getVouchers,
   getReviews,
+  createRoom,
+  updateRoom,
+  deleteRoom,
+  uploadRoomImage,
+  deleteRoomImage,
+  setRoomImageCover,
   getReportSummary,
   getRevenueYearly,
   getRevenueMonthly,

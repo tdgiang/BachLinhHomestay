@@ -6,7 +6,13 @@ interface GoogleMapsEmbedProps {
   className?: string;
 }
 
-export function GoogleMapsEmbed({ latitude, longitude, label, height = 280, className }: GoogleMapsEmbedProps) {
+export function GoogleMapsEmbed({
+  latitude,
+  longitude,
+  label,
+  height = 320,
+  className,
+}: GoogleMapsEmbedProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
 
   const src = apiKey
@@ -14,7 +20,10 @@ export function GoogleMapsEmbed({ latitude, longitude, label, height = 280, clas
     : `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
 
   return (
-    <div className={`rounded-[var(--radius-card)] overflow-hidden border ${className ?? ''}`} style={{ height, borderColor: 'var(--color-border)' }}>
+    <div
+      className={`rounded-[var(--radius-card)] overflow-hidden border ${className ?? ""}`}
+      style={{ height, borderColor: "var(--color-border)" }}
+    >
       <iframe
         src={src}
         width="100%"
@@ -23,7 +32,7 @@ export function GoogleMapsEmbed({ latitude, longitude, label, height = 280, clas
         allowFullScreen
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        title={label ?? 'Bản đồ vị trí'}
+        title={label ?? "Bản đồ vị trí"}
       />
     </div>
   );

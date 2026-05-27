@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useState, useRef } from 'react';
-import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useState, useRef } from "react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ImageCarouselProps {
   images: { url: string; isCover?: boolean }[];
   alt: string;
-  aspectRatio?: '1/1' | '4/3' | '16/9';
+  aspectRatio?: "1/1" | "4/3" | "16/9";
   className?: string;
   showCounter?: boolean;
   showArrows?: boolean;
@@ -18,7 +18,7 @@ interface ImageCarouselProps {
 export function ImageCarousel({
   images,
   alt,
-  aspectRatio = '1/1',
+  aspectRatio = "1/1",
   className,
   showCounter = true,
   showArrows = true,
@@ -44,14 +44,18 @@ export function ImageCarousel({
   };
 
   const aspectClass = {
-    '1/1': 'aspect-square',
-    '4/3': 'aspect-[4/3]',
-    '16/9': 'aspect-video',
+    "1/1": "aspect-square",
+    "4/3": "aspect-[4/3]",
+    "16/9": "aspect-video",
   }[aspectRatio];
 
   return (
     <div
-      className={cn('relative overflow-hidden rounded-[var(--radius-card)] group', aspectClass, className)}
+      className={cn(
+        "relative overflow-hidden rounded-[var(--radius-card)] group",
+        aspectClass,
+        className,
+      )}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -59,7 +63,10 @@ export function ImageCarousel({
       {images.map((img, i) => (
         <div
           key={i}
-          className={cn('absolute inset-0 transition-opacity duration-300', i === current ? 'opacity-100' : 'opacity-0 pointer-events-none')}
+          className={cn(
+            "absolute inset-0 transition-opacity duration-300",
+            i === current ? "opacity-100" : "opacity-0 pointer-events-none",
+          )}
         >
           <Image
             src={img.url}
@@ -84,14 +91,20 @@ export function ImageCarousel({
       {showArrows && images.length > 1 && (
         <>
           <button
-            onClick={(e) => { e.preventDefault(); prev(); }}
+            onClick={(e) => {
+              e.preventDefault();
+              prev();
+            }}
             className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 flex items-center justify-center shadow opacity-0 group-hover:opacity-100 transition-opacity"
             aria-label="Previous"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
-            onClick={(e) => { e.preventDefault(); next(); }}
+            onClick={(e) => {
+              e.preventDefault();
+              next();
+            }}
             className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 flex items-center justify-center shadow opacity-0 group-hover:opacity-100 transition-opacity"
             aria-label="Next"
           >
@@ -106,8 +119,14 @@ export function ImageCarousel({
           {images.map((_, i) => (
             <button
               key={i}
-              onClick={(e) => { e.preventDefault(); setCurrent(i); }}
-              className={cn('w-1.5 h-1.5 rounded-full transition-all', i === current ? 'bg-white w-3' : 'bg-white/60')}
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrent(i);
+              }}
+              className={cn(
+                "w-1.5 h-1.5 rounded-full transition-all",
+                i === current ? "bg-white w-3" : "bg-white/60",
+              )}
               aria-label={`Go to image ${i + 1}`}
             />
           ))}

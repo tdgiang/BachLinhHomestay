@@ -48,6 +48,10 @@ export class BookingsService {
     let baseAmount: number;
     if (dto.bookingType === 'hourly') {
       if (!dto.numHours) throw new BadRequestException('numHours bắt buộc cho bookingType=hourly');
+      const minHours = Number((room as any).minHours ?? 1);
+      if (dto.numHours < minHours) {
+        throw new BadRequestException(`Phòng này yêu cầu đặt tối thiểu ${minHours} giờ`);
+      }
       baseAmount = Number((room as any).pricePerHour) * dto.numHours;
     } else {
       const nights = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
