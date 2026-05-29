@@ -43,7 +43,12 @@ export class ReportsService {
       GROUP BY DATE(b.created_at AT TIME ZONE 'Asia/Ho_Chi_Minh')
     `;
 
-    return rows[0] ?? { date, revenue: 0, bookingCount: 0 };
+    if (!rows[0]) return { date, revenue: 0, bookingCount: 0 };
+    return {
+      date:         rows[0].date ?? date,
+      revenue:      Number(rows[0].revenue),
+      bookingCount: Number(rows[0].booking_count),
+    };
   }
 
   /** Doanh thu theo từng ngày trong một tháng */
