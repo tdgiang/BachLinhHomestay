@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { RoomsRepository } from '../infrastructure/rooms.repository';
+import { ImageService } from '../../image/application/image.service';
+import { PrismaService } from '../../../prisma/prisma.service';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
 const mockRepo = {
@@ -18,6 +20,13 @@ const mockRepo = {
 
 const mockCache = { get: jest.fn(), set: jest.fn(), del: jest.fn() };
 
+const mockImageService = { upload: jest.fn(), delete: jest.fn() };
+
+const mockPrisma = {
+  roomImage: { findMany: jest.fn(), create: jest.fn(), findFirst: jest.fn(), delete: jest.fn(), update: jest.fn(), updateMany: jest.fn() },
+  roomAmenity: { deleteMany: jest.fn(), createMany: jest.fn() },
+};
+
 const activeRoom = {
   id: 'r1', name: 'Test Room', status: 'active', deletedAt: null,
   pricePerHour: 150000, pricePerDay: 1200000,
@@ -33,6 +42,8 @@ describe('RoomsService', () => {
         RoomsService,
         { provide: RoomsRepository, useValue: mockRepo },
         { provide: CACHE_MANAGER, useValue: mockCache },
+        { provide: ImageService, useValue: mockImageService },
+        { provide: PrismaService, useValue: mockPrisma },
       ],
     }).compile();
     service = module.get(RoomsService);
