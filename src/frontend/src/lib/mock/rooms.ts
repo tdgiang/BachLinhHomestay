@@ -36,12 +36,12 @@ export const MOCK_ROOMS: Room[] = [
       { id: 'img-001-3', roomId: 'room-001', url: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800', sortOrder: 2, isCover: false, createdAt: '2026-01-01T00:00:00.000Z' },
     ],
     amenities: [
-      { id: 'am-001-1', roomId: 'room-001', name: 'Wifi tốc độ cao', nameEn: 'High-speed WiFi', icon: 'wifi', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-001-2', roomId: 'room-001', name: 'Điều hòa', nameEn: 'Air conditioning', icon: 'wind', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-001-3', roomId: 'room-001', name: 'Smart TV 55"', nameEn: 'Smart TV 55"', icon: 'tv', isFeatured: false, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-001-4', roomId: 'room-001', name: 'Tủ lạnh', nameEn: 'Refrigerator', icon: 'package', isFeatured: false, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-001-5', roomId: 'room-001', name: 'Gửi xe máy', nameEn: 'Motorbike parking', icon: 'bike', isFeatured: false, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-001-6', roomId: 'room-001', name: 'Gửi ô tô', nameEn: 'Car parking', icon: 'car', isFeatured: false, isFree: false, price: 50000, createdAt: '2026-01-01T00:00:00.000Z' },
+      { id: 'am-001-1', roomId: 'room-001', amenityId: 'am-001-1', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-001-1', name: 'Wifi tốc độ cao', nameEn: 'High-speed WiFi', icon: 'wifi', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-001-2', roomId: 'room-001', amenityId: 'am-001-2', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-001-2', name: 'Điều hòa', nameEn: 'Air conditioning', icon: 'wind', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-001-3', roomId: 'room-001', amenityId: 'am-001-3', isFeatured: false, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-001-3', name: 'Smart TV 55"', nameEn: 'Smart TV 55"', icon: 'tv', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-001-4', roomId: 'room-001', amenityId: 'am-001-4', isFeatured: false, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-001-4', name: 'Tủ lạnh', nameEn: 'Refrigerator', icon: 'package', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-001-5', roomId: 'room-001', amenityId: 'am-001-5', isFeatured: false, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-001-5', name: 'Gửi xe máy', nameEn: 'Motorbike parking', icon: 'bike', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-001-6', roomId: 'room-001', amenityId: 'am-001-6', isFeatured: false, isFree: false, price: 50000, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-001-6', name: 'Gửi ô tô', nameEn: 'Car parking', icon: 'car', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
     ],
     timeSlotSuggestions: [
       { id: 'ts-001-1', roomId: 'room-001', label: 'Buổi sáng', startTime: '08:00', endTime: '12:00', priceOverride: 400000, priceOriginal: 600000, dayOfWeek: null, isActive: true },
@@ -87,9 +87,9 @@ export const MOCK_ROOMS: Room[] = [
       { id: 'img-002-2', roomId: 'room-002', url: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800', sortOrder: 1, isCover: false, createdAt: '2026-01-01T00:00:00.000Z' },
     ],
     amenities: [
-      { id: 'am-002-1', roomId: 'room-002', name: 'Wifi tốc độ cao', nameEn: 'High-speed WiFi', icon: 'wifi', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-002-2', roomId: 'room-002', name: 'Điều hòa', nameEn: 'Air conditioning', icon: 'wind', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-002-3', roomId: 'room-002', name: 'Gác xép riêng', nameEn: 'Private loft', icon: 'layers', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
+      { id: 'am-002-1', roomId: 'room-002', amenityId: 'am-002-1', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-002-1', name: 'Wifi tốc độ cao', nameEn: 'High-speed WiFi', icon: 'wifi', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-002-2', roomId: 'room-002', amenityId: 'am-002-2', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-002-2', name: 'Điều hòa', nameEn: 'Air conditioning', icon: 'wind', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-002-3', roomId: 'room-002', amenityId: 'am-002-3', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-002-3', name: 'Gác xép riêng', nameEn: 'Private loft', icon: 'layers', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
     ],
     timeSlotSuggestions: [],
     cancellationPolicies: [
@@ -130,10 +130,10 @@ export const MOCK_ROOMS: Room[] = [
       { id: 'img-003-3', roomId: 'room-003', url: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800', sortOrder: 2, isCover: false, createdAt: '2026-01-01T00:00:00.000Z' },
     ],
     amenities: [
-      { id: 'am-003-1', roomId: 'room-003', name: 'Ban công view biển', nameEn: 'Sea view balcony', icon: 'sun', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-003-2', roomId: 'room-003', name: 'Bồn tắm', nameEn: 'Bathtub', icon: 'droplets', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-003-3', roomId: 'room-003', name: 'Wifi tốc độ cao', nameEn: 'High-speed WiFi', icon: 'wifi', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-003-4', roomId: 'room-003', name: 'Điều hòa', nameEn: 'Air conditioning', icon: 'wind', isFeatured: false, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
+      { id: 'am-003-1', roomId: 'room-003', amenityId: 'am-003-1', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-003-1', name: 'Ban công view biển', nameEn: 'Sea view balcony', icon: 'sun', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-003-2', roomId: 'room-003', amenityId: 'am-003-2', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-003-2', name: 'Bồn tắm', nameEn: 'Bathtub', icon: 'droplets', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-003-3', roomId: 'room-003', amenityId: 'am-003-3', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-003-3', name: 'Wifi tốc độ cao', nameEn: 'High-speed WiFi', icon: 'wifi', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-003-4', roomId: 'room-003', amenityId: 'am-003-4', isFeatured: false, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-003-4', name: 'Điều hòa', nameEn: 'Air conditioning', icon: 'wind', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
     ],
     timeSlotSuggestions: [
       { id: 'ts-003-1', roomId: 'room-003', label: 'Nghỉ trưa', startTime: '12:00', endTime: '15:00', priceOverride: 600000, priceOriginal: 750000, dayOfWeek: null, isActive: true },
@@ -176,8 +176,8 @@ export const MOCK_ROOMS: Room[] = [
       { id: 'img-004-1', roomId: 'room-004', url: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800', sortOrder: 0, isCover: true, createdAt: '2026-01-01T00:00:00.000Z' },
     ],
     amenities: [
-      { id: 'am-004-1', roomId: 'room-004', name: 'Wifi tốc độ cao', nameEn: 'High-speed WiFi', icon: 'wifi', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-004-2', roomId: 'room-004', name: '2 phòng ngủ', nameEn: '2 bedrooms', icon: 'bed', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
+      { id: 'am-004-1', roomId: 'room-004', amenityId: 'am-004-1', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-004-1', name: 'Wifi tốc độ cao', nameEn: 'High-speed WiFi', icon: 'wifi', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-004-2', roomId: 'room-004', amenityId: 'am-004-2', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-004-2', name: '2 phòng ngủ', nameEn: '2 bedrooms', icon: 'bed', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
     ],
     timeSlotSuggestions: [],
     cancellationPolicies: [],
@@ -214,7 +214,7 @@ export const MOCK_ROOMS: Room[] = [
       { id: 'img-005-1', roomId: 'room-005', url: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800', sortOrder: 0, isCover: true, createdAt: '2026-01-01T00:00:00.000Z' },
     ],
     amenities: [
-      { id: 'am-005-1', roomId: 'room-005', name: 'View vườn', nameEn: 'Garden view', icon: 'trees', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
+      { id: 'am-005-1', roomId: 'room-005', amenityId: 'am-005-1', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-005-1', name: 'View vườn', nameEn: 'Garden view', icon: 'trees', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
     ],
     timeSlotSuggestions: [],
     cancellationPolicies: [],
@@ -252,9 +252,9 @@ export const MOCK_ROOMS: Room[] = [
       { id: 'img-006-2', roomId: 'room-006', url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800', sortOrder: 1, isCover: false, createdAt: '2026-01-01T00:00:00.000Z' },
     ],
     amenities: [
-      { id: 'am-006-1', roomId: 'room-006', name: 'Bồn tắm freestanding', nameEn: 'Freestanding bathtub', icon: 'droplets', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-006-2', roomId: 'room-006', name: 'Ban công riêng', nameEn: 'Private balcony', icon: 'sun', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
-      { id: 'am-006-3', roomId: 'room-006', name: 'Wifi tốc độ cao', nameEn: 'High-speed WiFi', icon: 'wifi', isFeatured: false, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z' },
+      { id: 'am-006-1', roomId: 'room-006', amenityId: 'am-006-1', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-006-1', name: 'Bồn tắm freestanding', nameEn: 'Freestanding bathtub', icon: 'droplets', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-006-2', roomId: 'room-006', amenityId: 'am-006-2', isFeatured: true, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-006-2', name: 'Ban công riêng', nameEn: 'Private balcony', icon: 'sun', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
+      { id: 'am-006-3', roomId: 'room-006', amenityId: 'am-006-3', isFeatured: false, isFree: true, price: null, createdAt: '2026-01-01T00:00:00.000Z', amenity: { id: 'am-006-3', name: 'Wifi tốc độ cao', nameEn: 'High-speed WiFi', icon: 'wifi', category: 'basic' as const, createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' } },
     ],
     timeSlotSuggestions: [],
     cancellationPolicies: [

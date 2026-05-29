@@ -1,9 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
-import { usePathname } from 'next/navigation';
-import { Link, useRouter } from '@/i18n/navigation';
+import { useTranslations, useLocale } from 'next-intl';
+import { Link, useRouter, usePathname } from '@/i18n/navigation';
 import { Menu, X, Waves, Globe, LogOut, Calendar, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -37,7 +36,7 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const currentLocale = pathname.startsWith('/en') ? 'en' : 'vi';
+  const currentLocale = useLocale();
 
   // Always solid — hero is now light warm, transparent nav causes contrast issues
   const onSolid = true;

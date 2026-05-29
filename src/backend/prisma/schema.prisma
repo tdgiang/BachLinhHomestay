@@ -49,6 +49,13 @@ enum UserRole {
   admin
 }
 
+enum AmenityCategory {
+  basic
+  entertainment
+  convenience
+  safety
+}
+
 // ─── MODELS ────────────────────────────────────────────────────────────────
 
 model Branch {
@@ -124,19 +131,34 @@ model RoomImage {
   @@map("room_images")
 }
 
+model Amenity {
+  id        String          @id @default(uuid())
+  name      String
+  nameEn    String?         @map("name_en")
+  icon      String?
+  category  AmenityCategory @default(basic)
+  createdAt DateTime        @default(now()) @map("created_at")
+  updatedAt DateTime        @updatedAt @map("updated_at")
+  deletedAt DateTime?       @map("deleted_at")
+
+  roomAmenities RoomAmenity[]
+
+  @@map("amenities")
+}
+
 model RoomAmenity {
   id         String   @id @default(uuid())
   roomId     String   @map("room_id")
-  name       String
-  nameEn     String?  @map("name_en")
-  icon       String?
+  amenityId  String   @map("amenity_id")
   isFeatured Boolean  @default(false) @map("is_featured")
   isFree     Boolean  @default(true) @map("is_free")
   price      Decimal? @db.Decimal(12, 2)
   createdAt  DateTime @default(now()) @map("created_at")
 
-  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  room    Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  amenity Amenity @relation(fields: [amenityId], references: [id])
 
+  @@unique([roomId, amenityId])
   @@map("room_amenities")
 }
 

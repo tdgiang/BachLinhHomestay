@@ -69,14 +69,14 @@ function AmenityRow({ amenity, t }: { amenity: RoomAmenity; t: ReturnType<typeof
   return (
     <div className="flex items-center gap-3 p-3 rounded-xl border" style={{ borderColor: 'var(--color-border)' }}>
       <AmenityIcon
-        name={amenity.icon}
+        name={amenity.amenity?.icon ?? null}
         className="w-5 h-5 shrink-0"
         // @ts-ignore
         style={{ color: 'var(--color-primary)' }}
       />
       <div className="min-w-0">
         <p className="text-sm font-medium truncate" style={{ color: 'var(--color-text-primary)' }}>
-          {amenity.name}
+          {amenity.amenity?.name ?? ''}
         </p>
         <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
           {amenity.isFree ? t('free') : `${amenity.price?.toLocaleString('vi-VN')}₫`}

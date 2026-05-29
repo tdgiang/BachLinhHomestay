@@ -54,8 +54,14 @@ export class RoomsRepository extends BaseRepository<
     extraPersonPrice: true,
     amenities: {
       select: {
-        id: true, name: true, nameEn: true, icon: true,
-        isFeatured: true, isFree: true, price: true,
+        id: true,
+        amenityId: true,
+        isFeatured: true,
+        isFree: true,
+        price: true,
+        amenity: {
+          select: { id: true, name: true, nameEn: true, icon: true, category: true },
+        },
       },
     },
     timeSlotSuggestions: {

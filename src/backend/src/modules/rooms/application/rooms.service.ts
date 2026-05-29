@@ -8,6 +8,7 @@ import { RoomsRepository } from '../infrastructure/rooms.repository';
 import { CreateRoomDto } from '../interface/dto/create-room.dto';
 import { UpdateRoomDto } from '../interface/dto/update-room.dto';
 import { RoomQueryDto } from '../interface/dto/room-query.dto';
+import { SyncRoomAmenitiesDto } from '../interface/dto/sync-room-amenities.dto';
 import { ImageService } from '../../image/application/image.service';
 import { PrismaService } from '../../../prisma/prisma.service';
 
@@ -185,6 +186,25 @@ export class RoomsService {
       if (first) await this.prisma.roomImage.update({ where: { id: first.id }, data: { isCover: true } });
     }
     await this.invalidateRoomCache(roomId);
+  }
+
+  async syncAmenities(roomId: string, dto: SyncRoomAmenitiesDto) {
+    await this.findOne(roomId);
+    await this.prisma.roomAmenity.deleteMany({ where: { roomId } });
+    if (dto.amenities.length > 0) {
+      await this.prisma.roomAmenity.createMany({
+        data: dto.amenities.map((a) => ({
+          roomId,
+          amenityId: a.amenityId,
+          isFeatured: a.isFeatured ?? false,
+          isFree: a.isFree ?? true,
+          price: a.price ?? null,
+        })),
+      });
+    }
+    await this.invalidateRoomCache(roomId);
+    this.logger.log(`Room amenities synced: ${roomId} (${dto.amenities.length} items)`);
+    return this.findOne(roomId);
   }
 
   async setCoverImage(roomId: string, imageId: string) {

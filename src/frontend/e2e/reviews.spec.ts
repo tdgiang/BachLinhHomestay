@@ -1,13 +1,28 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
+import { execSync } from 'child_process';
+
+// ─── DB seed helpers ──────────────────────────────────────────────────────────
+
+function seedReviews() {
+  execSync(`psql "postgresql://homestay_user:homestay_pass@localhost:5432/homestay" -c "
+    DELETE FROM reviews WHERE booking_id IN ('bk-004', 'bk-006', 'bk-008');
+    INSERT INTO reviews (id, booking_id, user_id, room_id, rating, comment, is_visible, created_at)
+    VALUES
+      (gen_random_uuid(), 'bk-004', '91145981-bebd-405d-8866-4c90ba9c61eb', 'room-004', 5, 'Phòng duplex rất rộng rãi, phù hợp gia đình. View đẹp, sẽ quay lại!', true, NOW() - INTERVAL '5 days'),
+      (gen_random_uuid(), 'bk-008', '91145981-bebd-405d-8866-4c90ba9c61eb', 'room-002', 4, 'Gác xép tạo không gian độc đáo, nhưng cầu thang hơi dốc.', true, NOW() - INTERVAL '3 days'),
+      (gen_random_uuid(), 'bk-006', '91145981-bebd-405d-8866-4c90ba9c61eb', 'room-001', 3, 'Phòng ổn, nhưng wifi hơi chậm vào giờ cao điểm.', false, NOW() - INTERVAL '1 day')
+    ON CONFLICT (booking_id) DO NOTHING;
+  "`, { stdio: 'pipe' });
+}
 
 // ─── Auth helper ─────────────────────────────────────────────────────────────
 
-async function loginAsAdmin(page: any) {
+async function loginAsAdmin(page: Page) {
   await page.goto('/vi/login');
   await page.fill('[data-slot="input"]', 'admin@homestay.vn');
   await page.fill('[type="password"]', 'Admin@123');
   await page.click('button[type="submit"]');
-  await page.waitForURL((url: URL) => !url.pathname.includes('/login'), { timeout: 15000 });
+  await page.waitForURL((url) => !url.pathname.includes('/login'), { timeout: 15000 });
 }
 
 // ─── User Journeys: Quản lý đánh giá ─────────────────────────────────────────
@@ -18,6 +33,8 @@ async function loginAsAdmin(page: any) {
 // Journey 4: Admin xóa đánh giá với dialog xác nhận
 
 test.describe('Quản lý đánh giá — Journey 1: Danh sách từ API thật', () => {
+  test.beforeAll(() => seedReviews());
+
   test('trang hiển thị đánh giá từ cơ sở dữ liệu thật (không phải mock)', async ({ page }) => {
     await loginAsAdmin(page);
     await page.goto('/vi/admin/reviews');
@@ -45,8 +62,8 @@ test.describe('Quản lý đánh giá — Journey 1: Danh sách từ API thật'
     const rows = page.locator('tbody tr');
     await expect(rows.first()).toBeVisible({ timeout: 10000 });
 
-    // At least one row shows a rating number
-    await expect(page.locator('text=/[1-5]\/5/')).toBeVisible();
+    // At least one row shows a rating number — use .first() to avoid strict mode
+    await expect(page.locator('text=/[1-5]\\/5/').first()).toBeVisible();
 
     // Status badge present
     await expect(page.locator('text=Hiển thị').first()).toBeVisible();
@@ -54,6 +71,8 @@ test.describe('Quản lý đánh giá — Journey 1: Danh sách từ API thật'
 });
 
 test.describe('Quản lý đánh giá — Journey 2: Lọc trạng thái', () => {
+  test.beforeAll(() => seedReviews());
+
   test('lọc "Hiển thị" chỉ hiện đánh giá đang active', async ({ page }) => {
     await loginAsAdmin(page);
     await page.goto('/vi/admin/reviews');
@@ -78,7 +97,7 @@ test.describe('Quản lý đánh giá — Journey 2: Lọc trạng thái', () =>
     await page.click('button:has-text("Ẩn")');
     await page.waitForTimeout(500);
 
-    // Must show at least 1 hidden review (our seeded room-001 review has is_visible=false)
+    // Must show at least 1 hidden review (seeded room-001 review has is_visible=false)
     const hiddenBadge = page.locator('tbody').locator('text=Đã ẩn').first();
     await expect(hiddenBadge).toBeVisible({ timeout: 5000 });
 
@@ -104,21 +123,34 @@ test.describe('Quản lý đánh giá — Journey 2: Lọc trạng thái', () =>
 });
 
 test.describe('Quản lý đánh giá — Journey 3: Toggle ẩn/hiện', () => {
+  test.beforeAll(() => seedReviews());
+
   test('click nút Eye trên đánh giá "Hiển thị" → badge đổi thành "Đã ẩn"', async ({ page }) => {
     await loginAsAdmin(page);
     await page.goto('/vi/admin/reviews');
     await page.waitForLoadState('networkidle');
 
-    // Find the first row with "Hiển thị" badge
+    // Count hidden badges BEFORE toggle
+    const hiddenBadges = page.locator('tbody').locator('text=Đã ẩn');
+    const countBefore = await hiddenBadges.count();
+
+    // Find first visible row by index — more stable than text filter which changes
     const firstVisibleRow = page.locator('tbody tr').filter({ has: page.locator('text=Hiển thị') }).first();
     await expect(firstVisibleRow).toBeVisible({ timeout: 10000 });
 
-    // Click the toggle button in that row (EyeOff icon when visible)
+    // Nth row index to re-locate after state change
+    const rowIndex = await page.locator('tbody tr').all().then(rows =>
+      rows.findIndex(async (_, i) =>
+        (await page.locator('tbody tr').nth(i).locator('text=Hiển thị').count()) > 0,
+      ),
+    );
+
+    // Click the toggle button (last button in the row)
     const toggleBtn = firstVisibleRow.locator('button').last();
     await toggleBtn.click();
 
-    // The badge in that row should change to "Đã ẩn"
-    await expect(firstVisibleRow.locator('text=Đã ẩn')).toBeVisible({ timeout: 8000 });
+    // Count of hidden badges should increase by 1
+    await expect(hiddenBadges).toHaveCount(countBefore + 1, { timeout: 8000 });
   });
 
   test('click nút Eye trên đánh giá "Đã ẩn" → badge đổi thành "Hiển thị"', async ({ page }) => {
@@ -126,19 +158,26 @@ test.describe('Quản lý đánh giá — Journey 3: Toggle ẩn/hiện', () => 
     await page.goto('/vi/admin/reviews');
     await page.waitForLoadState('networkidle');
 
-    // Find the row with "Đã ẩn" badge (our seeded room-001 review)
-    const hiddenRow = page.locator('tbody tr').filter({ has: page.locator('text=Đã ẩn') }).first();
-    await expect(hiddenRow).toBeVisible({ timeout: 10000 });
+    // Count visible badges BEFORE toggle
+    const visibleBadges = page.locator('tbody').locator('text=Hiển thị');
+    const countBefore = await visibleBadges.count();
 
-    const toggleBtn = hiddenRow.locator('button').last();
+    // Find first hidden row
+    const firstHiddenRow = page.locator('tbody tr').filter({ has: page.locator('text=Đã ẩn') }).first();
+    await expect(firstHiddenRow).toBeVisible({ timeout: 10000 });
+
+    // Click the toggle button (last button in the row)
+    const toggleBtn = firstHiddenRow.locator('button').last();
     await toggleBtn.click();
 
-    // Badge should change to "Hiển thị"
-    await expect(hiddenRow.locator('text=Hiển thị')).toBeVisible({ timeout: 8000 });
+    // Count of visible badges should increase by 1
+    await expect(visibleBadges).toHaveCount(countBefore + 1, { timeout: 8000 });
   });
 });
 
 test.describe('Quản lý đánh giá — Journey 4: Xóa đánh giá', () => {
+  test.beforeAll(() => seedReviews());
+
   test('mỗi hàng có nút xóa (icon trash)', async ({ page }) => {
     await loginAsAdmin(page);
     await page.goto('/vi/admin/reviews');
@@ -147,7 +186,7 @@ test.describe('Quản lý đánh giá — Journey 4: Xóa đánh giá', () => {
     const rows = page.locator('tbody tr');
     await expect(rows.first()).toBeVisible({ timeout: 10000 });
 
-    // Each row must have at least 2 action buttons (toggle + delete)
+    // Each row must have at least 2 action buttons (delete + toggle)
     const firstRowBtns = rows.first().locator('button');
     await expect(firstRowBtns).toHaveCount(2, { timeout: 5000 });
   });
@@ -160,7 +199,7 @@ test.describe('Quản lý đánh giá — Journey 4: Xóa đánh giá', () => {
     const firstRow = page.locator('tbody tr').first();
     await firstRow.waitFor({ timeout: 10000 });
 
-    // Click delete button (first button in the row action group)
+    // Click delete button (first button = Trash2)
     const deleteBtn = firstRow.locator('button').first();
     await deleteBtn.click();
 
@@ -174,16 +213,13 @@ test.describe('Quản lý đánh giá — Journey 4: Xóa đánh giá', () => {
     await page.goto('/vi/admin/reviews');
     await page.waitForLoadState('networkidle');
 
-    // Count initial rows
     const rows = page.locator('tbody tr');
     await expect(rows.first()).toBeVisible({ timeout: 10000 });
     const initialCount = await rows.count();
 
-    // Click delete on first row
+    // Click delete on first row, then confirm
     const deleteBtn = rows.first().locator('button').first();
     await deleteBtn.click();
-
-    // Confirm deletion
     await page.click('button:has-text("Xác nhận xóa")');
 
     // Row count should decrease by 1

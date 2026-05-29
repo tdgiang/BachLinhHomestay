@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import {
   LayoutDashboard, MapPin, BedDouble, Calendar,
-  Tag, BarChart2, Star, ChevronLeft, ChevronRight,
+  Tag, BarChart2, Star, ChevronLeft, ChevronRight, Package,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { label: 'Dashboard',  href: '/admin/dashboard',  icon: LayoutDashboard },
   { label: 'Chi nhánh',  href: '/admin/branches',   icon: MapPin },
   { label: 'Phòng',      href: '/admin/rooms',       icon: BedDouble },
+  { label: 'Tiện ích',   href: '/admin/amenities',  icon: Package },
   { label: 'Đặt phòng',  href: '/admin/bookings',   icon: Calendar },
   { label: 'Voucher',    href: '/admin/vouchers',    icon: Tag },
   { label: 'Báo cáo',   href: '/admin/reports',     icon: BarChart2 },

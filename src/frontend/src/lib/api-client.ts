@@ -1,6 +1,6 @@
 import { api } from './api';
 import type {
-  Branch, Room, RoomImage, Booking, Voucher, Review,
+  Amenity, Branch, Room, RoomImage, Booking, Voucher, Review,
   RoomQuery, RoomAvailability, TimeSlotSuggestion,
   CreateBookingDto, ValidateVoucherDto, ValidateVoucherResult,
   PaginatedResult, BookingSummary, RevenueData,
@@ -64,6 +64,39 @@ function coerceVoucher(v: any): Voucher {
     maxDiscountAmount: nn(v.maxDiscountAmount),
     minBookingAmount:  n(v.minBookingAmount),
   };
+}
+
+// ─── Amenities ────────────────────────────────────────────────────────────────
+
+async function getAmenities(): Promise<PaginatedResult<Amenity>> {
+  const res = await api.get<PaginatedResult<Amenity>>('/api/v1/amenities?limit=200');
+  return res.data;
+}
+
+async function createAmenity(dto: Partial<Amenity>, token: string): Promise<Amenity> {
+  const res = await api.post<Amenity>('/api/v1/amenities', dto, token);
+  return res.data;
+}
+
+async function updateAmenity(id: string, dto: Partial<Amenity>, token: string): Promise<Amenity> {
+  const res = await api.patch<Amenity>(`/api/v1/amenities/${id}`, dto, token);
+  return res.data;
+}
+
+async function deleteAmenity(id: string, token: string): Promise<void> {
+  await api.delete(`/api/v1/amenities/${id}`, token);
+}
+
+interface RoomAmenityItem {
+  amenityId: string;
+  isFeatured?: boolean;
+  isFree?: boolean;
+  price?: number | null;
+}
+
+async function syncRoomAmenities(roomId: string, amenities: RoomAmenityItem[], token: string): Promise<Room> {
+  const res = await api.put<Room>(`/api/v1/rooms/${roomId}/amenities`, { amenities }, token);
+  return coerceRoom(res.data);
 }
 
 // ─── Branches ─────────────────────────────────────────────────────────────────
@@ -244,6 +277,35 @@ async function getMyBookings(token: string): Promise<PaginatedResult<Booking>> {
   return { ...res.data, items: res.data.items.map(coerceBooking) };
 }
 
+async function getAdminBookings(
+  query: { page?: number; limit?: number; bookingStatus?: string; search?: string } = {},
+  token: string,
+): Promise<PaginatedResult<Booking>> {
+  if (isMock) return mockDelay({
+    items: MOCK_BOOKINGS,
+    meta: { total: MOCK_BOOKINGS.length, page: 1, limit: 20, totalPages: 1 },
+  });
+  const params = new URLSearchParams();
+  if (query.page)    params.set('page',    String(query.page));
+  if (query.limit)   params.set('limit',   String(query.limit));
+  if (query.bookingStatus && query.bookingStatus !== 'all') params.set('bookingStatus', query.bookingStatus);
+  if (query.search)  params.set('search',  query.search);
+  const qs = params.toString();
+  const res = await api.get<PaginatedResult<Booking>>(
+    `/api/v1/bookings${qs ? '?' + qs : ''}`, token,
+  );
+  return { ...res.data, items: res.data.items.map(coerceBooking) };
+}
+
+async function updateBookingStatus(
+  id: string,
+  bookingStatus: string,
+  token: string,
+): Promise<Booking> {
+  const res = await api.patch<Booking>(`/api/v1/bookings/${id}/status`, { bookingStatus }, token);
+  return coerceBooking(res.data);
+}
+
 async function cancelBooking(id: string, reason: string, token: string): Promise<Booking> {
   if (isMock) {
     const booking = MOCK_BOOKINGS.find((b) => b.id === id) ?? MOCK_BOOKINGS[0];
@@ -274,8 +336,35 @@ async function getVouchers(token: string): Promise<PaginatedResult<Voucher>> {
     items: MOCK_VOUCHERS,
     meta: { total: MOCK_VOUCHERS.length, page: 1, limit: 10, totalPages: 1 },
   });
-  const res = await api.get<PaginatedResult<Voucher>>('/api/v1/vouchers', token);
+  const res = await api.get<PaginatedResult<Voucher>>('/api/v1/vouchers?limit=100', token);
   return { ...res.data, items: res.data.items.map(coerceVoucher) };
+}
+
+interface CreateVoucherDto {
+  code: string;
+  description?: string;
+  discountType: 'percentage' | 'fixed_amount';
+  discountValue: number;
+  maxDiscountAmount?: number;
+  minBookingAmount?: number;
+  usageLimit?: number;
+  validFrom: string;
+  validUntil: string;
+  isActive?: boolean;
+}
+
+async function createVoucher(dto: CreateVoucherDto, token: string): Promise<Voucher> {
+  const res = await api.post<Voucher>('/api/v1/vouchers', dto, token);
+  return coerceVoucher(res.data);
+}
+
+async function updateVoucher(id: string, dto: Partial<CreateVoucherDto>, token: string): Promise<Voucher> {
+  const res = await api.patch<Voucher>(`/api/v1/vouchers/${id}`, dto, token);
+  return coerceVoucher(res.data);
+}
+
+async function deleteVoucher(id: string, token: string): Promise<void> {
+  await api.delete(`/api/v1/vouchers/${id}`, token);
 }
 
 // ─── Reviews ──────────────────────────────────────────────────────────────────
@@ -289,6 +378,32 @@ async function getReviews(roomId: string, page = 1): Promise<PaginatedResult<Rev
     `/api/v1/reviews/room/${roomId}?page=${page}&limit=10`,
   );
   return res.data;
+}
+
+async function getAdminReviews(
+  query: { isVisible?: boolean; roomId?: string; page?: number; limit?: number } = {},
+  token: string,
+): Promise<PaginatedResult<Review>> {
+  const params = new URLSearchParams();
+  if (query.page)   params.set('page',   String(query.page));
+  params.set('limit', String(Math.min(query.limit ?? 100, 100)));
+  if (query.roomId) params.set('roomId', query.roomId);
+  if (query.isVisible !== undefined) params.set('isVisible', String(query.isVisible));
+  const qs = params.toString();
+  const res = await api.get<PaginatedResult<Review>>(
+    `/api/v1/reviews${qs ? '?' + qs : ''}`,
+    token,
+  );
+  return res.data;
+}
+
+async function setReviewVisibility(id: string, isVisible: boolean, token: string): Promise<Review> {
+  const res = await api.patch<Review>(`/api/v1/reviews/${id}/visibility`, { isVisible }, token);
+  return res.data;
+}
+
+async function deleteReview(id: string, token: string): Promise<void> {
+  await api.delete(`/api/v1/reviews/${id}`, token);
 }
 
 // ─── Reports (Admin) ──────────────────────────────────────────────────────────
@@ -337,6 +452,11 @@ async function getRevenueMonthly(year: number, month: number, token: string): Pr
 // ─── Export ───────────────────────────────────────────────────────────────────
 
 export const apiClient = {
+  getAmenities,
+  createAmenity,
+  updateAmenity,
+  deleteAmenity,
+  syncRoomAmenities,
   getBranches,
   getBranch,
   createBranch,
@@ -349,12 +469,20 @@ export const apiClient = {
   createBooking,
   getBookingByCode,
   getBooking,
+  getAdminBookings,
+  updateBookingStatus,
   getMyBookings,
   cancelBooking,
   createVnpayPayment,
   validateVoucher,
   getVouchers,
+  createVoucher,
+  updateVoucher,
+  deleteVoucher,
   getReviews,
+  getAdminReviews,
+  setReviewVisibility,
+  deleteReview,
   createRoom,
   updateRoom,
   deleteRoom,

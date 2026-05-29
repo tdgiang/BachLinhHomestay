@@ -1,5 +1,5 @@
 import {
-  Controller, Get, Post, Patch, Delete, Body, Param, Query,
+  Controller, Get, Post, Put, Patch, Delete, Body, Param, Query,
   HttpCode, HttpStatus, UploadedFile, UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -10,6 +10,7 @@ import { RoomsService } from '../application/rooms.service';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
 import { RoomQueryDto } from './dto/room-query.dto';
+import { SyncRoomAmenitiesDto } from './dto/sync-room-amenities.dto';
 import { Public } from '../../../common/decorators/public.decorator';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { UserRole } from '@prisma/client';
@@ -82,6 +83,18 @@ export class RoomsController {
   async remove(@Param('id') id: string) {
     const data = await this.roomsService.remove(id);
     return { message: 'Xóa phòng thành công', data };
+  }
+
+  // ── Amenity endpoints ───────────────────────────────────────────────────
+
+  @Put(':id/amenities')
+  @Roles(UserRole.admin)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Đồng bộ tiện ích cho phòng (Admin) — thay thế toàn bộ' })
+  @ApiParam({ name: 'id' })
+  async syncAmenities(@Param('id') id: string, @Body() dto: SyncRoomAmenitiesDto) {
+    const data = await this.roomsService.syncAmenities(id, dto);
+    return { message: 'Đồng bộ tiện ích thành công', data };
   }
 
   // ── Image endpoints ─────────────────────────────────────────────────────

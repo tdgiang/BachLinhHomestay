@@ -5,9 +5,11 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 export default withNextIntl({
   output: 'standalone',
   images: {
+    dangerouslyAllowLocalIP: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'http',  hostname: 'localhost' },
+      { protocol: 'http',  hostname: 'localhost', port: '4000' },
       { protocol: 'http',  hostname: 'localhost', port: '9000' },
     ],
   },

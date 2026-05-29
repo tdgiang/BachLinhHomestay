@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { signIn } from 'next-auth/react';
+import { signIn, getSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useRouter, Link } from '@/i18n/navigation';
 import { Waves, Eye, EyeOff, Loader2 } from 'lucide-react';
@@ -42,7 +42,12 @@ export default function LoginPage() {
     if (result?.error) {
       setError('Email/số điện thoại hoặc mật khẩu không đúng');
     } else {
-      router.push('/');
+      const session = await getSession();
+      if (session?.user?.role === 'admin') {
+        router.push('/admin/dashboard');
+      } else {
+        router.push('/');
+      }
       router.refresh();
     }
   };

@@ -35,16 +35,27 @@ export interface RoomImage {
   createdAt: string;
 }
 
-export interface RoomAmenity {
+export type AmenityCategory = 'basic' | 'entertainment' | 'convenience' | 'safety';
+
+export interface Amenity {
   id: string;
-  roomId: string;
   name: string;
   nameEn: string | null;
   icon: string | null;
+  category: AmenityCategory;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RoomAmenity {
+  id: string;
+  roomId: string;
+  amenityId: string;
   isFeatured: boolean;
   isFree: boolean;
   price: number | null;
   createdAt: string;
+  amenity: Amenity;
 }
 
 export interface TimeSlotSuggestion {
@@ -154,6 +165,7 @@ export interface Review {
   isVisible: boolean;
   createdAt: string;
   user?: Pick<User, 'id' | 'fullName'>;
+  room?: { id: string; name: string; roomNumber?: string };
 }
 
 export interface Booking {
