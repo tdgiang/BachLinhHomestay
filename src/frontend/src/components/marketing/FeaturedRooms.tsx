@@ -12,11 +12,14 @@ interface FeaturedRoomsProps {
 
 export async function FeaturedRooms({ query }: FeaturedRoomsProps = {}) {
   const t = await getTranslations('home');
-  const result = await apiClient.getRooms({ ...query, limit: 100 });
+  const result = await apiClient.getRooms({ ...query, limit: 100 }).catch(() => ({
+    items: [] as import('@/types').Room[],
+    meta: { total: 0, page: 1, limit: 100, totalPages: 0 },
+  }));
   const rooms = result.items;
 
   const hasActiveFilter = Boolean(
-    query?.branchId || query?.type || query?.priceMax || query?.search,
+    query?.branchId || query?.type || query?.priceMax || query?.search || query?.checkIn,
   );
 
   return (

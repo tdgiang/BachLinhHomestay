@@ -74,16 +74,21 @@ export function HeroSection({ branches }: HeroSectionProps) {
     const params = new URLSearchParams();
     if (branchId) params.set("branchId", branchId);
     params.set("type", tab);
+
     if (checkInDate) {
       const dateStr = format(checkInDate, "yyyy-MM-dd");
-      const checkIn =
-        tab === "hourly" ? `${dateStr}T${time}:00` : `${dateStr}T14:00:00`;
-      params.set("checkIn", checkIn);
+      if (tab === "hourly") {
+        const checkInMs = new Date(`${dateStr}T${time}:00`).getTime();
+        params.set("checkIn", new Date(checkInMs).toISOString());
+        params.set("checkOut", new Date(checkInMs + numHours * 3600000).toISOString());
+      } else {
+        params.set("checkIn", new Date(`${dateStr}T14:00:00`).toISOString());
+        if (checkOutDate) {
+          params.set("checkOut", new Date(`${format(checkOutDate, "yyyy-MM-dd")}T11:00:00`).toISOString());
+        }
+      }
     }
-    if (tab === "daily" && checkOutDate) {
-      params.set("checkOut", `${format(checkOutDate, "yyyy-MM-dd")}T11:00:00`);
-    }
-    if (tab === "hourly") params.set("numHours", String(numHours));
+
     router.push(`/?${params.toString()}#rooms`);
   };
 

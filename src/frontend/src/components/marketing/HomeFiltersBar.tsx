@@ -14,6 +14,9 @@ export function HomeFiltersBar() {
   const type = searchParams.get('type');
   const priceMax = searchParams.get('priceMax');
   const search = searchParams.get('search');
+  const checkIn = searchParams.get('checkIn');
+  const checkOut = searchParams.get('checkOut');
+  const branchId = searchParams.get('branchId');
 
   let active = '';
   if (type === 'hourly') active = 'hourly';
@@ -27,11 +30,16 @@ export function HomeFiltersBar() {
   const hasFilter = Boolean(active);
 
   const handleSelect = (value: string) => {
+    const params = new URLSearchParams();
+    // Preserve date/branch params from hero search
+    if (checkIn) params.set('checkIn', checkIn);
+    if (checkOut) params.set('checkOut', checkOut);
+    if (branchId) params.set('branchId', branchId);
+
     if (!value) {
-      router.push('/#rooms');
+      router.push(params.toString() ? `/?${params.toString()}#rooms` : '/#rooms');
       return;
     }
-    const params = new URLSearchParams();
     if (value === 'hourly') params.set('type', 'hourly');
     else if (value === 'daily') params.set('type', 'daily');
     else if (value === 'under500k') params.set('priceMax', '500000');

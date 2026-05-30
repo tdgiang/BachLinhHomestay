@@ -17,6 +17,8 @@ type Props = {
     type?: string;
     priceMax?: string;
     search?: string;
+    checkIn?: string;
+    checkOut?: string;
   }>;
 };
 
@@ -30,6 +32,8 @@ export default async function HomePage({ params, searchParams }: Props) {
     type: sp.type as BookingType | undefined,
     priceMax: sp.priceMax ? Number(sp.priceMax) : undefined,
     search: sp.search,
+    checkIn: sp.checkIn,
+    checkOut: sp.checkOut,
   };
 
   const branches = await apiClient.getBranches();

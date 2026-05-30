@@ -10,7 +10,7 @@ import { CreateBookingDto } from './dto/create-booking.dto';
 import { CancelBookingDto } from './dto/cancel-booking.dto';
 import { UpdateBookingStatusDto } from './dto/update-status.dto';
 import { BookingQueryDto } from './dto/booking-query.dto';
-import { Public } from '../../../common/decorators/public.decorator';
+import { Public, OptionalAuth } from '../../../common/decorators/public.decorator';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { UserRole } from '@prisma/client';
 import type { AuthUser } from '../../users/application/users.service';
@@ -21,7 +21,7 @@ export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
   @Post()
-  @Public()
+  @OptionalAuth()
   @ApiOperation({ summary: 'Tạo booking mới (khách vãng lai hoặc user đã đăng nhập)' })
   @ApiResponse({ status: 201 })
   @ApiResponse({ status: 400, description: 'Phòng không trống hoặc dữ liệu không hợp lệ' })

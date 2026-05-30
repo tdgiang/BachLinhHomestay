@@ -3,7 +3,7 @@ import {
 } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import type { Cache } from 'cache-manager';
-import { Prisma, RoomStatus, BookingType } from '@prisma/client';
+import { Prisma, RoomStatus, BookingType, BookingStatus } from '@prisma/client';
 import { RoomsRepository } from '../infrastructure/rooms.repository';
 import { CreateRoomDto } from '../interface/dto/create-room.dto';
 import { UpdateRoomDto } from '../interface/dto/update-room.dto';
@@ -60,7 +60,8 @@ export class RoomsService {
 
     const {
       page = 1, limit = 12, sortBy = 'createdAt', sortOrder = 'desc',
-      branchId, type, status, search, priceMax, priceMin, isFeatured, isGuestFavorite,
+      branchId, type, status, search, priceMax, priceMin,
+      isFeatured, isGuestFavorite, checkIn, checkOut,
     } = query;
 
     const where: Prisma.RoomWhereInput = { deletedAt: null };
@@ -80,6 +81,27 @@ export class RoomsService {
         { name: { contains: search, mode: 'insensitive' } },
         { description: { contains: search, mode: 'insensitive' } },
       ];
+    }
+
+    // Exclude rooms that have an overlapping non-cancelled booking.
+    // Two-step: fetch booked room IDs first, then exclude with notIn.
+    // Force UTC parsing — strings without timezone (e.g. "2026-07-10T14:00:00")
+    // would otherwise be interpreted as local time (UTC+7) on this server.
+    if (checkIn && checkOut) {
+      const toUTC = (s: string) =>
+        new Date(s.includes('Z') || s.includes('+') ? s : s + 'Z');
+      const overlapping = await this.prisma.booking.findMany({
+        where: {
+          bookingStatus: { not: BookingStatus.cancelled },
+          checkIn: { lt: toUTC(checkOut) },
+          checkOut: { gt: toUTC(checkIn) },
+        },
+        select: { roomId: true },
+      });
+      const bookedIds = [...new Set(overlapping.map((b) => b.roomId))];
+      if (bookedIds.length > 0) {
+        where.id = { notIn: bookedIds };
+      }
     }
 
     const [rooms, total] = await this.repository.findAll({
@@ -215,6 +237,10 @@ export class RoomsService {
     const updated = await this.prisma.roomImage.update({ where: { id: imageId }, data: { isCover: true } });
     await this.invalidateRoomCache(roomId);
     return updated;
+  }
+
+  async invalidateAvailabilityCache() {
+    await this.invalidateListCache();
   }
 
   private async invalidateRoomCache(id: string) {

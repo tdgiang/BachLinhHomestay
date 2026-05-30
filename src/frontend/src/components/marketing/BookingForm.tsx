@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -50,6 +51,7 @@ function calcNights(checkIn: string, checkOut: string): number {
 export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defaultCheckOut, defaultNumHours }: BookingFormProps) {
   const t = useTranslations('booking');
   const router = useRouter();
+  const { data: session } = useSession();
 
   const today = new Date().toISOString().split('T')[0];
   const [tab, setTab] = useState<'hourly' | 'daily'>(room.allowHourly ? defaultType : 'daily');
@@ -113,7 +115,7 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
         guestNote: guestData.guestNote || undefined,
         voucherCode: voucherResult?.valid ? voucherCode.trim() : undefined,
         paymentMethod: 'cash',
-      });
+      }, session?.accessToken);
 
       router.push(`/booking/${booking.id}/confirm`);
     } catch (err: unknown) {

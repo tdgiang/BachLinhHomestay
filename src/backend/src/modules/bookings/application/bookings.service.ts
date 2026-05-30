@@ -113,6 +113,7 @@ export class BookingsService {
     }
 
     await this.invalidateListCache();
+    await this.roomsService.invalidateAvailabilityCache();
     this.logger.log(`Booking created: ${bookingCode}`);
     return booking;
   }
@@ -198,6 +199,7 @@ export class BookingsService {
     });
 
     await this.invalidateBookingCache(id);
+    await this.roomsService.invalidateAvailabilityCache();
     this.logger.log(`Booking cancelled: ${id}`);
     return updated;
   }
@@ -212,6 +214,7 @@ export class BookingsService {
       },
     });
     await this.invalidateBookingCache(id);
+    await this.roomsService.invalidateAvailabilityCache();
     this.logger.log(`Booking status updated: ${id} → ${dto.bookingStatus}`);
     return updated;
   }

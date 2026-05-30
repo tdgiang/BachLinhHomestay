@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { MapPin, Calendar, ChevronRight, Loader2 } from 'lucide-react';
@@ -24,6 +25,7 @@ interface Props { initialBookings: Booking[] }
 
 export function MyBookingsList({ initialBookings }: Props) {
   const t = useTranslations('booking');
+  const { data: session } = useSession();
   const [bookings, setBookings] = useState(initialBookings);
   const [cancelId, setCancelId] = useState<string | null>(null);
   const [cancelReason, setCancelReason] = useState('');
@@ -36,7 +38,7 @@ export function MyBookingsList({ initialBookings }: Props) {
     if (!cancelId || !cancelReason.trim()) return;
     setCancelling(true);
     try {
-      const updated = await apiClient.cancelBooking(cancelId, cancelReason.trim(), '');
+      const updated = await apiClient.cancelBooking(cancelId, cancelReason.trim(), session?.accessToken ?? '');
       setBookings((prev) => prev.map((b) => (b.id === cancelId ? updated : b)));
       setCancelId(null);
       setCancelReason('');
