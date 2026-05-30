@@ -13,6 +13,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
+import {
+  DatePickerField,
+  dateToIsoDate,
+  parseIsoDate,
+  startOfToday,
+} from '@/components/shared/DatePickerField';
 import { ImageCarousel } from '@/components/shared/ImageCarousel';
 import { PriceDisplay } from '@/components/shared/PriceDisplay';
 import { RatingStars } from '@/components/shared/RatingStars';
@@ -53,13 +59,19 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
   const router = useRouter();
   const { data: session } = useSession();
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = startOfToday();
   const [tab, setTab] = useState<'hourly' | 'daily'>(room.allowHourly ? defaultType : 'daily');
-  const [date, setDate] = useState(defaultCheckIn?.split('T')[0] ?? today);
+  const [bookingDate, setBookingDate] = useState<Date>(
+    () => parseIsoDate(defaultCheckIn?.split('T')[0]) ?? today,
+  );
   const [time, setTime] = useState(defaultCheckIn?.split('T')[1]?.slice(0, 5) ?? '14:00');
   const [numHours, setNumHours] = useState(defaultNumHours ?? room.minHours ?? 2);
   const [numGuests, setNumGuests] = useState(1);
-  const [checkoutDate, setCheckoutDate] = useState(defaultCheckOut?.split('T')[0] ?? '');
+  const [checkoutDate, setCheckoutDate] = useState<Date | undefined>(() =>
+    parseIsoDate(defaultCheckOut?.split('T')[0]),
+  );
+  const date = dateToIsoDate(bookingDate);
+  const checkoutDateStr = checkoutDate ? dateToIsoDate(checkoutDate) : '';
   const [voucherCode, setVoucherCode] = useState('');
   const [voucherResult, setVoucherResult] = useState<{ valid: boolean; discountAmount: number; message?: string } | null>(null);
   const [voucherLoading, setVoucherLoading] = useState(false);
@@ -71,7 +83,7 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
   });
 
   // Pricing
-  const numNights = tab === 'daily' ? calcNights(date, checkoutDate) : 0;
+  const numNights = tab === 'daily' ? calcNights(date, checkoutDateStr) : 0;
   const baseAmount = tab === 'hourly'
     ? room.pricePerHour * numHours
     : room.pricePerDay * numNights;
@@ -100,7 +112,7 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
         : new Date(`${date}T14:00:00`).toISOString();
       const checkOut = tab === 'hourly'
         ? new Date(new Date(`${date}T${time}:00`).getTime() + numHours * 3600000).toISOString()
-        : new Date(`${checkoutDate}T11:00:00`).toISOString();
+        : new Date(`${checkoutDateStr}T11:00:00`).toISOString();
 
       const booking = await apiClient.createBooking({
         roomId: room.id,
@@ -170,7 +182,13 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Label>{t('selectDate')}</Label>
-                <Input type="date" min={today} value={date} onChange={(e) => setDate(e.target.value)} />
+                <DatePickerField
+                  variant="field"
+                  value={bookingDate}
+                  onChange={(d) => d && setBookingDate(d)}
+                  placeholder={t('selectDate')}
+                  minDate={today}
+                />
               </div>
               <div className="space-y-1.5">
                 <Label>{t('selectTime')}</Label>
@@ -212,11 +230,27 @@ export function BookingForm({ room, defaultType = 'hourly', defaultCheckIn, defa
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Label>{t('checkin')}</Label>
-                <Input type="date" min={today} value={date} onChange={(e) => setDate(e.target.value)} />
+                <DatePickerField
+                  variant="field"
+                  value={bookingDate}
+                  onChange={(d) => {
+                    if (!d) return;
+                    setBookingDate(d);
+                    if (checkoutDate && checkoutDate < d) setCheckoutDate(undefined);
+                  }}
+                  placeholder={t('checkin')}
+                  minDate={today}
+                />
               </div>
               <div className="space-y-1.5">
                 <Label>{t('checkout')}</Label>
-                <Input type="date" min={date || today} value={checkoutDate} onChange={(e) => setCheckoutDate(e.target.value)} />
+                <DatePickerField
+                  variant="field"
+                  value={checkoutDate}
+                  onChange={setCheckoutDate}
+                  placeholder={t('checkout')}
+                  minDate={bookingDate}
+                />
               </div>
               <div className="col-span-2 space-y-1.5">
                 <Label>{t('numGuests')}</Label>

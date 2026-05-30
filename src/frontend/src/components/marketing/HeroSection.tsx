@@ -199,7 +199,12 @@ export function HeroSection({ branches }: HeroSectionProps) {
           </div>
 
           <div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-y my-3 mx-3 rounded-xl overflow-hidden"
+            className={cn(
+              "grid grid-cols-1 border-y my-3 mx-3 rounded-xl overflow-hidden",
+              tab === "hourly"
+                ? "sm:grid-cols-2 lg:grid-cols-4"
+                : "sm:grid-cols-3",
+            )}
             style={{
               borderColor: "var(--color-border)",
               background: "rgba(255,255,255,0.6)",
@@ -288,7 +293,6 @@ export function HeroSection({ branches }: HeroSectionProps) {
                 label={t("checkout")}
                 icon={<CalendarDays className="w-3.5 h-3.5" />}
                 bordered
-                className="sm:col-span-2"
               >
                 <HeroDatePicker
                   value={checkOutDate}

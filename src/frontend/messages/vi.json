@@ -224,6 +224,9 @@
     "hours": "{n} giờ",
     "nights": "{n} đêm",
     "guests": "{n} khách",
-    "persons": "{n} người"
+    "persons": "{n} người",
+    "pickDate": "Chọn ngày",
+    "clearDate": "Xóa",
+    "today": "Hôm nay"
   }
 }

@@ -6,6 +6,11 @@ import { useRouter } from '@/i18n/navigation';
 import { Clock, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import {
+  DatePickerField,
+  dateToIsoDate,
+  startOfToday,
+} from '@/components/shared/DatePickerField';
 import { PriceDisplay } from '@/components/shared/PriceDisplay';
 import { apiClient } from '@/lib/api-client';
 import type { TimeSlotSuggestion } from '@/types';
@@ -18,8 +23,9 @@ export function TimeSlotsSection({ roomId }: TimeSlotsSectionProps) {
   const t = useTranslations('room');
   const router = useRouter();
 
-  const today = new Date().toISOString().split('T')[0];
-  const [date, setDate] = useState(today);
+  const today = startOfToday();
+  const [selectedDate, setSelectedDate] = useState<Date>(today);
+  const date = dateToIsoDate(selectedDate);
   const [slots, setSlots] = useState<TimeSlotSuggestion[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,13 +54,12 @@ export function TimeSlotsSection({ roomId }: TimeSlotsSectionProps) {
         <h2 className="text-xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>
           {t('timeSlots')}
         </h2>
-        <input
-          type="date"
-          value={date}
-          min={today}
-          onChange={(e) => setDate(e.target.value)}
-          className="text-sm border rounded-lg px-3 py-1.5 outline-none focus:border-[#00B4D8] transition-colors"
-          style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }}
+        <DatePickerField
+          variant="field"
+          className="w-[160px]"
+          value={selectedDate}
+          onChange={(d) => d && setSelectedDate(d)}
+          minDate={today}
         />
       </div>
 

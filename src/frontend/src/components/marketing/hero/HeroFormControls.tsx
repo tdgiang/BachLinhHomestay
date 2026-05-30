@@ -1,21 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { format } from 'date-fns';
-import { vi, enUS } from 'date-fns/locale';
-import { useLocale } from 'next-intl';
-import { CalendarIcon, ChevronDownIcon } from 'lucide-react';
 import Select, { type GroupBase, type StylesConfig } from 'react-select';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { HeroDatePicker } from '@/components/shared/DatePickerField';
 
-const dateLocales = { vi, en: enUS } as const;
+export { HeroDatePicker };
 
 export type HeroSelectOption = { value: string; label: string };
 
@@ -139,7 +129,7 @@ export function HeroFormField({
   return (
     <div
       className={cn(
-        'px-3.5 sm:px-4 py-3 flex flex-col gap-1.5 transition-colors hover:bg-white/80',
+        'min-w-0 px-3.5 sm:px-4 py-3 flex flex-col gap-1.5 transition-colors hover:bg-white/80',
         bordered && 'sm:border-l',
         className,
       )}
@@ -209,58 +199,3 @@ export function HeroSelect({
   );
 }
 
-export function HeroDatePicker({
-  value,
-  onChange,
-  placeholder,
-  minDate,
-  disabled,
-}: {
-  value?: Date;
-  onChange: (date: Date | undefined) => void;
-  placeholder: string;
-  minDate?: Date;
-  disabled?: boolean;
-}) {
-  const locale = useLocale() as keyof typeof dateLocales;
-  const dateLocale = dateLocales[locale] ?? vi;
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        render={
-          <Button
-            type="button"
-            variant="ghost"
-            disabled={disabled}
-            className={cn(
-              'w-full justify-start gap-2 h-auto min-h-0 border-0 bg-transparent px-0 py-0.5 text-sm font-normal shadow-none hover:bg-transparent cursor-pointer',
-              !value && 'text-[var(--color-text-muted)]',
-              value && 'text-[var(--color-text-primary)]',
-            )}
-          />
-        }
-      >
-        <CalendarIcon className="size-4 shrink-0 opacity-60" />
-        <span className="flex-1 text-left truncate">
-          {value ? format(value, 'dd/MM/yyyy', { locale: dateLocale }) : placeholder}
-        </span>
-        <ChevronDownIcon className="size-4 shrink-0 opacity-50" />
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start" sideOffset={8}>
-        <Calendar
-          mode="single"
-          selected={value}
-          onSelect={(day) => {
-            onChange(day);
-            setOpen(false);
-          }}
-          locale={dateLocale}
-          disabled={minDate ? { before: minDate } : undefined}
-          defaultMonth={value ?? minDate}
-        />
-      </PopoverContent>
-    </Popover>
-  );
-}

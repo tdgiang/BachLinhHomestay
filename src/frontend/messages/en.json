@@ -224,6 +224,9 @@
     "hours": "{n} hours",
     "nights": "{n} nights",
     "guests": "{n} guests",
-    "persons": "{n} persons"
+    "persons": "{n} persons",
+    "pickDate": "Pick a date",
+    "clearDate": "Clear",
+    "today": "Today"
   }
 }
