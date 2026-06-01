@@ -32,4 +32,5 @@ COPY prisma ./prisma
 
 EXPOSE 4000
 
-CMD ["node", "dist/main.js"]
+# Run migrations then start the server
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]

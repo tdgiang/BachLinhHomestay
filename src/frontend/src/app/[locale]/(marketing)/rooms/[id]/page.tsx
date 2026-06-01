@@ -175,7 +175,7 @@ export default async function RoomDetailPage({ params }: Props) {
                   className="font-semibold text-base"
                   style={{ color: "var(--color-text-primary)" }}
                 >
-                  Host: Ocean Blue Homestay
+                  Host: Ba.Li Homestay
                 </p>
                 <p
                   className="text-sm flex items-center gap-1"

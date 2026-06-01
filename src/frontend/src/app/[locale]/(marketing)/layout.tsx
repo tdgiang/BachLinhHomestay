@@ -1,16 +1,20 @@
-import type { Metadata } from 'next';
-import { Navbar } from '@/components/marketing/Navbar';
-import { Footer } from '@/components/marketing/Footer';
+import type { Metadata } from "next";
+import { Navbar } from "@/components/marketing/Navbar";
+import { Footer } from "@/components/marketing/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: 'Ocean Blue Homestay',
-    template: '%s — Ocean Blue Homestay',
+    default: "Ba.Li Homestay",
+    template: "%s — Ba.Li Homestay",
   },
-  description: 'Đặt phòng linh hoạt theo giờ & ngày tại chuỗi homestay Ocean Blue.',
+  description: "Đặt phòng linh hoạt theo giờ & ngày tại chuỗi homestay Ba.Li.",
 };
 
-export default function MarketingLayout({ children }: { children: React.ReactNode }) {
+export default function MarketingLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />

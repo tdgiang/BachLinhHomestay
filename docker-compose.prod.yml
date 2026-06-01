@@ -75,6 +75,7 @@ services:
       VNPAY_URL:               ${VNPAY_URL}
       VNPAY_RETURN_URL:        ${SITE_URL}/payment/callback
       VNPAY_IPN_URL:           ${API_URL}/api/v1/payments/vnpay/ipn
+      PUBLIC_URL:              ${API_URL}
     depends_on:
       postgres: { condition: service_healthy }
       redis:    { condition: service_healthy }

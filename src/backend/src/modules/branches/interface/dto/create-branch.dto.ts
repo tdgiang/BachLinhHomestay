@@ -4,12 +4,12 @@ import {
 } from 'class-validator';
 
 export class CreateBranchDto {
-  @ApiProperty({ example: 'Homestay Ocean Blue — Đà Nẵng Trung Tâm' })
+  @ApiProperty({ example: 'Homestay Ba.Li — Đà Nẵng Trung Tâm' })
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @ApiPropertyOptional({ example: 'Ocean Blue Homestay — Da Nang Center' })
+  @ApiPropertyOptional({ example: 'Ba.Li Homestay — Da Nang Center' })
   @IsString()
   @IsOptional()
   nameEn?: string;

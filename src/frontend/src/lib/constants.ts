@@ -1,11 +1,12 @@
-export const APP_NAME = 'Ocean Blue Homestay';
+export const APP_NAME = 'Ba.Li Homestay';
+export const LOGO_SRC = '/images/logo.png';
 export const APP_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
 
 export const NAV_ITEMS = [
-  { label: 'Tìm phòng', href: '/rooms' },
-  { label: 'Về chúng tôi', href: '/about' },
-  { label: 'Liên hệ', href: '/contact' },
+  // { label: 'Tìm phòng', href: '/rooms' },
+  // { label: 'Về chúng tôi', href: '/about' },
+  // { label: 'Liên hệ', href: '/contact' },
 ];
 
 export const ADMIN_NAV_ITEMS = [

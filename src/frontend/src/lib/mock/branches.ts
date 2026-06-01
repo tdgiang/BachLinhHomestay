@@ -3,8 +3,8 @@ import type { Branch } from '@/types';
 export const MOCK_BRANCHES: Branch[] = [
   {
     id: 'branch-da-nang-001',
-    name: 'Ocean Blue — Đà Nẵng Trung Tâm',
-    nameEn: 'Ocean Blue — Da Nang Center',
+    name: 'Ba.Li — Đà Nẵng Trung Tâm',
+    nameEn: 'Ba.Li — Da Nang Center',
     address: '12 Bạch Đằng, Hải Châu',
     city: 'Đà Nẵng',
     latitude: 16.0544,
@@ -18,8 +18,8 @@ export const MOCK_BRANCHES: Branch[] = [
   },
   {
     id: 'branch-da-nang-002',
-    name: 'Ocean Blue — Mỹ Khê',
-    nameEn: 'Ocean Blue — My Khe Beach',
+    name: 'Ba.Li — Mỹ Khê',
+    nameEn: 'Ba.Li — My Khe Beach',
     address: '58 Võ Nguyên Giáp, Ngũ Hành Sơn',
     city: 'Đà Nẵng',
     latitude: 16.0429,
@@ -33,8 +33,8 @@ export const MOCK_BRANCHES: Branch[] = [
   },
   {
     id: 'branch-hoi-an-001',
-    name: 'Ocean Blue — Hội An',
-    nameEn: 'Ocean Blue — Hoi An',
+    name: 'Ba.Li — Hội An',
+    nameEn: 'Ba.Li — Hoi An',
     address: '45 Cửa Đại, Cẩm An',
     city: 'Hội An',
     latitude: 15.8801,

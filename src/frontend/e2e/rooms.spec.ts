@@ -16,7 +16,7 @@ test.describe('Rooms Listing', () => {
 
   test('rooms page has correct title', async ({ page }) => {
     await page.goto('/vi/rooms');
-    await expect(page).toHaveTitle(/Tìm phòng|Rooms|Ocean Blue/);
+    await expect(page).toHaveTitle(/Tìm phòng|Rooms|Ba.Li/);
   });
 
   test('can navigate to room detail', async ({ page }) => {

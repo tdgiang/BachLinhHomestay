@@ -71,11 +71,10 @@ function FormField({
 
 async function getToken(): Promise<string> {
   const session = await getSession();
-  return (session as { accessToken?: string })?.accessToken ?? '';
+  return (session as { accessToken?: string })?.accessToken ?? "";
 }
 
 export default function AdminBranchesPage() {
-
   const [branches, setBranches] = useState<Branch[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -369,14 +368,14 @@ export default function AdminBranchesPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <FormField label="Tên chi nhánh *">
                 <Input
-                  placeholder="Homestay Ocean Blue — Đà Nẵng"
+                  placeholder="Homestay Ba.Li — Đà Nẵng"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
               </FormField>
               <FormField label="Tên tiếng Anh">
                 <Input
-                  placeholder="Ocean Blue — Da Nang"
+                  placeholder="Ba.Li — Da Nang"
                   value={form.nameEn}
                   onChange={(e) => setForm({ ...form, nameEn: e.target.value })}
                 />

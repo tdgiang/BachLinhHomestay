@@ -129,7 +129,7 @@ src/frontend/src/
 
 Route structure: `src/app/[locale]/` — wrap tất cả routes trong locale segment.
 
-### 1.2 Design Tokens — Ocean Blue Theme ✅
+### 1.2 Design Tokens — Ba.Li Theme ✅
 
 File: `src/frontend/src/app/globals.css`
 

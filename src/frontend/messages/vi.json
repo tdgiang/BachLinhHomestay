@@ -11,8 +11,8 @@
   },
   "home": {
     "heroEyebrow": "Đặt phòng linh hoạt theo giờ & ngày",
-    "heroTitle": "Nghỉ dưỡng theo cách của bạn",
-    "heroSubtitle": "Hơn 20 phòng tại 5+ chi nhánh ven biển. Đặt phòng theo giờ hoặc theo ngày — linh hoạt, tiện lợi.",
+    "heroTitle": "Lưu trú theo cách của bạn",
+    "heroSubtitle": "Hơn 20 phòng tại 5+ chi nhánh trung tâm Hà Nội. Đặt phòng theo giờ hoặc theo ngày — linh hoạt, tiện lợi.",
     "tabHourly": "Theo giờ",
     "tabDaily": "Theo ngày",
     "selectBranch": "Chọn chi nhánh",
@@ -202,7 +202,7 @@
     "phone": "Hotline",
     "email": "Email",
     "address": "Địa chỉ",
-    "copyright": "© {year} Ocean Blue Homestay. Bảo lưu mọi quyền."
+    "copyright": "© {year} Ba.Li Homestay. Bảo lưu mọi quyền."
   },
   "common": {
     "loading": "Đang tải...",

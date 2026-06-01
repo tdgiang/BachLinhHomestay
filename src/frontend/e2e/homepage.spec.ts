@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Homepage', () => {
   test('loads successfully and shows hero section', async ({ page }) => {
     await page.goto('/vi');
-    await expect(page).toHaveTitle(/Ocean Blue/);
+    await expect(page).toHaveTitle(/Ba.Li/);
     // Hero heading visible
     await expect(page.locator('h1, h2').first()).toBeVisible();
   });

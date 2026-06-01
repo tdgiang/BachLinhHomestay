@@ -17,8 +17,9 @@ const mockRepo = {
 };
 
 const mockRoomsService = {
-  findOne:           jest.fn(),
-  checkAvailability: jest.fn(),
+  findOne:                    jest.fn(),
+  checkAvailability:          jest.fn(),
+  invalidateAvailabilityCache: jest.fn(),
 };
 
 const mockVouchersService = {

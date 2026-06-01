@@ -1,4 +1,4 @@
-# Kế hoạch Test — Ocean Blue Homestay
+# Kế hoạch Test — Ba.Li Homestay
 
 > Tài liệu này mô tả test cases cho **từng chức năng** của hệ thống.  
 > Base URL backend: `http://localhost:4000/api/v1` | Frontend: `http://localhost:3000`  
@@ -476,7 +476,7 @@
 
 | #       | Test case                              | Cách kiểm tra      | Expected                           | Status |
 | ------- | -------------------------------------- | ------------------ | ---------------------------------- | ------ |
-| 10.1.1  | Trang load thành công                  | `GET /vi`          | HTTP 200, title chứa "Ocean Blue"  | ⬜     |
+| 10.1.1  | Trang load thành công                  | `GET /vi`          | HTTP 200, title chứa "Ba.Li"       | ⬜     |
 | 10.1.2  | Hero section hiển thị                  | Browser → homepage | H1/H2 visible, nền `#0D1B2A`       | ⬜     |
 | 10.1.3  | Tab "Theo giờ" / "Theo ngày" hoạt động | Click tab          | active pill chuyển màu             | ⬜     |
 | 10.1.4  | Dropdown chi nhánh có dữ liệu thật     | Mở dropdown        | 3 chi nhánh từ backend             | ⬜     |

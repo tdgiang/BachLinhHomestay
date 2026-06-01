@@ -59,8 +59,8 @@ async function main() {
     update: {},
     create: {
       id: 'br-hcm-01',
-      name: 'Ocean Blue Homestay — Sài Gòn Central',
-      nameEn: 'Ocean Blue Homestay — Saigon Central',
+      name: 'Ba.Li Homestay — Sài Gòn Central',
+      nameEn: 'Ba.Li Homestay — Saigon Central',
       address: '28 Bùi Viện, Phường Phạm Ngũ Lão, Quận 1',
       city: 'TP. Hồ Chí Minh',
       latitude: 10.76935,
@@ -77,8 +77,8 @@ async function main() {
     update: {},
     create: {
       id: 'br-dl-01',
-      name: 'Ocean Blue Homestay — Đà Lạt Highland',
-      nameEn: 'Ocean Blue Homestay — Da Lat Highland',
+      name: 'Ba.Li Homestay — Đà Lạt Highland',
+      nameEn: 'Ba.Li Homestay — Da Lat Highland',
       address: '15 Huỳnh Thúc Kháng, Phường 9',
       city: 'Đà Lạt',
       latitude: 11.94066,
@@ -95,8 +95,8 @@ async function main() {
     update: {},
     create: {
       id: 'br-pq-01',
-      name: 'Ocean Blue Homestay — Phú Quốc Beachside',
-      nameEn: 'Ocean Blue Homestay — Phu Quoc Beachside',
+      name: 'Ba.Li Homestay — Phú Quốc Beachside',
+      nameEn: 'Ba.Li Homestay — Phu Quoc Beachside',
       address: '68 Trần Hưng Đạo, Dương Tơ, Phú Quốc',
       city: 'Phú Quốc',
       latitude: 10.22884,

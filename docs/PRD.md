@@ -1,19 +1,21 @@
 # PRODUCT REQUIREMENTS DOCUMENT
+
 ## Website Đặt Phòng Chuỗi Homestay
-**Theme:** Ocean Blue | **Version:** 1.0 | **Ngày:** 16/05/2026 | **Tác giả:** BA — Claude Sonnet 4.6
+
+**Theme:** Ba.Li | **Version:** 1.0 | **Ngày:** 16/05/2026 | **Tác giả:** BA — Claude Sonnet 4.6
 
 ---
 
-| Hạng mục | Chi tiết |
-|---|---|
-| Tên sản phẩm | Website Đặt Phòng Chuỗi Homestay |
-| Phiên bản PRD | 1.0 |
-| Ngày tạo | 16/05/2026 |
-| Trạng thái | Draft — Sẵn sàng để dev |
-| Tech Stack | Next.js 14 + NestJS + PostgreSQL |
-| Deploy | VPS Ubuntu (Nginx + PM2 + Docker) |
-| Domain chính | bachlinh.com.vn |
-| Domain admin | admin.bachlinh.com.vn |
+| Hạng mục      | Chi tiết                          |
+| ------------- | --------------------------------- |
+| Tên sản phẩm  | Website Đặt Phòng Chuỗi Homestay  |
+| Phiên bản PRD | 1.0                               |
+| Ngày tạo      | 16/05/2026                        |
+| Trạng thái    | Draft — Sẵn sàng để dev           |
+| Tech Stack    | Next.js 14 + NestJS + PostgreSQL  |
+| Deploy        | VPS Ubuntu (Nginx + PM2 + Docker) |
+| Domain chính  | bachlinh.com.vn                   |
+| Domain admin  | admin.bachlinh.com.vn             |
 
 ---
 
@@ -38,32 +40,32 @@
 
 ### 1.1 Mục tiêu
 
-Xây dựng website đặt phòng trực tuyến cho chuỗi homestay với hơn 20 phòng tại hơn 5 chi nhánh, cho phép khách hàng đặt phòng **theo giờ** (tùy chọn số giờ) hoặc **theo ngày**, tích hợp thanh toán VNPay và Google Maps, giao diện song ngữ Việt–Anh theo phong cách gorio.vn với màu chủ đạo **Ocean Blue**.
+Xây dựng website đặt phòng trực tuyến cho chuỗi homestay với hơn 20 phòng tại hơn 5 chi nhánh, cho phép khách hàng đặt phòng **theo giờ** (tùy chọn số giờ) hoặc **theo ngày**, tích hợp thanh toán VNPay và Google Maps, giao diện song ngữ Việt–Anh theo phong cách gorio.vn với màu chủ đạo **Ba.Li**.
 
 ### 1.2 Phạm vi
 
-| Module | Mô tả | Ưu tiên |
-|---|---|---|
-| Website khách hàng | Trang tìm phòng, chi tiết phòng, đặt phòng, thanh toán | P0 |
-| Admin Dashboard | Quản lý phòng, booking, voucher, báo cáo | P0 |
-| REST API (NestJS) | Backend xử lý nghiệp vụ, kết nối DB | P0 |
-| Auth System | JWT cho khách có tài khoản + guest flow | P0 |
-| VNPay Integration | Thanh toán online qua cổng VNPay | P0 |
-| Google Maps | Hiển thị vị trí từng chi nhánh | P1 |
-| Voucher System | Tạo, quản lý và áp dụng mã giảm giá | P1 |
-| Revenue Reports | Dashboard báo cáo doanh thu theo ngày/tháng/năm | P1 |
+| Module             | Mô tả                                                  | Ưu tiên |
+| ------------------ | ------------------------------------------------------ | ------- |
+| Website khách hàng | Trang tìm phòng, chi tiết phòng, đặt phòng, thanh toán | P0      |
+| Admin Dashboard    | Quản lý phòng, booking, voucher, báo cáo               | P0      |
+| REST API (NestJS)  | Backend xử lý nghiệp vụ, kết nối DB                    | P0      |
+| Auth System        | JWT cho khách có tài khoản + guest flow                | P0      |
+| VNPay Integration  | Thanh toán online qua cổng VNPay                       | P0      |
+| Google Maps        | Hiển thị vị trí từng chi nhánh                         | P1      |
+| Voucher System     | Tạo, quản lý và áp dụng mã giảm giá                    | P1      |
+| Revenue Reports    | Dashboard báo cáo doanh thu theo ngày/tháng/năm        | P1      |
 
 ### 1.3 Định nghĩa thuật ngữ
 
-| Thuật ngữ | Định nghĩa |
-|---|---|
-| Branch / Chi nhánh | Một cơ sở homestay tại một địa điểm cụ thể |
-| Room / Phòng | Đơn vị cho thuê thuộc một chi nhánh |
-| Booking | Giao dịch đặt phòng của khách hàng |
-| Guest booking | Đặt phòng không cần tài khoản |
-| Time slot / Khung giờ | Khoảng thời gian thuê theo giờ được gợi ý |
-| Voucher | Mã giảm giá áp dụng khi đặt phòng |
-| Superhost | Host có đánh giá cao, hiển thị badge đặc biệt |
+| Thuật ngữ             | Định nghĩa                                    |
+| --------------------- | --------------------------------------------- |
+| Branch / Chi nhánh    | Một cơ sở homestay tại một địa điểm cụ thể    |
+| Room / Phòng          | Đơn vị cho thuê thuộc một chi nhánh           |
+| Booking               | Giao dịch đặt phòng của khách hàng            |
+| Guest booking         | Đặt phòng không cần tài khoản                 |
+| Time slot / Khung giờ | Khoảng thời gian thuê theo giờ được gợi ý     |
+| Voucher               | Mã giảm giá áp dụng khi đặt phòng             |
+| Superhost             | Host có đánh giá cao, hiển thị badge đặc biệt |
 
 ---
 
@@ -71,23 +73,23 @@ Xây dựng website đặt phòng trực tuyến cho chuỗi homestay với hơn
 
 ### 2.1 Tổng quan
 
-| Layer | Technology | Version | Ghi chú |
-|---|---|---|---|
-| Frontend | Next.js (App Router) | 14.x | SSR + SSG, SEO tốt |
-| UI Library | Tailwind CSS | 3.x | Utility-first CSS |
-| Component | shadcn/ui | Latest | Accessible components |
-| Backend | NestJS | 10.x | TypeScript, modular |
-| ORM | Prisma | 5.x | Type-safe DB access |
-| Database | PostgreSQL | 15.x | ACID, enterprise-grade |
-| Auth | JWT + Passport.js | — | Access + Refresh token |
-| Cache | Redis | 7.x | Session, rate limiting |
-| File Storage | MinIO / S3-compatible | — | Lưu ảnh phòng |
-| Payment | VNPay SDK | Latest | QR + thẻ nội địa + quốc tế |
-| Maps | Google Maps JS API | Weekly | Embed bản đồ chi nhánh |
-| Process Manager | PM2 | Latest | Quản lý Node process |
-| Reverse Proxy | Nginx | 1.24+ | SSL termination, routing |
-| Containerization | Docker + Compose | 24.x | Dev & prod environment |
-| CI/CD | GitHub Actions | — | Auto deploy lên VPS |
+| Layer            | Technology            | Version | Ghi chú                    |
+| ---------------- | --------------------- | ------- | -------------------------- |
+| Frontend         | Next.js (App Router)  | 14.x    | SSR + SSG, SEO tốt         |
+| UI Library       | Tailwind CSS          | 3.x     | Utility-first CSS          |
+| Component        | shadcn/ui             | Latest  | Accessible components      |
+| Backend          | NestJS                | 10.x    | TypeScript, modular        |
+| ORM              | Prisma                | 5.x     | Type-safe DB access        |
+| Database         | PostgreSQL            | 15.x    | ACID, enterprise-grade     |
+| Auth             | JWT + Passport.js     | —       | Access + Refresh token     |
+| Cache            | Redis                 | 7.x     | Session, rate limiting     |
+| File Storage     | MinIO / S3-compatible | —       | Lưu ảnh phòng              |
+| Payment          | VNPay SDK             | Latest  | QR + thẻ nội địa + quốc tế |
+| Maps             | Google Maps JS API    | Weekly  | Embed bản đồ chi nhánh     |
+| Process Manager  | PM2                   | Latest  | Quản lý Node process       |
+| Reverse Proxy    | Nginx                 | 1.24+   | SSL termination, routing   |
+| Containerization | Docker + Compose      | 24.x    | Dev & prod environment     |
+| CI/CD            | GitHub Actions        | —       | Auto deploy lên VPS        |
 
 ### 2.2 Cấu trúc project (Monorepo)
 
@@ -115,12 +117,12 @@ homestay-app/
 
 ### 2.3 Nginx routing
 
-| Domain | Proxy đến | Ghi chú |
-|---|---|---|
-| `bachlinh.com.vn` | `web:3000` | Website khách hàng (Next.js) |
-| `admin.bachlinh.com.vn` | `admin:3001` | Admin dashboard (Next.js) |
-| `api.bachlinh.com.vn` | `api:4000` | NestJS REST API |
-| `cdn.bachlinh.com.vn` | `minio:9000` | Static files / ảnh phòng |
+| Domain                  | Proxy đến    | Ghi chú                      |
+| ----------------------- | ------------ | ---------------------------- |
+| `bachlinh.com.vn`       | `web:3000`   | Website khách hàng (Next.js) |
+| `admin.bachlinh.com.vn` | `admin:3001` | Admin dashboard (Next.js)    |
+| `api.bachlinh.com.vn`   | `api:4000`   | NestJS REST API              |
+| `cdn.bachlinh.com.vn`   | `minio:9000` | Static files / ảnh phòng     |
 
 ---
 
@@ -438,54 +440,55 @@ model Review {
 
 ### 4.1 Authentication — `/auth`
 
-| Method | Endpoint | Auth | Mô tả |
-|---|---|---|---|
-| POST | `/auth/register` | Public | Đăng ký tài khoản (email/phone + password) |
-| POST | `/auth/login` | Public | Đăng nhập → trả về `access_token` + `refresh_token` |
-| POST | `/auth/refresh` | Public | Làm mới `access_token` bằng `refresh_token` |
-| POST | `/auth/logout` | Bearer | Thu hồi refresh_token |
-| GET | `/auth/me` | Bearer | Lấy thông tin user hiện tại |
+| Method | Endpoint         | Auth   | Mô tả                                               |
+| ------ | ---------------- | ------ | --------------------------------------------------- |
+| POST   | `/auth/register` | Public | Đăng ký tài khoản (email/phone + password)          |
+| POST   | `/auth/login`    | Public | Đăng nhập → trả về `access_token` + `refresh_token` |
+| POST   | `/auth/refresh`  | Public | Làm mới `access_token` bằng `refresh_token`         |
+| POST   | `/auth/logout`   | Bearer | Thu hồi refresh_token                               |
+| GET    | `/auth/me`       | Bearer | Lấy thông tin user hiện tại                         |
 
 ### 4.2 Branches — `/branches`
 
-| Method | Endpoint | Auth | Mô tả |
-|---|---|---|---|
-| GET | `/branches` | Public | Danh sách chi nhánh. Query: `city`, `is_active` |
-| GET | `/branches/:id` | Public | Chi tiết chi nhánh + Google Maps embed URL |
-| POST | `/branches` | Admin | Tạo chi nhánh mới |
-| PATCH | `/branches/:id` | Admin | Cập nhật chi nhánh |
-| DELETE | `/branches/:id` | Admin | Xóa chi nhánh (soft delete `is_active=false`) |
+| Method | Endpoint        | Auth   | Mô tả                                           |
+| ------ | --------------- | ------ | ----------------------------------------------- |
+| GET    | `/branches`     | Public | Danh sách chi nhánh. Query: `city`, `is_active` |
+| GET    | `/branches/:id` | Public | Chi tiết chi nhánh + Google Maps embed URL      |
+| POST   | `/branches`     | Admin  | Tạo chi nhánh mới                               |
+| PATCH  | `/branches/:id` | Admin  | Cập nhật chi nhánh                              |
+| DELETE | `/branches/:id` | Admin  | Xóa chi nhánh (soft delete `is_active=false`)   |
 
 ### 4.3 Rooms — `/rooms`
 
-| Method | Endpoint | Auth | Mô tả |
-|---|---|---|---|
-| GET | `/rooms` | Public | Danh sách phòng. Query: `branch_id`, `type` (hourly\|daily), `check_in`, `check_out`, `amenities`, `price_max`, `page`, `limit` |
-| GET | `/rooms/:id` | Public | Chi tiết phòng + amenities + images + time_slots + policies + reviews |
-| GET | `/rooms/:id/availability` | Public | Kiểm tra phòng trống theo date range |
-| GET | `/rooms/:id/time-slots?date=2026-05-16` | Public | Gợi ý khung giờ theo ngày cụ thể |
-| POST | `/rooms` | Admin | Tạo phòng mới |
-| PATCH | `/rooms/:id` | Admin | Cập nhật thông tin phòng |
-| DELETE | `/rooms/:id` | Admin | Xóa phòng (soft delete) |
-| POST | `/rooms/:id/images` | Admin | Upload ảnh phòng (multipart/form-data) |
-| PATCH | `/rooms/:id/images/reorder` | Admin | Sắp xếp lại thứ tự ảnh |
-| DELETE | `/rooms/:id/images/:imgId` | Admin | Xóa ảnh phòng |
+| Method | Endpoint                                | Auth   | Mô tả                                                                                                                           |
+| ------ | --------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| GET    | `/rooms`                                | Public | Danh sách phòng. Query: `branch_id`, `type` (hourly\|daily), `check_in`, `check_out`, `amenities`, `price_max`, `page`, `limit` |
+| GET    | `/rooms/:id`                            | Public | Chi tiết phòng + amenities + images + time_slots + policies + reviews                                                           |
+| GET    | `/rooms/:id/availability`               | Public | Kiểm tra phòng trống theo date range                                                                                            |
+| GET    | `/rooms/:id/time-slots?date=2026-05-16` | Public | Gợi ý khung giờ theo ngày cụ thể                                                                                                |
+| POST   | `/rooms`                                | Admin  | Tạo phòng mới                                                                                                                   |
+| PATCH  | `/rooms/:id`                            | Admin  | Cập nhật thông tin phòng                                                                                                        |
+| DELETE | `/rooms/:id`                            | Admin  | Xóa phòng (soft delete)                                                                                                         |
+| POST   | `/rooms/:id/images`                     | Admin  | Upload ảnh phòng (multipart/form-data)                                                                                          |
+| PATCH  | `/rooms/:id/images/reorder`             | Admin  | Sắp xếp lại thứ tự ảnh                                                                                                          |
+| DELETE | `/rooms/:id/images/:imgId`              | Admin  | Xóa ảnh phòng                                                                                                                   |
 
 ### 4.4 Bookings — `/bookings`
 
-| Method | Endpoint | Auth | Mô tả |
-|---|---|---|---|
-| POST | `/bookings` | Public | Tạo booking mới |
-| GET | `/bookings/code/:code` | Public | Tra cứu booking bằng `booking_code` |
-| GET | `/bookings/:id` | Public | Chi tiết booking |
-| POST | `/bookings/:id/cancel` | Bearer/Public | Yêu cầu hủy booking |
-| GET | `/bookings/my` | Bearer | Lịch sử booking của user đăng nhập |
-| GET | `/bookings` | Admin | Danh sách tất cả booking. Filter: `status`, `room_id`, `branch_id`, `payment_method`, `date_from`, `date_to`, `page`, `limit` |
-| PATCH | `/bookings/:id/status` | Admin | Cập nhật `booking_status` |
-| PATCH | `/bookings/:id/refund` | Admin | Xử lý hoàn tiền thủ công |
-| GET | `/bookings/export/csv` | Admin | Export CSV theo bộ lọc hiện tại |
+| Method | Endpoint               | Auth          | Mô tả                                                                                                                         |
+| ------ | ---------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| POST   | `/bookings`            | Public        | Tạo booking mới                                                                                                               |
+| GET    | `/bookings/code/:code` | Public        | Tra cứu booking bằng `booking_code`                                                                                           |
+| GET    | `/bookings/:id`        | Public        | Chi tiết booking                                                                                                              |
+| POST   | `/bookings/:id/cancel` | Bearer/Public | Yêu cầu hủy booking                                                                                                           |
+| GET    | `/bookings/my`         | Bearer        | Lịch sử booking của user đăng nhập                                                                                            |
+| GET    | `/bookings`            | Admin         | Danh sách tất cả booking. Filter: `status`, `room_id`, `branch_id`, `payment_method`, `date_from`, `date_to`, `page`, `limit` |
+| PATCH  | `/bookings/:id/status` | Admin         | Cập nhật `booking_status`                                                                                                     |
+| PATCH  | `/bookings/:id/refund` | Admin         | Xử lý hoàn tiền thủ công                                                                                                      |
+| GET    | `/bookings/export/csv` | Admin         | Export CSV theo bộ lọc hiện tại                                                                                               |
 
 **Body POST `/bookings`:**
+
 ```json
 {
   "room_id": "uuid",
@@ -505,24 +508,25 @@ model Review {
 
 ### 4.5 Payments — `/payments`
 
-| Method | Endpoint | Auth | Mô tả |
-|---|---|---|---|
-| POST | `/payments/vnpay/create` | Public | Tạo URL thanh toán VNPay từ `booking_id` |
-| GET | `/payments/vnpay/callback` | Public | VNPay redirect sau thanh toán — verify & update DB |
-| POST | `/payments/vnpay/ipn` | Public | VNPay IPN webhook (xác nhận bất đồng bộ) |
-| GET | `/payments/:bookingId` | Bearer/Admin | Lấy thông tin payment của booking |
+| Method | Endpoint                   | Auth         | Mô tả                                              |
+| ------ | -------------------------- | ------------ | -------------------------------------------------- |
+| POST   | `/payments/vnpay/create`   | Public       | Tạo URL thanh toán VNPay từ `booking_id`           |
+| GET    | `/payments/vnpay/callback` | Public       | VNPay redirect sau thanh toán — verify & update DB |
+| POST   | `/payments/vnpay/ipn`      | Public       | VNPay IPN webhook (xác nhận bất đồng bộ)           |
+| GET    | `/payments/:bookingId`     | Bearer/Admin | Lấy thông tin payment của booking                  |
 
 ### 4.6 Vouchers — `/vouchers`
 
-| Method | Endpoint | Auth | Mô tả |
-|---|---|---|---|
-| POST | `/vouchers/validate` | Public | Kiểm tra mã voucher + tính số tiền giảm |
-| GET | `/vouchers` | Admin | Danh sách vouchers |
-| POST | `/vouchers` | Admin | Tạo voucher mới |
-| PATCH | `/vouchers/:id` | Admin | Cập nhật voucher |
-| DELETE | `/vouchers/:id` | Admin | Xóa voucher |
+| Method | Endpoint             | Auth   | Mô tả                                   |
+| ------ | -------------------- | ------ | --------------------------------------- |
+| POST   | `/vouchers/validate` | Public | Kiểm tra mã voucher + tính số tiền giảm |
+| GET    | `/vouchers`          | Admin  | Danh sách vouchers                      |
+| POST   | `/vouchers`          | Admin  | Tạo voucher mới                         |
+| PATCH  | `/vouchers/:id`      | Admin  | Cập nhật voucher                        |
+| DELETE | `/vouchers/:id`      | Admin  | Xóa voucher                             |
 
 **Body POST `/vouchers/validate`:**
+
 ```json
 {
   "code": "SUMMER30",
@@ -532,22 +536,22 @@ model Review {
 
 ### 4.7 Reports — `/reports` _(Admin only)_
 
-| Method | Endpoint | Mô tả |
-|---|---|---|
-| GET | `/reports/revenue/daily?date=2026-05-16` | Doanh thu ngày cụ thể |
-| GET | `/reports/revenue/monthly?year=2026&month=5` | Doanh thu tháng |
-| GET | `/reports/revenue/yearly?year=2026` | Doanh thu năm (chart 12 tháng) |
-| GET | `/reports/revenue/by-branch?from=...&to=...` | Doanh thu phân chia theo chi nhánh |
-| GET | `/reports/bookings/summary` | Tổng hợp: tổng, pending, completed, cancelled |
-| GET | `/reports/rooms/occupancy?from=...&to=...` | Tỷ lệ lấp đầy theo phòng |
+| Method | Endpoint                                     | Mô tả                                         |
+| ------ | -------------------------------------------- | --------------------------------------------- |
+| GET    | `/reports/revenue/daily?date=2026-05-16`     | Doanh thu ngày cụ thể                         |
+| GET    | `/reports/revenue/monthly?year=2026&month=5` | Doanh thu tháng                               |
+| GET    | `/reports/revenue/yearly?year=2026`          | Doanh thu năm (chart 12 tháng)                |
+| GET    | `/reports/revenue/by-branch?from=...&to=...` | Doanh thu phân chia theo chi nhánh            |
+| GET    | `/reports/bookings/summary`                  | Tổng hợp: tổng, pending, completed, cancelled |
+| GET    | `/reports/rooms/occupancy?from=...&to=...`   | Tỷ lệ lấp đầy theo phòng                      |
 
 ### 4.8 Reviews — `/reviews`
 
-| Method | Endpoint | Auth | Mô tả |
-|---|---|---|---|
-| GET | `/reviews/room/:roomId?page=1&limit=10` | Public | Danh sách reviews của phòng |
-| POST | `/reviews` | Bearer | Gửi đánh giá (cần `booking_status = completed`) |
-| DELETE | `/reviews/:id` | Admin | Xóa review vi phạm |
+| Method | Endpoint                                | Auth   | Mô tả                                           |
+| ------ | --------------------------------------- | ------ | ----------------------------------------------- |
+| GET    | `/reviews/room/:roomId?page=1&limit=10` | Public | Danh sách reviews của phòng                     |
+| POST   | `/reviews`                              | Bearer | Gửi đánh giá (cần `booking_status = completed`) |
+| DELETE | `/reviews/:id`                          | Admin  | Xóa review vi phạm                              |
 
 ---
 
@@ -555,24 +559,25 @@ model Review {
 
 ### 5.1 Cấu trúc routes
 
-| Route | Page Component | Mô tả |
-|---|---|---|
-| `/` | `HomePage` | Hero search + phòng nổi bật + khung giờ gợi ý |
-| `/rooms` | `RoomsPage` | Danh sách phòng với filter chips + 2-column grid |
-| `/rooms/[id]` | `RoomDetailPage` | Chi tiết phòng: ảnh, amenities, policies, reviews, time slots |
-| `/booking/[roomId]` | `BookingPage` | Form đặt phòng (giờ/ngày, thông tin, voucher) |
-| `/booking/[id]/confirm` | `ConfirmPage` | Tóm tắt đơn + chọn phương thức thanh toán |
-| `/booking/[id]/success` | `SuccessPage` | Thành công — hiển thị mã booking |
-| `/payment/callback` | `PaymentCallbackPage` | VNPay redirect — verify & redirect |
-| `/track?code=HMS-xxx` | `TrackBookingPage` | Tra cứu booking bằng mã (public) |
-| `/my-bookings` | `MyBookingsPage` | Lịch sử đặt phòng (auth required) |
-| `/my-bookings/[id]` | `BookingDetailPage` | Chi tiết booking của user |
-| `/auth/login` | `LoginPage` | Đăng nhập |
-| `/auth/register` | `RegisterPage` | Đăng ký tài khoản |
+| Route                   | Page Component        | Mô tả                                                         |
+| ----------------------- | --------------------- | ------------------------------------------------------------- |
+| `/`                     | `HomePage`            | Hero search + phòng nổi bật + khung giờ gợi ý                 |
+| `/rooms`                | `RoomsPage`           | Danh sách phòng với filter chips + 2-column grid              |
+| `/rooms/[id]`           | `RoomDetailPage`      | Chi tiết phòng: ảnh, amenities, policies, reviews, time slots |
+| `/booking/[roomId]`     | `BookingPage`         | Form đặt phòng (giờ/ngày, thông tin, voucher)                 |
+| `/booking/[id]/confirm` | `ConfirmPage`         | Tóm tắt đơn + chọn phương thức thanh toán                     |
+| `/booking/[id]/success` | `SuccessPage`         | Thành công — hiển thị mã booking                              |
+| `/payment/callback`     | `PaymentCallbackPage` | VNPay redirect — verify & redirect                            |
+| `/track?code=HMS-xxx`   | `TrackBookingPage`    | Tra cứu booking bằng mã (public)                              |
+| `/my-bookings`          | `MyBookingsPage`      | Lịch sử đặt phòng (auth required)                             |
+| `/my-bookings/[id]`     | `BookingDetailPage`   | Chi tiết booking của user                                     |
+| `/auth/login`           | `LoginPage`           | Đăng nhập                                                     |
+| `/auth/register`        | `RegisterPage`        | Đăng ký tài khoản                                             |
 
 ### 5.2 Trang chủ (`/`)
 
 #### Hero Section
+
 - **Nền:** `#0D1B2A` (ocean dark navy), full width
 - **Eyebrow:** `🌊 Đặt phòng linh hoạt theo giờ & ngày` — màu `#90E0EF`
 - **Tiêu đề:** Font 28–32px, bold, trắng, 2 dòng
@@ -584,13 +589,16 @@ model Review {
 - **Nút:** `Tìm phòng trống` — full width, bg `#00B4D8`, border-radius 10px
 
 #### Filter chips (ngang, scroll ẩn scrollbar)
+
 ```
 [Tất cả] [Theo giờ] [Theo ngày] [Dưới 500k] [Ban công] [Bồn tắm] [Duplex] [Gác xép] [🔧]
 ```
+
 - Chip default: border `#DCE8F0`, bg white, text `#556677`
 - Chip active: border `#00B4D8`, bg `#E6F4FB`, text `#0077B6`
 
 #### Room listing — 2-column grid
+
 - Ảnh tỷ lệ `1:1`, `border-radius: 12px`, carousel dots phía dưới
 - Heart button góc trên phải (yêu thích — auth required)
 - Badge `Được khách yêu thích` nếu `is_guest_favorite = true`
@@ -601,24 +609,25 @@ model Review {
 
 ### 5.3 Trang chi tiết phòng (`/rooms/[id]`)
 
-| Section | Nội dung chi tiết |
-|---|---|
-| **Hero image** | Full-width carousel tối đa 10 ảnh, counter `1/N` góc dưới phải, back button góc trên trái |
-| **Room title** | Tên phòng, specs: `1 bedroom · 1 bed · 1 bathroom · 1 kitchen` |
-| **Host info** | Avatar chữ cái màu `#00B4D8`, tên host, badge Superhost, số tháng kinh nghiệm |
-| **3 Highlights** | Self check-in icon / Cho phép đặt theo giờ icon / Standard time frame (14:00 – 11:00) |
-| **Amenities** | Grid 2 cột, hiển thị 6 tiện ích chính, nút `Hiển thị thêm (N)` |
-| **Featured amenities** | Ảnh thực tế + tên tiện ích + `Miễn phí` / `Có phí` |
-| **Description** | Mô tả phòng (VI/EN theo ngôn ngữ hiện tại), nút `Đọc thêm` nếu dài |
-| **Vị trí** | Google Maps embed (`<iframe>`) + tên quận/huyện |
-| **Nội quy & chính sách** | Gửi xe máy / Gửi ô tô / Giá theo giờ / Lưu ý trải nghiệm (✓/✗) / Nội quy / Chính sách hủy |
-| **Reviews** | Tab: `Đánh giá` \| `Hồ sơ Host`. Card: avatar chữ cái + tên + ngày + ⭐⭐⭐⭐⭐ + text + `hiển thị thêm` |
-| **Gợi ý khung giờ** | 2–3 time slots cho ngày hiện tại: ⏱ `14:00 – 17:00` · ~~490.000₫~~ **390.000₫** · `[Đặt ngay]` |
-| **Sticky bottom bar** | ~~590.000₫~~ **490.000₫** · `từ 16/05 – 17/05` · `[Thay đổi]` · `[Đặt phòng]` |
+| Section                  | Nội dung chi tiết                                                                                        |
+| ------------------------ | -------------------------------------------------------------------------------------------------------- |
+| **Hero image**           | Full-width carousel tối đa 10 ảnh, counter `1/N` góc dưới phải, back button góc trên trái                |
+| **Room title**           | Tên phòng, specs: `1 bedroom · 1 bed · 1 bathroom · 1 kitchen`                                           |
+| **Host info**            | Avatar chữ cái màu `#00B4D8`, tên host, badge Superhost, số tháng kinh nghiệm                            |
+| **3 Highlights**         | Self check-in icon / Cho phép đặt theo giờ icon / Standard time frame (14:00 – 11:00)                    |
+| **Amenities**            | Grid 2 cột, hiển thị 6 tiện ích chính, nút `Hiển thị thêm (N)`                                           |
+| **Featured amenities**   | Ảnh thực tế + tên tiện ích + `Miễn phí` / `Có phí`                                                       |
+| **Description**          | Mô tả phòng (VI/EN theo ngôn ngữ hiện tại), nút `Đọc thêm` nếu dài                                       |
+| **Vị trí**               | Google Maps embed (`<iframe>`) + tên quận/huyện                                                          |
+| **Nội quy & chính sách** | Gửi xe máy / Gửi ô tô / Giá theo giờ / Lưu ý trải nghiệm (✓/✗) / Nội quy / Chính sách hủy                |
+| **Reviews**              | Tab: `Đánh giá` \| `Hồ sơ Host`. Card: avatar chữ cái + tên + ngày + ⭐⭐⭐⭐⭐ + text + `hiển thị thêm` |
+| **Gợi ý khung giờ**      | 2–3 time slots cho ngày hiện tại: ⏱ `14:00 – 17:00` · ~~490.000₫~~ **390.000₫** · `[Đặt ngay]`           |
+| **Sticky bottom bar**    | ~~590.000₫~~ **490.000₫** · `từ 16/05 – 17/05` · `[Thay đổi]` · `[Đặt phòng]`                            |
 
 ### 5.4 Form đặt phòng (`/booking/[roomId]`)
 
 #### Theo giờ
+
 - Chọn ngày (date picker, không cho chọn ngày quá khứ)
 - Chọn giờ vào (time picker, bước 30 phút)
 - Chọn số giờ (stepper: `min_hours` → 12h)
@@ -626,23 +635,27 @@ model Review {
 - **Tính giá:** `base = price_per_hour × num_hours + (extra_person_price × max(0, num_guests - capacity_base))`
 
 #### Theo ngày
+
 - Chọn ngày nhận phòng (date picker)
 - Chọn ngày trả phòng (tối thiểu ngày hôm sau)
 - Chọn số khách
 - **Tính giá:** `base = price_per_day × num_nights`
 
 #### Thông tin khách hàng
+
 - Họ và tên `*`
 - Số điện thoại `*`
 - Email (tùy chọn)
 - Ghi chú cho host (tùy chọn)
 
 #### Voucher
+
 - Input nhập mã + nút `Áp dụng`
 - Gọi `POST /vouchers/validate` — hiển thị số tiền giảm ngay (realtime)
 - Lỗi inline nếu mã không hợp lệ / hết hạn
 
 #### Tóm tắt đơn
+
 ```
 Giá phòng:     490.000₫
 Giảm giá:      -49.000₫  (voucher SUMMER10)
@@ -653,43 +666,43 @@ Tổng cộng:     541.000₫
 
 ### 5.5 Trang xác nhận & thanh toán (`/booking/[id]/confirm`)
 
-| Phương thức | Flow |
-|---|---|
-| **VNPay** | `POST /payments/vnpay/create` → redirect VNPay → callback `/payment/callback` → `/booking/[id]/success` |
-| **Tiền mặt** | `POST /bookings` với `payment_method=cash` → `booking_status=pending` → hiển thị mã booking |
+| Phương thức  | Flow                                                                                                    |
+| ------------ | ------------------------------------------------------------------------------------------------------- |
+| **VNPay**    | `POST /payments/vnpay/create` → redirect VNPay → callback `/payment/callback` → `/booking/[id]/success` |
+| **Tiền mặt** | `POST /bookings` với `payment_method=cash` → `booking_status=pending` → hiển thị mã booking             |
 
-### 5.6 Design Tokens — Ocean Blue Theme
+### 5.6 Design Tokens — Ba.Li Theme
 
 ```css
 /* ─── Colors ─── */
---color-primary:        #00B4D8;  /* Buttons, active states, icons accent */
---color-primary-dark:   #0077B6;  /* Hover states, headings, links */
---color-primary-light:  #90E0EF;  /* Muted text trên nền tối, badges */
---color-hero-bg:        #0D1B2A;  /* Hero section background */
---color-hero-card:      rgba(255,255,255,0.06); /* Search form */
---color-card-bg:        #FFFFFF;  /* Room cards, detail sections */
---color-surface:        #F5F8FA;  /* Page background, alternating rows */
---color-border:         #DCE8F0;  /* Borders, dividers */
---color-text-primary:   #1A2A3A;  /* Body text chính */
---color-text-secondary: #8EA3B3;  /* Muted text, địa chỉ, ngày tháng */
---color-success:        #2ECC71;  /* Available badge, ✓ icon */
---color-danger:         #E24B4A;  /* ✗ icon, error states */
---color-warning:        #FF9500;  /* Star rating */
+--color-primary: #00b4d8; /* Buttons, active states, icons accent */
+--color-primary-dark: #0077b6; /* Hover states, headings, links */
+--color-primary-light: #90e0ef; /* Muted text trên nền tối, badges */
+--color-hero-bg: #0d1b2a; /* Hero section background */
+--color-hero-card: rgba(255, 255, 255, 0.06); /* Search form */
+--color-card-bg: #ffffff; /* Room cards, detail sections */
+--color-surface: #f5f8fa; /* Page background, alternating rows */
+--color-border: #dce8f0; /* Borders, dividers */
+--color-text-primary: #1a2a3a; /* Body text chính */
+--color-text-secondary: #8ea3b3; /* Muted text, địa chỉ, ngày tháng */
+--color-success: #2ecc71; /* Available badge, ✓ icon */
+--color-danger: #e24b4a; /* ✗ icon, error states */
+--color-warning: #ff9500; /* Star rating */
 
 /* ─── Typography ─── */
---font-sans: 'Inter', system-ui, -apple-system, sans-serif;
---font-size-xs:   11px;
---font-size-sm:   13px;
+--font-sans: "Inter", system-ui, -apple-system, sans-serif;
+--font-size-xs: 11px;
+--font-size-sm: 13px;
 --font-size-base: 15px;
---font-size-lg:   17px;
---font-size-xl:   20px;
---font-size-2xl:  24px;
+--font-size-lg: 17px;
+--font-size-xl: 20px;
+--font-size-2xl: 24px;
 
 /* ─── Spacing & Radius ─── */
---radius-card:  12px;
---radius-pill:  24px;
---radius-btn:    9px;
---radius-badge:  6px;
+--radius-card: 12px;
+--radius-pill: 24px;
+--radius-btn: 9px;
+--radius-badge: 6px;
 ```
 
 ### 5.7 i18n — Song ngữ
@@ -706,38 +719,40 @@ Tổng cộng:     541.000₫
 
 ### 6.1 Routes
 
-| Route | Trang | Chức năng |
-|---|---|---|
-| `/` | Dashboard | Metric cards + revenue chart + recent bookings |
-| `/branches` | Danh sách chi nhánh | CRUD chi nhánh |
-| `/branches/[id]/rooms` | Phòng theo chi nhánh | Danh sách phòng, thêm mới |
-| `/rooms/[id]` | Chi tiết phòng admin | Chỉnh sửa phòng, upload ảnh, cấu hình giá/tiện nghi/time slots |
-| `/bookings` | Quản lý booking | Danh sách, filter, xác nhận, hủy, hoàn tiền |
-| `/bookings/[id]` | Chi tiết booking | Xem đầy đủ, đổi trạng thái, ghi chú admin |
-| `/vouchers` | Quản lý voucher | CRUD voucher, xem thống kê dùng |
-| `/reports` | Báo cáo doanh thu | Chart ngày/tháng/năm + filter chi nhánh |
-| `/reviews` | Quản lý đánh giá | Xem, xóa review vi phạm |
-| `/settings` | Cài đặt | Thông tin admin, đổi mật khẩu |
+| Route                  | Trang                | Chức năng                                                      |
+| ---------------------- | -------------------- | -------------------------------------------------------------- |
+| `/`                    | Dashboard            | Metric cards + revenue chart + recent bookings                 |
+| `/branches`            | Danh sách chi nhánh  | CRUD chi nhánh                                                 |
+| `/branches/[id]/rooms` | Phòng theo chi nhánh | Danh sách phòng, thêm mới                                      |
+| `/rooms/[id]`          | Chi tiết phòng admin | Chỉnh sửa phòng, upload ảnh, cấu hình giá/tiện nghi/time slots |
+| `/bookings`            | Quản lý booking      | Danh sách, filter, xác nhận, hủy, hoàn tiền                    |
+| `/bookings/[id]`       | Chi tiết booking     | Xem đầy đủ, đổi trạng thái, ghi chú admin                      |
+| `/vouchers`            | Quản lý voucher      | CRUD voucher, xem thống kê dùng                                |
+| `/reports`             | Báo cáo doanh thu    | Chart ngày/tháng/năm + filter chi nhánh                        |
+| `/reviews`             | Quản lý đánh giá     | Xem, xóa review vi phạm                                        |
+| `/settings`            | Cài đặt              | Thông tin admin, đổi mật khẩu                                  |
 
 ### 6.2 Dashboard — Metric cards
 
-| Card | Data | So sánh |
-|---|---|---|
-| Doanh thu hôm nay | `SUM(total_amount) WHERE date=today AND status=confirmed` | vs hôm qua |
-| Booking hôm nay | `COUNT bookings WHERE date=today` | vs hôm qua |
-| Phòng đang được thuê | `COUNT bookings WHERE status=checked_in` | Live |
-| Tỷ lệ lấp đầy | `booked_rooms / total_rooms × 100%` | vs tuần trước |
+| Card                 | Data                                                      | So sánh       |
+| -------------------- | --------------------------------------------------------- | ------------- |
+| Doanh thu hôm nay    | `SUM(total_amount) WHERE date=today AND status=confirmed` | vs hôm qua    |
+| Booking hôm nay      | `COUNT bookings WHERE date=today`                         | vs hôm qua    |
+| Phòng đang được thuê | `COUNT bookings WHERE status=checked_in`                  | Live          |
+| Tỷ lệ lấp đầy        | `booked_rooms / total_rooms × 100%`                       | vs tuần trước |
 
 ### 6.3 Quản lý booking
 
 **Filter bar:** chi nhánh | phòng | trạng thái | phương thức thanh toán | khoảng ngày
 
 **Bảng columns:**
+
 ```
 Mã booking | Khách hàng | Phòng | Chi nhánh | Check-in | Check-out | Tổng tiền | TT thanh toán | TT booking | Hành động
 ```
 
 **Hành động từng row:**
+
 - `Xác nhận` (pending → confirmed)
 - `Check-in` (confirmed → checked_in)
 - `Check-out` (checked_in → completed)
@@ -749,6 +764,7 @@ Mã booking | Khách hàng | Phòng | Chi nhánh | Check-in | Check-out | Tổng
 ### 6.4 Quản lý phòng
 
 **Form tạo/sửa phòng:**
+
 - Thông tin cơ bản: tên VI/EN, mô tả VI/EN, chi nhánh, số phòng, tầng, sức chứa
 - Giá: giá/giờ, giá gốc/giờ, giá/ngày, giá gốc/ngày, số giờ tối thiểu, giá thêm giờ, giá thêm người
 - Cài đặt: cho phép đặt theo giờ, giờ check-in/out, trạng thái, is_featured, is_guest_favorite
@@ -769,22 +785,22 @@ Mã booking | Khách hàng | Phòng | Chi nhánh | Check-in | Check-out | Tổng
 
 ## 7. YÊU CẦU PHI CHỨC NĂNG
 
-| Hạng mục | Yêu cầu | Ghi chú |
-|---|---|---|
-| **Hiệu năng** | LCP < 2.5s, FCP < 1.8s | Next.js SSG + image optimization |
-| **SEO** | SSR cho `/rooms/[id]`, sitemap.xml, robots.txt, Open Graph tags | `next-seo` package |
-| **Mobile** | Responsive 360px–1440px, touch target ≥ 44px | Tailwind responsive breakpoints |
-| **Ngôn ngữ** | Song ngữ VI/EN, switch toggle trên navbar | `next-intl` |
-| **JWT Auth** | Access token 15 phút, Refresh token 30 ngày (rotate), HttpOnly cookie | Passport.js + NestJS Guards |
-| **Rate limiting** | 100 req/min/IP cho public endpoints, 20 req/min cho auth endpoints | `@nestjs/throttler` + Redis |
-| **Security** | Helmet.js, CORS whitelist, SQL injection protection (Prisma), XSS sanitization | |
-| **HTTPS** | Let's Encrypt SSL, auto-renew | Certbot + Nginx |
-| **Backup DB** | Daily pg_dump, giữ 30 ngày, upload lên MinIO/S3 | Cron job |
-| **Uptime** | Target 99.5% | PM2 cluster mode, Nginx keepalive |
-| **Image** | Max 10MB/ảnh, JPEG/PNG/WebP, auto-resize → WebP, lưu MinIO | Sharp |
-| **Payment security** | HTTPS bắt buộc, không lưu thông tin thẻ, verify chữ ký VNPay | |
-| **Logging** | Request logs, error logs, payment logs riêng biệt | Winston + `winston-daily-rotate-file` |
-| **Health check** | `GET /api/health` trả về 200 OK | PM2 + Nginx upstream check |
+| Hạng mục             | Yêu cầu                                                                        | Ghi chú                               |
+| -------------------- | ------------------------------------------------------------------------------ | ------------------------------------- |
+| **Hiệu năng**        | LCP < 2.5s, FCP < 1.8s                                                         | Next.js SSG + image optimization      |
+| **SEO**              | SSR cho `/rooms/[id]`, sitemap.xml, robots.txt, Open Graph tags                | `next-seo` package                    |
+| **Mobile**           | Responsive 360px–1440px, touch target ≥ 44px                                   | Tailwind responsive breakpoints       |
+| **Ngôn ngữ**         | Song ngữ VI/EN, switch toggle trên navbar                                      | `next-intl`                           |
+| **JWT Auth**         | Access token 15 phút, Refresh token 30 ngày (rotate), HttpOnly cookie          | Passport.js + NestJS Guards           |
+| **Rate limiting**    | 100 req/min/IP cho public endpoints, 20 req/min cho auth endpoints             | `@nestjs/throttler` + Redis           |
+| **Security**         | Helmet.js, CORS whitelist, SQL injection protection (Prisma), XSS sanitization |                                       |
+| **HTTPS**            | Let's Encrypt SSL, auto-renew                                                  | Certbot + Nginx                       |
+| **Backup DB**        | Daily pg_dump, giữ 30 ngày, upload lên MinIO/S3                                | Cron job                              |
+| **Uptime**           | Target 99.5%                                                                   | PM2 cluster mode, Nginx keepalive     |
+| **Image**            | Max 10MB/ảnh, JPEG/PNG/WebP, auto-resize → WebP, lưu MinIO                     | Sharp                                 |
+| **Payment security** | HTTPS bắt buộc, không lưu thông tin thẻ, verify chữ ký VNPay                   |                                       |
+| **Logging**          | Request logs, error logs, payment logs riêng biệt                              | Winston + `winston-daily-rotate-file` |
+| **Health check**     | `GET /api/health` trả về 200 OK                                                | PM2 + Nginx upstream check            |
 
 ---
 
@@ -827,26 +843,26 @@ Frontend hiển thị /booking/[id]/success
 
 ### 8.2 Biến môi trường VNPay
 
-| Biến | Mô tả |
-|---|---|
-| `VNPAY_TMN_CODE` | Mã TMN code từ VNPay merchant portal |
-| `VNPAY_HASH_SECRET` | Secret key để tạo và verify chữ ký HMAC-SHA512 |
-| `VNPAY_URL` | `https://pay.vnpay.vn/vpcpay.html` (production) |
-| `VNPAY_RETURN_URL` | `https://bachlinh.com.vn/payment/callback` |
-| `VNPAY_IPN_URL` | `https://api.bachlinh.com.vn/api/payments/vnpay/ipn` |
+| Biến                | Mô tả                                                |
+| ------------------- | ---------------------------------------------------- |
+| `VNPAY_TMN_CODE`    | Mã TMN code từ VNPay merchant portal                 |
+| `VNPAY_HASH_SECRET` | Secret key để tạo và verify chữ ký HMAC-SHA512       |
+| `VNPAY_URL`         | `https://pay.vnpay.vn/vpcpay.html` (production)      |
+| `VNPAY_RETURN_URL`  | `https://bachlinh.com.vn/payment/callback`           |
+| `VNPAY_IPN_URL`     | `https://api.bachlinh.com.vn/api/payments/vnpay/ipn` |
 
 > **Lưu ý:** Test với sandbox URL `https://sandbox.vnpayment.vn/paymentv2/vpcpay.html` trước khi go-live.
 
 ### 8.3 vnp_ResponseCode quan trọng
 
-| Code | Ý nghĩa |
-|---|---|
-| `00` | Giao dịch thành công |
+| Code | Ý nghĩa                                    |
+| ---- | ------------------------------------------ |
+| `00` | Giao dịch thành công                       |
 | `07` | Trừ tiền thành công, giao dịch bị nghi ngờ |
-| `09` | Thẻ/tài khoản chưa đăng ký dịch vụ |
-| `24` | Khách hàng hủy giao dịch |
-| `51` | Tài khoản không đủ số dư |
-| `65` | Vượt hạn mức giao dịch ngày |
+| `09` | Thẻ/tài khoản chưa đăng ký dịch vụ         |
+| `24` | Khách hàng hủy giao dịch                   |
+| `51` | Tài khoản không đủ số dư                   |
+| `65` | Vượt hạn mức giao dịch ngày                |
 
 ---
 
@@ -854,13 +870,13 @@ Frontend hiển thị /booking/[id]/success
 
 ### 9.1 Cấu hình VPS tối thiểu
 
-| Thành phần | Tối thiểu | Khuyến nghị |
-|---|---|---|
-| CPU | 2 vCPU | 4 vCPU |
-| RAM | 4 GB | 8 GB |
-| Storage | 40 GB SSD | 80 GB SSD |
-| OS | Ubuntu 22.04 LTS | Ubuntu 22.04 LTS |
-| Bandwidth | 500 GB/tháng | Unmetered |
+| Thành phần | Tối thiểu        | Khuyến nghị      |
+| ---------- | ---------------- | ---------------- |
+| CPU        | 2 vCPU           | 4 vCPU           |
+| RAM        | 4 GB             | 8 GB             |
+| Storage    | 40 GB SSD        | 80 GB SSD        |
+| OS         | Ubuntu 22.04 LTS | Ubuntu 22.04 LTS |
+| Bandwidth  | 500 GB/tháng     | Unmetered        |
 
 ### 9.2 Docker Compose services
 
@@ -987,7 +1003,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install & Build
         run: |
@@ -1071,15 +1087,15 @@ NEXT_PUBLIC_SITE_URL=https://admin.bachlinh.com.vn
 
 ## 11. LỘ TRÌNH PHÁT TRIỂN
 
-| Sprint | Thời gian | Deliverables |
-|---|---|---|
-| **Sprint 0** — Setup | Tuần 1 | Monorepo, Docker Compose, Prisma schema + migrations, Nginx config, CI/CD pipeline |
-| **Sprint 1** — Core API | Tuần 2–3 | Auth module, Branches CRUD, Rooms CRUD, Image upload (MinIO), Availability check |
-| **Sprint 2** — Booking | Tuần 4–5 | Booking API, VNPay integration (sandbox), Cash payment, Voucher validation |
-| **Sprint 3** — Frontend | Tuần 6–8 | HomePage, RoomsPage, RoomDetailPage (full), BookingFlow, SuccessPage |
-| **Sprint 4** — Admin | Tuần 9–10 | Dashboard metrics, Quản lý booking, Quản lý phòng/chi nhánh, Upload ảnh |
-| **Sprint 5** — Features | Tuần 11–12 | Voucher UI, Reviews, Báo cáo doanh thu, Google Maps embed, i18n VI/EN |
-| **Sprint 6** — Launch | Tuần 13–14 | SEO optimization, Performance audit, Security review, UAT, Deploy production |
+| Sprint                  | Thời gian  | Deliverables                                                                       |
+| ----------------------- | ---------- | ---------------------------------------------------------------------------------- |
+| **Sprint 0** — Setup    | Tuần 1     | Monorepo, Docker Compose, Prisma schema + migrations, Nginx config, CI/CD pipeline |
+| **Sprint 1** — Core API | Tuần 2–3   | Auth module, Branches CRUD, Rooms CRUD, Image upload (MinIO), Availability check   |
+| **Sprint 2** — Booking  | Tuần 4–5   | Booking API, VNPay integration (sandbox), Cash payment, Voucher validation         |
+| **Sprint 3** — Frontend | Tuần 6–8   | HomePage, RoomsPage, RoomDetailPage (full), BookingFlow, SuccessPage               |
+| **Sprint 4** — Admin    | Tuần 9–10  | Dashboard metrics, Quản lý booking, Quản lý phòng/chi nhánh, Upload ảnh            |
+| **Sprint 5** — Features | Tuần 11–12 | Voucher UI, Reviews, Báo cáo doanh thu, Google Maps embed, i18n VI/EN              |
+| **Sprint 6** — Launch   | Tuần 13–14 | SEO optimization, Performance audit, Security review, UAT, Deploy production       |
 
 ---
 
@@ -1131,4 +1147,4 @@ Sau khi xong Sprint 0, báo tôi để chuyển sang Sprint 1 (Auth + Branches +
 
 ---
 
-*— Hết tài liệu PRD v1.0 — Tác giả: Claude Sonnet 4.6 — 16/05/2026 —*
+_— Hết tài liệu PRD v1.0 — Tác giả: Claude Sonnet 4.6 — 16/05/2026 —_
