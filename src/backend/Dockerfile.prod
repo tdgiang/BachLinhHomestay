@@ -19,18 +19,17 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Only production deps
 COPY package*.json ./
-RUN npm ci --omit=dev --legacy-peer-deps
 
-# Prisma client
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+# Copy full node_modules from builder so prisma CLI (a devDep) is available
+# and all generated Prisma artifacts are intact
+COPY --from=builder /app/node_modules ./node_modules
 
-# Built output
+# App code + Prisma schema, migrations, and config
 COPY --from=builder /app/dist ./dist
-COPY prisma ./prisma
+COPY prisma         ./prisma
+COPY prisma.config.ts ./
 
 EXPOSE 4000
 
-# Run migrations then start the server
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
+CMD ["sh", "-c", "node_modules/.bin/prisma migrate deploy && node dist/src/main.js"]

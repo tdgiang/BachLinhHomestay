@@ -22,6 +22,9 @@ CREATE TYPE "DiscountType" AS ENUM ('percentage', 'fixed_amount');
 -- CreateEnum
 CREATE TYPE "UserRole" AS ENUM ('customer', 'admin');
 
+-- CreateEnum
+CREATE TYPE "AmenityCategory" AS ENUM ('basic', 'entertainment', 'convenience', 'safety');
+
 -- CreateTable
 CREATE TABLE "branches" (
     "id" TEXT NOT NULL,
@@ -87,12 +90,24 @@ CREATE TABLE "room_images" (
 );
 
 -- CreateTable
+CREATE TABLE "amenities" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "name_en" TEXT NOT NULL,
+    "icon" TEXT NOT NULL,
+    "category" "AmenityCategory" NOT NULL DEFAULT 'basic',
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleted_at" TIMESTAMP(3),
+
+    CONSTRAINT "amenities_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "room_amenities" (
     "id" TEXT NOT NULL,
     "room_id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "name_en" TEXT,
-    "icon" TEXT,
+    "amenity_id" TEXT NOT NULL,
     "is_featured" BOOLEAN NOT NULL DEFAULT false,
     "is_free" BOOLEAN NOT NULL DEFAULT true,
     "price" DECIMAL(12,2),
@@ -252,8 +267,14 @@ ALTER TABLE "rooms" ADD CONSTRAINT "rooms_branch_id_fkey" FOREIGN KEY ("branch_i
 -- AddForeignKey
 ALTER TABLE "room_images" ADD CONSTRAINT "room_images_room_id_fkey" FOREIGN KEY ("room_id") REFERENCES "rooms"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
+-- CreateIndex
+CREATE UNIQUE INDEX "room_amenities_room_id_amenity_id_key" ON "room_amenities"("room_id", "amenity_id");
+
 -- AddForeignKey
 ALTER TABLE "room_amenities" ADD CONSTRAINT "room_amenities_room_id_fkey" FOREIGN KEY ("room_id") REFERENCES "rooms"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "room_amenities" ADD CONSTRAINT "room_amenities_amenity_id_fkey" FOREIGN KEY ("amenity_id") REFERENCES "amenities"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "time_slot_suggestions" ADD CONSTRAINT "time_slot_suggestions_room_id_fkey" FOREIGN KEY ("room_id") REFERENCES "rooms"("id") ON DELETE CASCADE ON UPDATE CASCADE;

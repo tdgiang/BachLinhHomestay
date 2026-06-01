@@ -1,7 +1,9 @@
 export const APP_NAME = 'Ba.Li Homestay';
 export const LOGO_SRC = '/images/logo.png';
 export const APP_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
-export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
+export const API_URL = process.env.API_INTERNAL_URL
+  ?? process.env.NEXT_PUBLIC_API_URL
+  ?? 'http://localhost:4000';
 
 export const NAV_ITEMS = [
   // { label: 'Tìm phòng', href: '/rooms' },

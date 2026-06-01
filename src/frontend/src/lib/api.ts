@@ -1,4 +1,10 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
+// API_INTERNAL_URL is a server-only runtime env (no NEXT_PUBLIC_ prefix), so
+// Next.js never exposes it to the browser bundle. Server-side it resolves to
+// the internal Docker hostname (http://api:4000); browser falls back to the
+// NEXT_PUBLIC value baked at build time.
+const API_URL = process.env.API_INTERNAL_URL
+  ?? process.env.NEXT_PUBLIC_API_URL
+  ?? 'http://localhost:4000';
 
 interface ApiResponse<T> {
   success: boolean;
