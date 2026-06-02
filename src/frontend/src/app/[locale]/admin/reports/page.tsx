@@ -23,6 +23,7 @@ export default function AdminReportsPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!token) return;
     setLoading(true);
     const fetch = tab === 'yearly'
       ? apiClient.getRevenueYearly(year, token)

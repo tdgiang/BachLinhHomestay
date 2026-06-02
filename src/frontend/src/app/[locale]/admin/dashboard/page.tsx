@@ -32,6 +32,7 @@ export default function DashboardPage() {
   const [year] = useState(new Date().getFullYear());
 
   useEffect(() => {
+    if (!token) return;
     apiClient.getReportSummary(token).then(setSummary).catch(() => {});
     apiClient.getRevenueYearly(year, token).then(setRevenueData).catch(() => {});
   }, [token, year]);
