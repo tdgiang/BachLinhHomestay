@@ -3,7 +3,7 @@ import { IsOptional, IsEmail, IsBoolean, IsIn } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PaginationDto } from '../../../../common/dto/pagination.dto';
 
-const USER_SORT_FIELDS = ['createdAt', 'updatedAt', 'email', 'firstName', 'lastName'] as const;
+const USER_SORT_FIELDS = ['createdAt', 'updatedAt', 'email', 'fullName'] as const;
 
 export class UserQueryDto extends PaginationDto {
   @ApiPropertyOptional({
@@ -13,7 +13,7 @@ export class UserQueryDto extends PaginationDto {
   })
   @IsOptional()
   @IsIn(USER_SORT_FIELDS)
-  sortBy?: string = 'createdAt';
+  override sortBy?: string = 'createdAt';
 
   @ApiPropertyOptional({ description: 'Lọc theo email chính xác' })
   @IsOptional()

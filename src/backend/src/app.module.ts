@@ -6,7 +6,15 @@ import { configValidationSchema } from './config/config.schema';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
-import { ProductsModule } from './modules/products/products.module';
+import { BranchesModule } from './modules/branches/branches.module';
+import { RoomsModule } from './modules/rooms/rooms.module';
+import { ImageModule } from './modules/image/image.module';
+import { VouchersModule } from './modules/vouchers/vouchers.module';
+import { BookingsModule } from './modules/bookings/bookings.module';
+import { PaymentsModule } from './modules/payments/payments.module';
+import { ReviewsModule } from './modules/reviews/reviews.module';
+import { ReportsModule } from './modules/reports/reports.module';
+import { AmenitiesModule } from './modules/amenities/amenities.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { CacheModule } from '@nestjs/cache-manager';
 import { APP_GUARD } from '@nestjs/core';
@@ -45,7 +53,15 @@ import { RolesGuard } from './common/guards/roles.guard';
     PrismaModule,
     AuthModule,
     UsersModule,
-    ProductsModule,
+    BranchesModule,
+    RoomsModule,
+    ImageModule,
+    VouchersModule,
+    BookingsModule,
+    PaymentsModule,
+    ReviewsModule,
+    ReportsModule,
+    AmenitiesModule,
   ],
   providers: [
     {

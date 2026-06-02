@@ -23,7 +23,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserQueryDto } from './dto/user-query.dto';
 import { Roles } from '../../../common/decorators/roles.decorator';
-import { Role } from '@prisma/client';
+import { UserRole } from '@prisma/client';
 
 @ApiTags('Người dùng (Users)')
 @ApiBearerAuth()
@@ -32,7 +32,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @Roles(Role.ADMIN)
+  @Roles(UserRole.admin)
   @ApiOperation({ summary: 'Tạo người dùng mới (Admin only)' })
   @ApiResponse({ status: 201, description: 'Tạo người dùng thành công' })
   @ApiResponse({ status: 400, description: 'Dữ liệu không hợp lệ' })
@@ -48,7 +48,7 @@ export class UsersController {
   }
 
   @Get()
-  @Roles(Role.ADMIN)
+  @Roles(UserRole.admin)
   @ApiOperation({
     summary: 'Lấy danh sách người dùng (Admin only, hỗ trợ phân trang & tìm kiếm)',
   })
@@ -82,7 +82,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @Roles(Role.ADMIN)
+  @Roles(UserRole.admin)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Xóa mềm người dùng (Admin only)' })
   @ApiParam({ name: 'id', description: 'UUID của người dùng' })

@@ -20,10 +20,11 @@ export class UsersRepository extends BaseRepository<
   readonly userSelect: Prisma.UserSelect = {
     id: true,
     email: true,
-    firstName: true,
-    lastName: true,
+    phone: true,
+    fullName: true,
     role: true,
     isActive: true,
+    isVerified: true,
     createdAt: true,
     updatedAt: true,
   };

@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,59 +6,299 @@ datasource db {
   provider = "postgresql"
 }
 
-enum Role {
-  USER
-  ADMIN
+// ─── ENUMS ─────────────────────────────────────────────────────────────────
+
+enum RoomStatus {
+  active
+  maintenance
+  inactive
 }
 
-enum PostStatus {
-  DRAFT
-  PUBLISHED
+enum BookingType {
+  hourly
+  daily
+}
+
+enum PaymentMethod {
+  vnpay
+  cash
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  failed
+  refunded
+}
+
+enum BookingStatus {
+  pending
+  confirmed
+  checked_in
+  completed
+  cancelled
+}
+
+enum DiscountType {
+  percentage
+  fixed_amount
+}
+
+enum UserRole {
+  customer
+  admin
+}
+
+enum AmenityCategory {
+  basic
+  entertainment
+  convenience
+  safety
+}
+
+// ─── MODELS ────────────────────────────────────────────────────────────────
+
+model Branch {
+  id            String   @id @default(uuid())
+  name          String
+  nameEn        String?  @map("name_en")
+  address       String
+  city          String
+  latitude      Decimal? @db.Decimal(10, 8)
+  longitude     Decimal? @db.Decimal(11, 8)
+  phone         String?
+  description   String?
+  descriptionEn String?  @map("description_en")
+  isActive      Boolean  @default(true) @map("is_active")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  rooms Room[]
+
+  @@map("branches")
+}
+
+model Room {
+  id                   String     @id @default(uuid())
+  branchId             String     @map("branch_id")
+  name                 String
+  nameEn               String?    @map("name_en")
+  description          String?
+  descriptionEn        String?    @map("description_en")
+  roomNumber           String     @map("room_number")
+  floor                Int?
+  capacity             Int        @default(2)
+  pricePerHour         Decimal    @db.Decimal(12, 2) @map("price_per_hour")
+  pricePerHourOriginal Decimal?   @db.Decimal(12, 2) @map("price_per_hour_original")
+  pricePerDay          Decimal    @db.Decimal(12, 2) @map("price_per_day")
+  pricePerDayOriginal  Decimal?   @db.Decimal(12, 2) @map("price_per_day_original")
+  minHours             Int        @default(2) @map("min_hours")
+  extraHourPrice       Decimal?   @db.Decimal(12, 2) @map("extra_hour_price")
+  extraPersonPrice     Decimal?   @db.Decimal(12, 2) @map("extra_person_price")
+  checkInTime          String     @default("14:00") @map("check_in_time")
+  checkOutTime         String     @default("11:00") @map("check_out_time")
+  allowHourly          Boolean    @default(true) @map("allow_hourly")
+  status               RoomStatus @default(active)
+  isFeatured           Boolean    @default(false) @map("is_featured")
+  isGuestFavorite      Boolean    @default(false) @map("is_guest_favorite")
+  ratingAvg            Decimal    @default(0) @db.Decimal(3, 2) @map("rating_avg")
+  ratingCount          Int        @default(0) @map("rating_count")
+  createdAt            DateTime   @default(now()) @map("created_at")
+  updatedAt            DateTime   @updatedAt @map("updated_at")
+  deletedAt            DateTime?  @map("deleted_at")
+
+  branch               Branch               @relation(fields: [branchId], references: [id])
+  images               RoomImage[]
+  amenities            RoomAmenity[]
+  timeSlotSuggestions  TimeSlotSuggestion[]
+  cancellationPolicies CancellationPolicy[]
+  bookings             Booking[]
+  reviews              Review[]
+
+  @@map("rooms")
+}
+
+model RoomImage {
+  id        String   @id @default(uuid())
+  roomId    String   @map("room_id")
+  url       String
+  sortOrder Int      @default(0) @map("sort_order")
+  isCover   Boolean  @default(false) @map("is_cover")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@map("room_images")
+}
+
+model Amenity {
+  id        String          @id @default(uuid())
+  name      String
+  nameEn    String?         @map("name_en")
+  icon      String?
+  category  AmenityCategory @default(basic)
+  createdAt DateTime        @default(now()) @map("created_at")
+  updatedAt DateTime        @updatedAt @map("updated_at")
+  deletedAt DateTime?       @map("deleted_at")
+
+  roomAmenities RoomAmenity[]
+
+  @@map("amenities")
+}
+
+model RoomAmenity {
+  id         String   @id @default(uuid())
+  roomId     String   @map("room_id")
+  amenityId  String   @map("amenity_id")
+  isFeatured Boolean  @default(false) @map("is_featured")
+  isFree     Boolean  @default(true) @map("is_free")
+  price      Decimal? @db.Decimal(12, 2)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  room    Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  amenity Amenity @relation(fields: [amenityId], references: [id])
+
+  @@unique([roomId, amenityId])
+  @@map("room_amenities")
+}
+
+model TimeSlotSuggestion {
+  id            String   @id @default(uuid())
+  roomId        String   @map("room_id")
+  label         String
+  startTime     String   @map("start_time")
+  endTime       String   @map("end_time")
+  priceOverride Decimal? @db.Decimal(12, 2) @map("price_override")
+  priceOriginal Decimal? @db.Decimal(12, 2) @map("price_original")
+  dayOfWeek     Int?     @map("day_of_week")
+  isActive      Boolean  @default(true) @map("is_active")
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@map("time_slot_suggestions")
+}
+
+model CancellationPolicy {
+  id               String  @id @default(uuid())
+  roomId           String  @map("room_id")
+  daysBefore       Int     @map("days_before")
+  refundPercentage Int     @map("refund_percentage")
+  description      String?
+  descriptionEn    String? @map("description_en")
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@map("cancellation_policies")
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  password  String
-  firstName String?
-  lastName  String?
-  role      Role      @default(USER)
-  isActive  Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  id               String    @id @default(uuid())
+  email            String?   @unique
+  phone            String?   @unique
+  password         String?
+  fullName         String    @map("full_name")
+  role             UserRole  @default(customer)
+  isActive         Boolean   @default(true) @map("is_active")
+  isVerified       Boolean   @default(false) @map("is_verified")
+  refreshTokenHash String?   @map("refresh_token_hash")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  deletedAt        DateTime? @map("deleted_at")
 
-  posts Post[]
+  bookings Booking[]
+  reviews  Review[]
 
   @@map("users")
 }
 
-model Product {
-  id          String    @id @default(uuid())
-  name        String
-  description String?
-  price       Float
-  stock       Int       @default(0)
-  category    String?
-  isActive    Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime?
+model Voucher {
+  id                String       @id @default(uuid())
+  code              String       @unique
+  description       String?
+  discountType      DiscountType @map("discount_type")
+  discountValue     Decimal      @db.Decimal(12, 2) @map("discount_value")
+  maxDiscountAmount Decimal?     @db.Decimal(12, 2) @map("max_discount_amount")
+  minBookingAmount  Decimal      @default(0) @db.Decimal(12, 2) @map("min_booking_amount")
+  usageLimit        Int?         @map("usage_limit")
+  usedCount         Int          @default(0) @map("used_count")
+  validFrom         DateTime     @map("valid_from")
+  validUntil        DateTime     @map("valid_until")
+  isActive          Boolean      @default(true) @map("is_active")
+  createdAt         DateTime     @default(now()) @map("created_at")
 
-  @@map("products")
+  bookings Booking[]
+
+  @@map("vouchers")
 }
 
-model Post {
-  id        String     @id @default(uuid())
-  title     String
-  slug      String     @unique
-  content   String     @default("")
-  status    PostStatus @default(DRAFT)
-  authorId  String
-  author    User       @relation(fields: [authorId], references: [id])
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  deletedAt DateTime?
+model Booking {
+  id            String        @id @default(uuid())
+  bookingCode   String        @unique @map("booking_code")
+  roomId        String        @map("room_id")
+  userId        String?       @map("user_id")
+  bookingType   BookingType   @map("booking_type")
+  checkIn       DateTime      @map("check_in")
+  checkOut      DateTime      @map("check_out")
+  numHours      Int?          @map("num_hours")
+  numGuests     Int           @default(1) @map("num_guests")
+  guestName     String        @map("guest_name")
+  guestPhone    String        @map("guest_phone")
+  guestEmail    String?       @map("guest_email")
+  guestNote     String?       @map("guest_note")
+  baseAmount    Decimal       @db.Decimal(12, 2) @map("base_amount")
+  discountAmount Decimal      @default(0) @db.Decimal(12, 2) @map("discount_amount")
+  extraAmount   Decimal       @default(0) @db.Decimal(12, 2) @map("extra_amount")
+  totalAmount   Decimal       @db.Decimal(12, 2) @map("total_amount")
+  voucherId     String?       @map("voucher_id")
+  voucherCode   String?       @map("voucher_code")
+  paymentMethod PaymentMethod @map("payment_method")
+  paymentStatus PaymentStatus @default(pending) @map("payment_status")
+  bookingStatus BookingStatus @default(pending) @map("booking_status")
+  cancelReason  String?       @map("cancel_reason")
+  refundAmount  Decimal?      @db.Decimal(12, 2) @map("refund_amount")
+  adminNote     String?       @map("admin_note")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
 
-  @@map("posts")
+  room    Room     @relation(fields: [roomId], references: [id])
+  user    User?    @relation(fields: [userId], references: [id])
+  voucher Voucher? @relation(fields: [voucherId], references: [id])
+  payment Payment?
+  review  Review?
+
+  @@map("bookings")
+}
+
+model Payment {
+  id              String        @id @default(uuid())
+  bookingId       String        @unique @map("booking_id")
+  gateway         PaymentMethod
+  gatewayTxnId    String?       @map("gateway_txn_id")
+  gatewayResponse Json?         @map("gateway_response")
+  amount          Decimal       @db.Decimal(12, 2)
+  status          PaymentStatus @default(pending)
+  paidAt          DateTime?     @map("paid_at")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  booking Booking @relation(fields: [bookingId], references: [id])
+
+  @@map("payments")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  bookingId String   @unique @map("booking_id")
+  userId    String   @map("user_id")
+  roomId    String   @map("room_id")
+  rating    Int
+  comment   String?
+  isVisible Boolean  @default(true) @map("is_visible")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  booking Booking @relation(fields: [bookingId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  room    Room    @relation(fields: [roomId], references: [id])
+
+  @@map("reviews")
 }
