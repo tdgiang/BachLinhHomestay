@@ -80,11 +80,19 @@ export function HeroSection({ branches }: HeroSectionProps) {
       if (tab === "hourly") {
         const checkInMs = new Date(`${dateStr}T${time}:00`).getTime();
         params.set("checkIn", new Date(checkInMs).toISOString());
-        params.set("checkOut", new Date(checkInMs + numHours * 3600000).toISOString());
+        params.set(
+          "checkOut",
+          new Date(checkInMs + numHours * 3600000).toISOString(),
+        );
       } else {
         params.set("checkIn", new Date(`${dateStr}T14:00:00`).toISOString());
         if (checkOutDate) {
-          params.set("checkOut", new Date(`${format(checkOutDate, "yyyy-MM-dd")}T11:00:00`).toISOString());
+          params.set(
+            "checkOut",
+            new Date(
+              `${format(checkOutDate, "yyyy-MM-dd")}T11:00:00`,
+            ).toISOString(),
+          );
         }
       }
     }
@@ -139,14 +147,17 @@ export function HeroSection({ branches }: HeroSectionProps) {
         </div>
 
         <h1
-          className="hero-fade-up-d1 text-[2rem] sm:text-5xl lg:text-[3.35rem] font-bold mb-5 leading-[1.1] tracking-tight text-white drop-shadow-md"
+          className="hero-fade-up-d1 text-[2rem] sm:text-5xl lg:text-[3.35rem] font-bold mb-5 leading-[1.1] tracking-tight  drop-shadow-md"
           style={{ fontFamily: "var(--font-heading)" }}
         >
-          <span className="block">{t("heroTitle")}</span>
+          <span style={{ color: "var(--color-secondary)" }} className="block">
+            {t("heroTitle")}
+          </span>
         </h1>
 
         <p
-          className="hero-fade-up-d2 text-base md:text-lg mb-8 leading-relaxed max-w-2xl mx-auto text-white/90 drop-shadow-sm"
+          style={{ color: "var(--color-text-note)" }}
+          className="hero-fade-up-d2 text-base md:text-lg mb-8 leading-relaxed max-w-2xl mx-auto text-white drop-shadow-sm"
         >
           {t("heroSubtitle")}
         </p>

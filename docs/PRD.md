@@ -676,6 +676,7 @@ Tổng cộng:     541.000₫
 ```css
 /* ─── Colors ─── */
 --color-primary: #00b4d8; /* Buttons, active states, icons accent */
+--color-secondary: #ff9f1c;
 --color-primary-dark: #0077b6; /* Hover states, headings, links */
 --color-primary-light: #90e0ef; /* Muted text trên nền tối, badges */
 --color-hero-bg: #0d1b2a; /* Hero section background */
