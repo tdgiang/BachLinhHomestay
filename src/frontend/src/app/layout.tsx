@@ -18,8 +18,7 @@ export const metadata: Metadata = {
     default: "Ba.Li Homestay",
     template: "%s — Ba.Li Homestay",
   },
-  description:
-    "Đặt phòng linh hoạt theo giờ & ngày tại chuỗi homestay Ba.Li — Đà Nẵng, Hội An.",
+  description: "Đặt phòng linh hoạt theo giờ & ngày tại chuỗi homestay Ba.Li",
   metadataBase: new URL(SITE_URL),
   openGraph: {
     type: "website",
@@ -40,7 +39,8 @@ export const metadata: Metadata = {
   ],
   robots: { index: true, follow: true },
   icons: {
-    icon: "/images/logo.png",
+    icon: [{ url: "/images/logo.png", type: "image/png" }],
+    shortcut: "/images/logo.png",
     apple: "/images/logo.png",
   },
 };
