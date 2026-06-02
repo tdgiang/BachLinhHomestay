@@ -23,17 +23,7 @@ apt update && apt upgrade -y
 apt install -y curl git ufw
 ```
 
-### 1.2 Tạo user deploy (không dùng root)
-
-```bash
-adduser deploy
-usermod -aG sudo deploy
-
-# Copy SSH key sang user deploy
-rsync --archive --chown=deploy:deploy ~/.ssh /home/deploy
-```
-
-### 1.3 Cấu hình Firewall
+### 1.2 Cấu hình Firewall
 
 ```bash
 ufw allow OpenSSH
@@ -48,18 +38,8 @@ ufw status
 ## Bước 2 — Cài đặt Docker
 
 ```bash
-# Đăng nhập bằng user deploy
-su - deploy
-
 # Cài Docker Engine
-curl -fsSL https://get.docker.com | sudo sh
-
-# Thêm user deploy vào group docker (không cần sudo mỗi lần)
-sudo usermod -aG docker deploy
-
-# Đăng xuất rồi đăng nhập lại để group có hiệu lực
-exit
-su - deploy
+curl -fsSL https://get.docker.com | sh
 
 # Kiểm tra
 docker --version
@@ -86,8 +66,7 @@ Trỏ các bản ghi A về IP VPS tại nhà cung cấp domain:
 
 ```bash
 # Tạo thư mục ứng dụng
-sudo mkdir -p /opt/bachlinhweb
-sudo chown deploy:deploy /opt/bachlinhweb
+mkdir -p /opt/bachlinhweb
 
 # Clone repository
 cd /opt
@@ -183,10 +162,9 @@ sudo certbot certonly --standalone \
 ```bash
 mkdir -p /opt/bachlinhweb/nginx/ssl
 
-sudo cp /etc/letsencrypt/live/bachlinh.com.vn/fullchain.pem /opt/bachlinhweb/nginx/ssl/
-sudo cp /etc/letsencrypt/live/bachlinh.com.vn/privkey.pem   /opt/bachlinhweb/nginx/ssl/
+cp /etc/letsencrypt/live/bachlinh.com.vn/fullchain.pem /opt/bachlinhweb/nginx/ssl/
+cp /etc/letsencrypt/live/bachlinh.com.vn/privkey.pem   /opt/bachlinhweb/nginx/ssl/
 
-sudo chown deploy:deploy /opt/bachlinhweb/nginx/ssl/*.pem
 chmod 600 /opt/bachlinhweb/nginx/ssl/privkey.pem
 ```
 
@@ -194,7 +172,7 @@ chmod 600 /opt/bachlinhweb/nginx/ssl/privkey.pem
 
 ```bash
 # Tạo script gia hạn
-sudo tee /etc/cron.d/certbot-renew > /dev/null << 'EOF'
+tee /etc/cron.d/certbot-renew > /dev/null << 'EOF'
 0 3 * * * root certbot renew --quiet --pre-hook "docker compose -f /opt/bachlinhweb/docker-compose.prod.yml stop nginx" --post-hook "cp /etc/letsencrypt/live/bachlinh.com.vn/fullchain.pem /opt/bachlinhweb/nginx/ssl/ && cp /etc/letsencrypt/live/bachlinh.com.vn/privkey.pem /opt/bachlinhweb/nginx/ssl/ && docker compose -f /opt/bachlinhweb/docker-compose.prod.yml start nginx"
 EOF
 ```
@@ -333,8 +311,8 @@ docker exec bachlinhweb-postgres-1 \
   gzip > /opt/bachlinhweb/backups/db_$(date +%Y%m%d_%H%M%S).sql.gz
 
 # Tự động backup hàng ngày lúc 2 giờ sáng
-sudo tee /etc/cron.d/db-backup > /dev/null << 'EOF'
-0 2 * * * deploy docker exec bachlinhweb-postgres-1 pg_dump -U homestay_user homestay | gzip > /opt/bachlinhweb/backups/db_$(date +\%Y\%m\%d).sql.gz && find /opt/bachlinhweb/backups -name "*.sql.gz" -mtime +30 -delete
+tee /etc/cron.d/db-backup > /dev/null << 'EOF'
+0 2 * * * root docker exec bachlinhweb-postgres-1 pg_dump -U homestay_user homestay | gzip > /opt/bachlinhweb/backups/db_$(date +\%Y\%m\%d).sql.gz && find /opt/bachlinhweb/backups -name "*.sql.gz" -mtime +30 -delete
 EOF
 
 # Restore backup
@@ -361,8 +339,8 @@ docker logs bachlinhweb-api-1 --tail=50
 sudo certbot certificates
 
 # Copy lại cert nếu đã gia hạn
-sudo cp /etc/letsencrypt/live/bachlinh.com.vn/fullchain.pem /opt/bachlinhweb/nginx/ssl/
-sudo cp /etc/letsencrypt/live/bachlinh.com.vn/privkey.pem   /opt/bachlinhweb/nginx/ssl/
+cp /etc/letsencrypt/live/bachlinh.com.vn/fullchain.pem /opt/bachlinhweb/nginx/ssl/
+cp /etc/letsencrypt/live/bachlinh.com.vn/privkey.pem   /opt/bachlinhweb/nginx/ssl/
 docker compose -f docker-compose.prod.yml restart nginx
 ```
 
