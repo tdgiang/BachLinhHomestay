@@ -9,7 +9,7 @@ export const MOCK_BRANCHES: Branch[] = [
     city: 'Đà Nẵng',
     latitude: 16.0544,
     longitude: 108.2022,
-    phone: '0236 123 4567',
+    phone: '0931 708 256',
     description: 'Chi nhánh trung tâm Đà Nẵng, cách biển Mỹ Khê 5 phút di chuyển.',
     descriptionEn: 'Da Nang city center branch, 5 minutes from My Khe Beach.',
     isActive: true,

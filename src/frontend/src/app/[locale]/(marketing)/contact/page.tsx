@@ -15,7 +15,7 @@ export default async function ContactPage({ params }: Props) {
         Liên hệ
       </h1>
       <p style={{ color: 'var(--color-text-secondary)' }}>
-        Hotline: 0236 123 4567 | Email: hello@oceanblue.vn
+        Hotline: 0931 708 256 | Email: admin@bachlinh.com.vn
       </p>
     </div>
   );

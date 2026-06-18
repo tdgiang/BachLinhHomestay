@@ -12,6 +12,9 @@ export function Footer() {
     { label: tNav("findRoom"), href: "/rooms" },
     { label: tNav("about"), href: "/about" },
     { label: tNav("contact"), href: "/contact" },
+    { label: "Chính sách bảo mật", href: "/privacy" },
+    { label: "Điều khoản sử dụng", href: "/terms" },
+    { label: "Chính sách thanh toán", href: "/payment-policy" },
   ];
 
   const branches = [
@@ -41,11 +44,11 @@ export function Footer() {
             </p>
             <div className="space-y-1.5">
               <a
-                href="tel:02361234567"
+                href="tel:0931708256"
                 className="flex items-center gap-2 text-sm transition-colors hover:text-[--color-primary]"
                 style={{ color: "var(--color-text-secondary)" }}
               >
-                <Phone className="w-3.5 h-3.5" /> 0236 123 4567
+                <Phone className="w-3.5 h-3.5" /> 0931 708 256
               </a>
               <a
                 href="mailto:admin@bachlinh.com.vn"
