@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { Providers } from "@/components/shared/Providers";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
@@ -54,7 +54,7 @@ export default function RootLayout({
   return (
     <html lang="vi" className={notoSansKR.variable} suppressHydrationWarning>
       <body className="min-h-full flex flex-col antialiased font-sans">
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+        <ThemeProvider>
           <Providers>
             {children}
             <Toaster richColors position="top-right" />
