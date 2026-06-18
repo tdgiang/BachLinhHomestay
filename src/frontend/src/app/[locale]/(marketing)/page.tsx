@@ -36,7 +36,7 @@ export default async function HomePage({ params, searchParams }: Props) {
     checkOut: sp.checkOut,
   };
 
-  const branches = await apiClient.getBranches();
+  const branches = await apiClient.getBranches().catch(() => []);
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--color-surface)' }}>
