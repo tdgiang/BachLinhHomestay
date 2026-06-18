@@ -152,7 +152,7 @@ sudo certbot certonly --standalone \
   -d bachlinh.com.vn \
   -d www.bachlinh.com.vn \
   -d cdn.bachlinh.com.vn \
-  --email <EMAIL_CỦA_BẠN> \
+  --email tdgiangdev@gmail.com \
   --agree-tos \
   --no-eff-email
 ```
