@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Building2, Receipt } from "lucide-react";
 import { BrandLogo } from "@/components/shared/BrandLogo";
 import { Separator } from "@/components/ui/separator";
 
@@ -57,6 +57,33 @@ export function Footer() {
               >
                 <Mail className="w-3.5 h-3.5" /> admin@bachlinh.com.vn
               </a>
+            </div>
+
+            <div
+              className="mt-5 pt-4 space-y-2 text-xs leading-relaxed border-t"
+              style={{
+                color: "var(--color-text-secondary)",
+                borderColor: "var(--color-border)",
+              }}
+            >
+              <p
+                className="font-semibold"
+                style={{ color: "var(--color-text-primary)" }}
+              >
+                {t("companyName")}
+              </p>
+              <p className="flex items-start gap-2">
+                <Receipt className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                <span>
+                  {t("taxCodeLabel")}: {t("taxCode")}
+                </span>
+              </p>
+              <p className="flex items-start gap-2">
+                <Building2 className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                <span>
+                  {t("headOfficeLabel")}: {t("headOffice")}
+                </span>
+              </p>
             </div>
           </div>
 

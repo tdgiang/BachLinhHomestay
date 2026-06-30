@@ -202,6 +202,11 @@
     "phone": "Hotline",
     "email": "Email",
     "address": "Address",
+    "companyName": "Công Ty Cổ Phần Sản Xuất Thương Mại Dịch Vụ Bách Linh",
+    "taxCodeLabel": "Tax code",
+    "taxCode": "0111484606",
+    "headOfficeLabel": "Head office",
+    "headOffice": "Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội, Việt Nam",
     "copyright": "© {year} Ba.Li Homestay. All rights reserved."
   },
   "common": {
