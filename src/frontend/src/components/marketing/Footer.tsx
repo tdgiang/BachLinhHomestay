@@ -1,6 +1,14 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Phone, Mail, MapPin, Building2, Receipt, UserRound, FileCheck } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Building2,
+  Receipt,
+  UserRound,
+  FileCheck,
+} from "lucide-react";
 import { BrandLogo } from "@/components/shared/BrandLogo";
 import { Separator } from "@/components/ui/separator";
 
@@ -20,8 +28,8 @@ export function Footer() {
 
   const branches = [
     { name: "Cầu Giấy", address: "66 Ngõ 61 Phạm Tuấn Tài" },
-    { name: "Đống Đa", address: "60 Ngõ 128 Nguyễn Đình Chiểu" },
-    { name: "Ba Đình", address: "105 Ngõ 103 Vũ Trọng Phụng" },
+    // { name: "Đống Đa", address: "60 Ngõ 128 Nguyễn Đình Chiểu" },
+    // { name: "Ba Đình", address: "105 Ngõ 103 Vũ Trọng Phụng" },
   ];
 
   return (
@@ -88,7 +96,8 @@ export function Footer() {
               <p className="flex items-start gap-2">
                 <UserRound className="w-3.5 h-3.5 mt-0.5 shrink-0" />
                 <span>
-                  {t("legalRepLabel")}: {t("legalRepName")} — {t("legalRepTitle")}
+                  {t("legalRepLabel")}: {t("legalRepName")} —{" "}
+                  {t("legalRepTitle")}
                 </span>
               </p>
               <p className="flex items-start gap-2">

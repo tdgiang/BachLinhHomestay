@@ -73,7 +73,7 @@ export const MOCK_BOOKINGS: Booking[] = [
       roomNumber: '101',
       checkInTime: '14:00',
       checkOutTime: '11:00',
-      branch: { id: 'branch-da-nang-001', name: 'Ba.Li — Cầu Giấy', address: 'Số 66, Ngõ 61 Phạm Tuấn Tài', city: 'Hà Nội' },
+      branch: { id: 'branch-da-nang-001', name: 'Ba.Li — Cầu Giấy', address: 'Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô', city: 'Hà Nội' },
       images: [{ url: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800', isCover: true }],
     },
   },
