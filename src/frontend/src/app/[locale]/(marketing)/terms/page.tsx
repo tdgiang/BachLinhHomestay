@@ -14,6 +14,7 @@ import {
   Mail,
   ArrowRight,
   ShieldCheck,
+  MapPin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -121,9 +122,11 @@ const SECTIONS = [
       {
         subtitle: "Quy trình hoàn tiền",
         items: [
-          "Hoàn tiền được xử lý trong vòng 3–7 ngày làm việc kể từ khi yêu cầu được chấp nhận.",
-          "Tiền hoàn trả về đúng phương thức thanh toán ban đầu.",
-          "Phí giao dịch ngân hàng (nếu có) do bên ngân hàng thu, Ba.Li Homestay không chịu trách nhiệm.",
+          "Thẻ ngân hàng nội địa: 3–5 ngày làm việc.",
+          "Thẻ quốc tế Visa/Mastercard: 7–15 ngày làm việc (tùy ngân hàng phát hành).",
+          "Ví MoMo, ZaloPay: 1–3 ngày làm việc.",
+          "Tiền hoàn trả về đúng phương thức thanh toán ban đầu. Phí giao dịch ngân hàng (nếu có) do ngân hàng thu.",
+          "Ba.Li Homestay hiện không áp dụng cơ chế tích điểm/điểm thưởng quy đổi thành tiền mặt.",
           "Trường hợp hủy do sự cố kỹ thuật từ phía Ba.Li Homestay: hoàn 100% và được ưu đãi đặt phòng lần sau.",
         ],
       },
@@ -218,15 +221,13 @@ const SECTIONS = [
           "Bước 1: Liên hệ trực tiếp qua hotline hoặc email trong vòng 7 ngày kể từ khi phát sinh tranh chấp.",
           "Bước 2: Chúng tôi phản hồi và xử lý trong vòng 5 ngày làm việc.",
           "Bước 3: Nếu không đạt thỏa thuận, hai bên có thể yêu cầu hòa giải qua Hội bảo vệ người tiêu dùng.",
-          "Bước 4: Trường hợp cuối cùng, tranh chấp được giải quyết tại Tòa án nhân dân có thẩm quyền tại Đà Nẵng.",
+          "Bước 4: Trường hợp cuối cùng, tranh chấp được giải quyết tại Tòa án nhân dân có thẩm quyền tại TP Hà Nội theo quy định pháp luật Việt Nam.",
         ],
       },
       {
         subtitle: "Luật áp dụng",
         items: [
-          "Các điều khoản này được điều chỉnh và giải thích theo pháp luật Việt Nam.",
-          "Luật Bảo vệ quyền lợi người tiêu dùng số 59/2010/QH12 và các văn bản hướng dẫn thi hành.",
-          "Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân áp dụng song song với chính sách riêng tư của chúng tôi.",
+          "Các điều khoản được điều chỉnh theo pháp luật Việt Nam, bao gồm Luật Thương mại điện tử 2025, Nghị định 248/2026/NĐ-CP, Luật Bảo vệ quyền lợi người tiêu dùng và các quy định về bảo vệ dữ liệu cá nhân hiện hành.",
         ],
       },
     ],
@@ -242,6 +243,34 @@ const SECTIONS = [
           "Mọi thay đổi trọng yếu về điều khoản sẽ được thông báo qua email đăng ký ít nhất 7 ngày trước khi có hiệu lực.",
           "Thay đổi nhỏ (chính tả, cách diễn đạt không ảnh hưởng đến quyền lợi) có thể được áp dụng ngay.",
           "Lịch sử các phiên bản điều khoản được lưu trữ và cung cấp theo yêu cầu.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "conditions",
+    icon: MapPin,
+    title: "10. Điều kiện và giới hạn cung cấp dịch vụ (Điều 9)",
+    content: [
+      {
+        subtitle: "Giới hạn thời gian",
+        items: [
+          "Đặt theo giờ tối thiểu 2 giờ/lượt.",
+          "Đặt theo ngày nhận phòng từ 14:00, trả phòng trước 12:00.",
+        ],
+      },
+      {
+        subtitle: "Phạm vi địa lý và đối tượng",
+        items: [
+          "Dịch vụ được cung cấp tại các chi nhánh của Ba.Li Homestay trên địa bàn TP Hà Nội.",
+          "Khách đặt phòng phải đủ 18 tuổi trở lên hoặc có sự đồng ý của người giám hộ hợp pháp.",
+        ],
+      },
+      {
+        subtitle: "Tính khả dụng",
+        items: [
+          "Dịch vụ có thể tạm ngừng hoặc gián đoạn vì lý do kỹ thuật, bảo trì hoặc sự kiện bất khả kháng.",
+          "Ba.Li Homestay sẽ thông báo và cùng khách thỏa thuận phương án phù hợp.",
         ],
       },
     ],
@@ -511,7 +540,7 @@ export default async function TermsPage({ params }: Props) {
                   fontFamily: "var(--font-heading)",
                 }}
               >
-                10. Liên hệ & hỗ trợ
+                11. Liên hệ & hỗ trợ
               </h2>
             </div>
 

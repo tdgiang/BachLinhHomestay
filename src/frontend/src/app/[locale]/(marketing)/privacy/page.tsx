@@ -145,6 +145,48 @@ const SECTIONS = [
     ],
   },
   {
+    id: "edit-data",
+    icon: UserCheck,
+    title: "5b. Quyền xem, chỉnh sửa dữ liệu (mục e)",
+    content: [
+      {
+        subtitle: "Cách thực hiện",
+        items: [
+          "Khách hàng có thể tự xem và chỉnh sửa thông tin trong mục \"Tài khoản\" trên website, hoặc gửi yêu cầu tới admin@bachlinh.com.vn.",
+          "Yêu cầu được xử lý trong vòng 07 ngày làm việc.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "delete-restrict",
+    icon: Trash2,
+    title: "5c. Quyền yêu cầu xóa, hủy hoặc hạn chế xử lý dữ liệu (mục g)",
+    content: [
+      {
+        subtitle: "Cách thực hiện",
+        items: [
+          "Khách hàng có quyền yêu cầu xóa, hủy hoặc hạn chế xử lý dữ liệu cá nhân đã cung cấp bằng cách gửi yêu cầu qua hotline 0931 708 256 hoặc email admin@bachlinh.com.vn.",
+          "Ba.Li Homestay xác minh và phản hồi trong vòng 07 ngày làm việc; một số dữ liệu bắt buộc lưu theo pháp luật kế toán, thuế sẽ được giữ đến hết thời hạn luật định.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "security-complaint",
+    icon: Bell,
+    title: "5d. Tiếp nhận và giải quyết khiếu nại về bảo mật (mục h)",
+    content: [
+      {
+        subtitle: "Kênh tiếp nhận",
+        items: [
+          "Mọi khiếu nại liên quan đến bảo mật thông tin được tiếp nhận qua hotline 0931 708 256 hoặc email admin@bachlinh.com.vn.",
+          "Phản hồi ban đầu trong 02 ngày làm việc và giải quyết dứt điểm trong tối đa 07 ngày làm việc.",
+        ],
+      },
+    ],
+  },
+  {
     id: "cookies",
     icon: Bell,
     title: "6. Cookie và công nghệ theo dõi",

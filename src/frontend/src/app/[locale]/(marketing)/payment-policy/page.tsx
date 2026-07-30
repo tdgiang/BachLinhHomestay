@@ -159,6 +159,7 @@ const SECTIONS = [
           "Thẻ quốc tế Visa/Mastercard: 7–15 ngày làm việc (tùy ngân hàng phát hành).",
           "Ví MoMo, ZaloPay: 1–3 ngày làm việc.",
           "Phí giao dịch ngân hàng phát sinh từ phía ngân hàng (nếu có) không thuộc trách nhiệm của Ba.Li Homestay.",
+          "Ba.Li Homestay hiện không áp dụng cơ chế tích điểm/điểm thưởng quy đổi thành tiền mặt.",
         ],
       },
       {

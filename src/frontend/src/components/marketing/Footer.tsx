@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Phone, Mail, MapPin, Building2, Receipt } from "lucide-react";
+import { Phone, Mail, MapPin, Building2, Receipt, UserRound, FileCheck } from "lucide-react";
 import { BrandLogo } from "@/components/shared/BrandLogo";
 import { Separator } from "@/components/ui/separator";
 
@@ -15,6 +15,7 @@ export function Footer() {
     { label: "Chính sách bảo mật", href: "/privacy" },
     { label: "Điều khoản sử dụng", href: "/terms" },
     { label: "Chính sách thanh toán", href: "/payment-policy" },
+    { label: "Chính sách hoạt động theo NĐ 248", href: "/chinh-sach-nd248" },
   ];
 
   const branches = [
@@ -82,6 +83,18 @@ export function Footer() {
                 <Building2 className="w-3.5 h-3.5 mt-0.5 shrink-0" />
                 <span>
                   {t("headOfficeLabel")}: {t("headOffice")}
+                </span>
+              </p>
+              <p className="flex items-start gap-2">
+                <UserRound className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                <span>
+                  {t("legalRepLabel")}: {t("legalRepName")} — {t("legalRepTitle")}
+                </span>
+              </p>
+              <p className="flex items-start gap-2">
+                <FileCheck className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                <span>
+                  {t("bizRegLabel")}: {t("bizRegDate")} — {t("bizRegIssuer")}
                 </span>
               </p>
             </div>

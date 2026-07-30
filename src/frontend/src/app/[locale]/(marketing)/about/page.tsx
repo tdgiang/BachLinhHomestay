@@ -22,8 +22,8 @@ export const metadata: Metadata = { title: "Về chúng tôi" };
 type Props = { params: Promise<{ locale: string }> };
 
 const STATS = [
-  { value: "20+", label: "Phòng nghỉ", sub: "khắp miền Trung" },
-  { value: "3", label: "Thành phố", sub: "Đà Nẵng · Đà Lạt · Phú Quốc" },
+  { value: "20+", label: "Phòng nghỉ", sub: "khắp Hà Nội" },
+  { value: "3", label: "Chi nhánh", sub: "Cầu Giấy · Đống Đa · Ba Đình" },
   { value: "4.9", label: "Điểm đánh giá", sub: "trung bình từ khách hàng" },
   { value: "5K+", label: "Lượt khách", sub: "đã lưu trú thành công" },
 ];
@@ -47,34 +47,34 @@ const VALUES = [
   {
     icon: Award,
     title: "Chất lượng nhất quán",
-    desc: "Từ Đà Nẵng đến Phú Quốc, mỗi phòng đều đạt tiêu chuẩn kiểm định nghiêm ngặt trước khi đón khách.",
+    desc: "Tại tất cả chi nhánh Hà Nội, mỗi phòng đều đạt tiêu chuẩn kiểm định nghiêm ngặt trước khi đón khách.",
   },
 ];
 
 const BRANCHES = [
   {
-    city: "TP. Hồ Chí Minh",
-    name: "Sài Gòn Central",
-    address: "28 Bùi Viện, Quận 1",
-    desc: "Giữa trung tâm phố Tây sôi động, cách Bến Thành 10 phút đi bộ.",
-    rooms: 3,
+    city: "Hà Nội",
+    name: "Cầu Giấy",
+    address: "Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô",
+    desc: "Gần các trường đại học lớn và trung tâm thương mại Cầu Giấy, thuận tiện di chuyển nội thành.",
+    rooms: 2,
     img: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&q=80",
   },
   {
-    city: "Đà Lạt",
-    name: "Đà Lạt Highland",
-    address: "15 Huỳnh Thúc Kháng, P. 9",
-    desc: "Đồi thông yên bình, view thung lũng, không khí mát lành quanh năm.",
-    rooms: 3,
-    img: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&q=80",
+    city: "Hà Nội",
+    name: "Đống Đa",
+    address: "60 Ngõ 128 Nguyễn Đình Chiểu",
+    desc: "Không gian yên tĩnh trong ngõ nhỏ, gần các tuyến phố ẩm thực sầm uất.",
+    rooms: 2,
+    img: "https://images.unsplash.com/photo-1590490359683-658d3d23f972?w=600&q=80",
   },
   {
-    city: "Phú Quốc",
-    name: "Phú Quốc Beachside",
-    address: "68 Trần Hưng Đạo, Dương Tơ",
-    desc: "Sát biển Dương Tơ trong xanh, hồ bơi vô cực nhìn ra đại dương.",
-    rooms: 3,
-    img: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80",
+    city: "Hà Nội",
+    name: "Ba Đình",
+    address: "105 Ngõ 103 Vũ Trọng Phụng",
+    desc: "Vị trí trung tâm, thuận tiện kết nối tới các điểm tham quan và khu vực làm việc.",
+    rooms: 2,
+    img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=80",
   },
 ];
 
@@ -146,9 +146,9 @@ export default async function AboutPage({ params }: Props) {
               className="text-base md:text-lg leading-relaxed mb-8 max-w-md"
               style={{ color: "rgba(255,255,255,0.75)" }}
             >
-              Từ cà phê sáng nhìn ra biển Phú Quốc đến chiều tà trong lành giữa
-              đồi thông Đà Lạt — Ba.Li mang đến không gian nghỉ dưỡng đúng
-              nghĩa, mọi lúc bạn cần.
+              Từ tách cà phê sáng giữa lòng phố cổ đến buổi tối yên tĩnh sau
+              một ngày dài — Ba.Li mang đến không gian nghỉ dưỡng đúng nghĩa,
+              mọi lúc bạn cần.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link href="/rooms">
@@ -185,7 +185,7 @@ export default async function AboutPage({ params }: Props) {
             />
             <img
               src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=500&q=80"
-              alt="Phòng nghỉ Đà Lạt"
+              alt="Phòng nghỉ Ba.Li"
               className="absolute left-0 bottom-0 w-[52%] h-[60%] object-cover rounded-2xl"
               style={{
                 boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
@@ -314,17 +314,16 @@ export default async function AboutPage({ params }: Props) {
                 — không ồn ào, không vội vã, không lo lắng.
               </p>
               <p>
-                Chúng tôi bắt đầu với một căn phòng nhỏ ở Đà Nẵng, nơi hướng
-                thẳng ra biển Mỹ Khê. Từ sự đón nhận nồng nhiệt của khách lưu
-                trú, Ba.Li dần mở rộng sang Đà Lạt và Phú Quốc — mang theo cùng
-                một triết lý:{" "}
+                Chúng tôi bắt đầu với một căn phòng nhỏ tại Cầu Giấy, Hà Nội.
+                Từ sự đón nhận nồng nhiệt của khách lưu trú, Ba.Li dần mở rộng
+                sang Đống Đa và Ba Đình — mang theo cùng một triết lý:{" "}
                 <em>chất lượng không thỏa hiệp, giá cả không bất ngờ</em>.
               </p>
               <p>
-                Ngày nay, với hơn 20 phòng tại 3 thành phố, chúng tôi phục vụ
-                hàng nghìn lượt khách mỗi năm — từ những cặp đôi tìm góc riêng
-                tư, gia đình tìm kỳ nghỉ ý nghĩa, đến những bạn trẻ cần không
-                gian yên tĩnh làm việc xa nhà.
+                Ngày nay, với hơn 20 phòng tại 3 chi nhánh Hà Nội, chúng tôi
+                phục vụ hàng nghìn lượt khách mỗi năm — từ những cặp đôi tìm
+                góc riêng tư, gia đình tìm kỳ nghỉ ý nghĩa, đến những bạn trẻ
+                cần không gian yên tĩnh làm việc xa nhà.
               </p>
             </div>
           </div>
@@ -421,7 +420,7 @@ export default async function AboutPage({ params }: Props) {
                   fontFamily: "var(--font-heading)",
                 }}
               >
-                3 thành phố, 1 tiêu chuẩn
+                3 chi nhánh, 1 tiêu chuẩn
               </h2>
             </div>
             <Link href="/rooms">
@@ -615,8 +614,8 @@ export default async function AboutPage({ params }: Props) {
             className="text-base md:text-lg mb-10 leading-relaxed"
             style={{ color: "rgba(255,255,255,0.7)" }}
           >
-            Hơn 20 phòng tại 3 thành phố biển đảo đẹp nhất Việt Nam. Đặt ngay,
-            nhận ưu đãi sớm.
+            Hơn 20 phòng tại 3 chi nhánh khắp Hà Nội. Đặt ngay, nhận ưu đãi
+            sớm.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/rooms">

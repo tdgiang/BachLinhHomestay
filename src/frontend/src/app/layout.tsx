@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   keywords: [
     "homestay",
     "đặt phòng",
-    "Đà Nẵng",
-    "Hội An",
+    "Hà Nội",
+    "Cầu Giấy",
     "theo giờ",
     "theo ngày",
   ],

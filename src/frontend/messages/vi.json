@@ -57,7 +57,7 @@
     "featurePaymentTitle": "Thanh toán dễ, an tâm",
     "featurePaymentDesc": "VNPay và nhiều hình thức — xác nhận đặt phòng ngay sau khi thanh toán.",
     "featureLocationTitle": "Gần biển, dễ di chuyển",
-    "featureLocationDesc": "Hơn 5 chi nhánh tại Đà Nẵng, Hội An — chọn điểm dừng gần bạn nhất.",
+    "featureLocationDesc": "3 chi nhánh khắp Hà Nội — chọn điểm dừng gần bạn nhất.",
     "featureSupportTitle": "Luôn có người hỗ trợ",
     "featureSupportDesc": "Gặp khó khi check-in? Nhắn hoặc gọi — đội ngũ sẵn sàng giúp bạn.",
     "howEyebrow": "Đơn giản thôi",
@@ -207,6 +207,12 @@
     "taxCode": "0111484606",
     "headOfficeLabel": "Trụ sở",
     "headOffice": "Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội, Việt Nam",
+    "legalRepLabel": "Người đại diện theo pháp luật",
+    "legalRepName": "Nguyễn Lan Phương",
+    "legalRepTitle": "Giám đốc",
+    "bizRegLabel": "GCN ĐKDN",
+    "bizRegDate": "Ngày cấp 04/05/2026 (đăng ký lần đầu)",
+    "bizRegIssuer": "Phòng Đăng ký kinh doanh và Tài chính doanh nghiệp — Sở Tài chính TP Hà Nội",
     "copyright": "© {year} Ba.Li Homestay. Bảo lưu mọi quyền."
   },
   "common": {

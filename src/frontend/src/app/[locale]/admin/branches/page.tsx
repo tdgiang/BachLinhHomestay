@@ -368,14 +368,14 @@ export default function AdminBranchesPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <FormField label="Tên chi nhánh *">
                 <Input
-                  placeholder="Homestay Ba.Li — Đà Nẵng"
+                  placeholder="Homestay Ba.Li — Cầu Giấy"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
               </FormField>
               <FormField label="Tên tiếng Anh">
                 <Input
-                  placeholder="Ba.Li — Da Nang"
+                  placeholder="Ba.Li — Cau Giay"
                   value={form.nameEn}
                   onChange={(e) => setForm({ ...form, nameEn: e.target.value })}
                 />
@@ -395,7 +395,7 @@ export default function AdminBranchesPage() {
               </FormField>
               <FormField label="Thành phố *">
                 <Input
-                  placeholder="Đà Nẵng"
+                  placeholder="Hà Nội"
                   value={form.city}
                   onChange={(e) => setForm({ ...form, city: e.target.value })}
                 />

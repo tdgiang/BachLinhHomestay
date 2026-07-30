@@ -186,7 +186,7 @@ export default function LocationPicker({ lat, lng, onChange }: Props) {
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
             />
             <Input
-              placeholder="Tìm địa điểm (VD: Bạch Đằng, Đà Nẵng)..."
+              placeholder="Tìm địa điểm (VD: Phạm Tuấn Tài, Hà Nội)..."
               className="pl-8 h-8 text-sm"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
