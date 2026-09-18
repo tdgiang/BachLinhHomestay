@@ -7,6 +7,7 @@ import { HomeValueProps } from '@/components/marketing/HomeValueProps';
 import { HomeHowItWorks } from '@/components/marketing/HomeHowItWorks';
 import { HomeCtaSection } from '@/components/marketing/HomeCtaSection';
 import { HomeBusinessInfo } from '@/components/marketing/HomeBusinessInfo';
+import { HomePolicyHub } from '@/components/marketing/HomePolicyHub';
 import { Skeleton } from '@/components/ui/skeleton';
 import { apiClient } from '@/lib/api-client';
 import type { BookingType } from '@/types';
@@ -57,6 +58,7 @@ export default async function HomePage({ params, searchParams }: Props) {
       <HomeHowItWorks />
       <HomeCtaSection />
       <HomeBusinessInfo />
+      <HomePolicyHub />
     </div>
   );
 }

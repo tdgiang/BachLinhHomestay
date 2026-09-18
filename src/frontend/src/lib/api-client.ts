@@ -4,6 +4,8 @@ import type {
   RoomQuery, RoomAvailability, TimeSlotSuggestion,
   CreateBookingDto, ValidateVoucherDto, ValidateVoucherResult,
   PaginatedResult, BookingSummary, RevenueData,
+  Complaint, ComplaintTracking, ComplaintReceipt, CreateComplaintDto,
+  ComplaintStatus, ComplaintCategory,
 } from '@/types';
 import {
   mockDelay, filterMockRooms, findMockRoom, validateMockVoucher,
@@ -406,6 +408,57 @@ async function deleteReview(id: string, token: string): Promise<void> {
   await api.delete(`/api/v1/reviews/${id}`, token);
 }
 
+// ─── Complaints (Điều 7 NĐ 248) ───────────────────────────────────────────────
+
+async function createComplaint(dto: CreateComplaintDto): Promise<ComplaintReceipt> {
+  const res = await api.post<ComplaintReceipt>('/api/v1/complaints', dto);
+  return res.data;
+}
+
+async function trackComplaint(code: string): Promise<ComplaintTracking> {
+  const res = await api.get<ComplaintTracking>(
+    `/api/v1/complaints/track/${encodeURIComponent(code)}`,
+  );
+  return res.data;
+}
+
+async function getAdminComplaints(
+  query: {
+    status?: ComplaintStatus;
+    category?: ComplaintCategory;
+    search?: string;
+    page?: number;
+    limit?: number;
+  } = {},
+  token: string,
+): Promise<PaginatedResult<Complaint>> {
+  const params = new URLSearchParams();
+  if (query.page)     params.set('page',     String(query.page));
+  params.set('limit', String(Math.min(query.limit ?? 50, 100)));
+  if (query.status)   params.set('status',   query.status);
+  if (query.category) params.set('category', query.category);
+  if (query.search)   params.set('search',   query.search);
+  const res = await api.get<PaginatedResult<Complaint>>(
+    `/api/v1/complaints?${params.toString()}`,
+    token,
+  );
+  return res.data;
+}
+
+async function getAdminComplaint(id: string, token: string): Promise<Complaint> {
+  const res = await api.get<Complaint>(`/api/v1/complaints/${id}`, token);
+  return res.data;
+}
+
+async function updateComplaint(
+  id: string,
+  dto: { status?: ComplaintStatus; response?: string },
+  token: string,
+): Promise<Complaint> {
+  const res = await api.patch<Complaint>(`/api/v1/complaints/${id}`, dto, token);
+  return res.data;
+}
+
 // ─── Reports (Admin) ──────────────────────────────────────────────────────────
 
 async function getReportSummary(token: string): Promise<BookingSummary> {
@@ -489,6 +542,11 @@ export const apiClient = {
   uploadRoomImage,
   deleteRoomImage,
   setRoomImageCover,
+  createComplaint,
+  trackComplaint,
+  getAdminComplaints,
+  getAdminComplaint,
+  updateComplaint,
   getReportSummary,
   getRevenueYearly,
   getRevenueMonthly,

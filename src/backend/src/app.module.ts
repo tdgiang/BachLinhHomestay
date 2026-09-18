@@ -15,6 +15,7 @@ import { PaymentsModule } from './modules/payments/payments.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { AmenitiesModule } from './modules/amenities/amenities.module';
+import { ComplaintsModule } from './modules/complaints/complaints.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { CacheModule } from '@nestjs/cache-manager';
 import { APP_GUARD } from '@nestjs/core';
@@ -62,6 +63,7 @@ import { RolesGuard } from './common/guards/roles.guard';
     ReviewsModule,
     ReportsModule,
     AmenitiesModule,
+    ComplaintsModule,
   ],
   providers: [
     {

@@ -14,6 +14,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Package,
+  MessageSquare,
 } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -29,6 +30,7 @@ const NAV_ITEMS = [
   { label: "Voucher", href: "/admin/vouchers", icon: Tag },
   { label: "Báo cáo", href: "/admin/reports", icon: BarChart2 },
   { label: "Đánh giá", href: "/admin/reviews", icon: Star },
+  { label: "Khiếu nại", href: "/admin/complaints", icon: MessageSquare },
 ];
 
 export function AdminSidebar() {

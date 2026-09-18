@@ -12,8 +12,12 @@ import {
   Mail,
   ArrowRight,
   FileText,
+  ListOrdered,
+  Video,
+  PackageX,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { securityLicenseText } from "@/lib/legal";
 
 export const metadata: Metadata = {
   title: "Chính sách hoạt động theo NĐ 248 | Ba.Li Homestay",
@@ -64,25 +68,27 @@ const SECTIONS = [
       {
         subtitle: "Kênh tiếp nhận",
         items: [
-          "Email admin@bachlinh.com.vn và biểu mẫu \"Liên hệ\" (trực tuyến).",
-          "Hotline 0931 708 256.",
-          "Trực tiếp tại quầy lễ tân.",
+          "Biểu mẫu trực tuyến tại trang Liên hệ — hoạt động 24/7, cấp mã phiếu để khách tự tra cứu tiến độ, không cần đăng nhập.",
+          "Email admin@bachlinh.com.vn.",
+          "Hotline 0931 708 256 (trực 24/7).",
+          "Trực tiếp tại quầy lễ tân chi nhánh trong giờ hành chính.",
         ],
       },
       {
         subtitle: "Quy trình xử lý",
         items: [
-          "Bước 1: Khách gửi phản ánh kèm mã đặt phòng.",
-          "Bước 2: Ba.Li tiếp nhận, phản hồi ban đầu.",
-          "Bước 3: Xác minh và đề xuất phương án.",
-          "Bước 4: Thực hiện và thông báo kết quả.",
+          "Bước 1: Khách gửi phản ánh kèm mã đặt phòng (nếu có).",
+          "Bước 2: Ba.Li tiếp nhận, cấp mã phiếu và phản hồi ban đầu trong thời hạn công bố theo từng nhóm vấn đề.",
+          "Bước 3: Xác minh và đề xuất phương án xử lý.",
+          "Bước 4: Thực hiện và thông báo kết quả bằng văn bản qua email.",
+          "Chi tiết từng bước, thời hạn theo loại vấn đề và công cụ hỗ trợ được công bố đầy đủ tại trang Liên hệ.",
         ],
       },
       {
         subtitle: "Thời hạn và biện pháp hỗ trợ",
         items: [
-          "Phản hồi ban đầu trong 02 ngày làm việc.",
-          "Giải quyết trong tối đa 07 ngày làm việc (vụ việc phức tạp sẽ thông báo trước cho khách).",
+          "Phản hồi ban đầu trong 24–72 giờ tùy nhóm vấn đề.",
+          "Giải quyết trong 02–07 ngày làm việc tùy nhóm vấn đề; riêng yêu cầu về dữ liệu cá nhân tối đa 30 ngày. Bảng thời hạn chi tiết công bố tại trang Liên hệ.",
           "Nếu không đạt thỏa thuận, hai bên có thể hòa giải qua tổ chức bảo vệ quyền lợi người tiêu dùng, hoặc giải quyết tại Tòa án nhân dân có thẩm quyền tại TP Hà Nội.",
         ],
       },
@@ -100,6 +106,14 @@ const SECTIONS = [
           "Không phát sinh phụ phí ẩn ngoài các khoản đã hiển thị trước khi khách xác nhận đặt phòng.",
           "Giá có thể thay đổi theo thời điểm (mùa lễ, cuối tuần) nhưng được khóa tại thời điểm đặt phòng thành công.",
           "Trường hợp thay đổi biểu phí dịch vụ, Ba.Li Homestay công khai trên nền tảng ít nhất 20 ngày trước thời điểm áp dụng.",
+        ],
+      },
+      {
+        subtitle: "Chi phí dịch vụ dành cho người bán (Điều 8 khoản b)",
+        items: [
+          "Không áp dụng. Ba.Li Homestay tự vận hành và tự cung cấp toàn bộ dịch vụ lưu trú trên nền tảng, không có người bán thứ ba tham gia.",
+          "Nền tảng không thu phí mở tài khoản, phí duy trì tài khoản, phí xử lý đơn hàng hay bất kỳ loại phí dịch vụ nào đối với người bán.",
+          "Nếu trong tương lai nền tảng cho phép người bán thứ ba tham gia, biểu giá dịch vụ, cách tính từng loại phí và thời điểm áp dụng sẽ được công bố tại mục này ít nhất 20 ngày trước khi áp dụng.",
         ],
       },
     ],
@@ -163,15 +177,87 @@ const SECTIONS = [
     ],
   },
   {
+    id: "display-ranking",
+    icon: ListOrdered,
+    title: "VI. Chính sách về ưu tiên hiển thị (Điều 11)",
+    content: [
+      {
+        subtitle: "Cách kết quả được lọc",
+        items: [
+          "Từ khóa và bộ lọc khách chọn quyết định phòng nào xuất hiện: tên phòng, mô tả, chi nhánh, loại hình đặt (theo giờ / theo ngày) và khoảng giá.",
+          "Phòng đã kín lịch trong khung thời gian khách tìm bị loại khỏi kết quả, không hiển thị.",
+          "Khách có thể tự lọc riêng nhóm \"Phòng nổi bật\" hoặc \"Khách yêu thích\" — đây là bộ lọc do khách chủ động bật, không phải yếu tố tự động đẩy phòng lên trên.",
+        ],
+      },
+      {
+        subtitle: "Cách kết quả được sắp xếp",
+        items: [
+          "Mặc định, danh sách phòng sắp xếp theo thời điểm đăng, phòng đăng gần đây nhất hiển thị trước.",
+          "Khách có thể tự đổi tiêu chí sắp xếp (ví dụ theo giá) và thứ tự tăng/giảm tại trang Tìm phòng. Khi đó thứ tự hoàn toàn theo lựa chọn của khách.",
+          "Ngoài hai cơ chế trên, nền tảng không áp dụng thuật toán xếp hạng nào khác.",
+        ],
+      },
+      {
+        subtitle: "Những yếu tố KHÔNG ảnh hưởng đến thứ tự hiển thị",
+        items: [
+          "Không có hình thức trả phí để được ưu tiên hiển thị. Ba.Li Homestay không bán vị trí hiển thị cho bất kỳ bên nào.",
+          "Không cá nhân hóa thứ tự theo lịch sử tìm kiếm hoặc lịch sử giao dịch của từng người dùng.",
+          "Điểm đánh giá, số lượt đánh giá và số đơn đặt thành công không tác động đến thứ tự hiển thị.",
+          "Không phân biệt theo địa phương, quốc gia hay vùng lãnh thổ của người truy cập.",
+          "Không phân biệt theo phương thức thanh toán mà khách lựa chọn.",
+        ],
+      },
+      {
+        subtitle: "Minh bạch",
+        items: [
+          "Khách hàng có thể tự sắp xếp và lọc kết quả theo giá, sức chứa, tiện ích và chi nhánh tại trang Tìm phòng.",
+          "Thông tin tại mục này mô tả đúng cơ chế đang vận hành trên nền tảng.",
+          "Khi thay đổi tiêu chí ưu tiên hiển thị, Ba.Li Homestay cập nhật công khai tại mục này.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "livestream",
+    icon: Video,
+    title: "VII. Quy chế hoạt động livestream bán hàng (Điều 12)",
+    content: [
+      {
+        subtitle: "Không áp dụng",
+        items: [
+          "Ba.Li Homestay không cung cấp và không cho phép chức năng phát trực tuyến (livestream) bán hàng trên nền tảng.",
+          "Nền tảng không có tài khoản người livestream bán hàng, không có công cụ phát trực tuyến và không đặt đường dẫn mua hàng trong nội dung phát trực tuyến.",
+          "Trường hợp triển khai chức năng này trong tương lai, Ba.Li Homestay sẽ ban hành và công khai quy chế livestream đầy đủ theo Điều 12 Nghị định 248/2026/NĐ-CP trước khi đưa vào sử dụng, bao gồm quyền và nghĩa vụ các bên, quy trình định danh xác thực điện tử, điều kiện mở tài khoản, các trường hợp dừng phát và cơ chế tiếp nhận khiếu nại của người xem.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "goods-delivery",
+    icon: PackageX,
+    title: "VIII. Giao hàng, đổi trả hàng hóa (Điều 13, Điều 14)",
+    content: [
+      {
+        subtitle: "Không áp dụng",
+        items: [
+          "Ba.Li Homestay kinh doanh dịch vụ lưu trú, không kinh doanh hàng hóa hữu hình. Nền tảng không có hoạt động giao nhận hàng hóa nên không phát sinh chính sách giao hàng theo Điều 13 và chính sách đổi trả hàng theo Điều 14.",
+          "Nội dung tương ứng đối với dịch vụ được công bố tại mục IV (Phương thức cung cấp dịch vụ — Điều 15) và mục V (Chấm dứt dịch vụ và hoàn tiền — Điều 16) của trang này.",
+          "Các khoản phụ thu tại chỗ (đồ ăn, đồ uống, vật dụng bổ sung) được tính trực tiếp tại chi nhánh khi khách sử dụng, không phát sinh vận chuyển.",
+        ],
+      },
+    ],
+  },
+  {
     id: "conditional-industry",
     icon: ShieldAlert,
-    title: "VI. Ngành nghề kinh doanh có điều kiện",
+    title: "IX. Ngành nghề kinh doanh có điều kiện",
     content: [
       {
         subtitle: "An ninh, trật tự",
         items: [
-          "Kinh doanh dịch vụ lưu trú thuộc ngành nghề đầu tư kinh doanh có điều kiện về an ninh, trật tự.",
-          "[Chờ bổ sung số/ngày/nơi cấp Giấy chứng nhận đủ điều kiện an ninh, trật tự]",
+          "Kinh doanh dịch vụ lưu trú thuộc ngành nghề đầu tư kinh doanh có điều kiện về an ninh, trật tự theo Nghị định 96/2016/NĐ-CP.",
+          securityLicenseText(),
+          "Cơ sở lưu trú thực hiện khai báo tạm trú cho khách theo quy định của Luật Cư trú; khách xuất trình giấy tờ tùy thân hợp lệ khi nhận phòng.",
         ],
       },
     ],
@@ -233,7 +319,7 @@ export default async function Nd248PolicyPage({ params }: Props) {
           </p>
 
           <p className="text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>
-            Cập nhật lần cuối: 29 tháng 7 năm 2026
+            Cập nhật lần cuối: 18 tháng 9 năm 2026
           </p>
         </div>
       </section>
@@ -437,6 +523,15 @@ export default async function Nd248PolicyPage({ params }: Props) {
             </div>
 
             <div className="ml-[60px] mt-5 flex flex-wrap gap-3">
+              <Link href="/contact">
+                <Button
+                  className="h-9 px-4 text-xs rounded-xl font-semibold gap-1.5"
+                  style={{ background: "var(--color-primary)", color: "white" }}
+                >
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  Gửi phản ánh trực tuyến
+                </Button>
+              </Link>
               <Link href="/terms">
                 <Button
                   variant="outline"

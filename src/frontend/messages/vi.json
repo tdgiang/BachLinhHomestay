@@ -12,7 +12,7 @@
   "home": {
     "heroEyebrow": "Đặt phòng linh hoạt theo giờ & ngày",
     "heroTitle": "Không gian xứng tầm trải nghiệm",
-    "heroSubtitle": "Hơn 20 phòng tại 5+ chi nhánh trung tâm Hà Nội. Đặt phòng theo giờ hoặc theo ngày — linh hoạt, tiện lợi.",
+    "heroSubtitle": "Hơn 20 phòng tại chi nhánh Cầu Giấy, Hà Nội. Đặt phòng theo giờ hoặc theo ngày — linh hoạt, tiện lợi.",
     "tabHourly": "Theo giờ",
     "tabDaily": "Theo ngày",
     "selectBranch": "Chọn chi nhánh",
@@ -57,7 +57,7 @@
     "featurePaymentTitle": "Thanh toán dễ, an tâm",
     "featurePaymentDesc": "VNPay và nhiều hình thức — xác nhận đặt phòng ngay sau khi thanh toán.",
     "featureLocationTitle": "Gần biển, dễ di chuyển",
-    "featureLocationDesc": "3 chi nhánh khắp Hà Nội — chọn điểm dừng gần bạn nhất.",
+    "featureLocationDesc": "Ngay trung tâm Cầu Giấy, Hà Nội — thuận tiện di chuyển.",
     "featureSupportTitle": "Luôn có người hỗ trợ",
     "featureSupportDesc": "Gặp khó khi check-in? Nhắn hoặc gọi — đội ngũ sẵn sàng giúp bạn.",
     "howEyebrow": "Đơn giản thôi",
@@ -196,7 +196,7 @@
     "vsYesterday": "so với hôm qua"
   },
   "footer": {
-    "tagline": "Hơn 20 phòng tại 5+ chi nhánh. Đặt phòng theo giờ hoặc theo ngày.",
+    "tagline": "Hơn 20 phòng tại chi nhánh Cầu Giấy, Hà Nội. Đặt phòng theo giờ hoặc theo ngày.",
     "navigation": "Điều hướng",
     "contact": "Liên hệ",
     "phone": "Hotline",

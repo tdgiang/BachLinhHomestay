@@ -1,6 +1,18 @@
+import { COMPANY } from './legal';
+
 export const APP_NAME = 'Ba.Li Homestay';
 export const LOGO_SRC = '/images/logo.png';
-export const APP_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+/**
+ * URL gốc của site. Production build truyền qua build arg NEXT_PUBLIC_SITE_URL
+ * (xem src/frontend/Dockerfile.prod). Nếu thiếu, fallback về tên miền đã đăng ký
+ * với Bộ Công Thương thay vì localhost — tránh sitemap/canonical trỏ localhost
+ * trên bản deploy thật.
+ */
+export const APP_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.NODE_ENV === 'production'
+    ? COMPANY.websiteUrl
+    : 'http://localhost:3000');
 export const API_URL = process.env.API_INTERNAL_URL
   ?? process.env.NEXT_PUBLIC_API_URL
   ?? 'http://localhost:4000';

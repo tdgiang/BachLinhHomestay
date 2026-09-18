@@ -12,6 +12,7 @@ import { CreateBookingDto } from '../interface/dto/create-booking.dto';
 import { CancelBookingDto } from '../interface/dto/cancel-booking.dto';
 import { UpdateBookingStatusDto } from '../interface/dto/update-status.dto';
 import { BookingQueryDto } from '../interface/dto/booking-query.dto';
+import { BOOKING_LIMITS, HOURS_TOLERANCE } from './booking-limits';
 
 @Injectable()
 export class BookingsService {
@@ -24,6 +25,105 @@ export class BookingsService {
     private readonly vouchersService: VouchersService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
+
+  /**
+   * Cưỡng chế các giới hạn số lượng đã công bố tại trang Điều khoản sử dụng.
+   *
+   * Điều 9d NĐ 248 yêu cầu công khai giới hạn số lượng; công bố rồi thì phải
+   * thực hiện đúng. Trước khi có hàm này, API cho phép giữ phòng 12 giờ nhưng
+   * chỉ trả tiền 3 giờ, đặt 365 đêm liên tục và khai 99 khách cho phòng 4 người.
+   */
+  private async assertWithinPublishedLimits(
+    dto: CreateBookingDto,
+    room: unknown,
+    numGuests: number,
+    diffMs: number,
+    userId?: string,
+  ): Promise<void> {
+    const r = room as { minHours?: number; capacity?: number; name?: string };
+
+    // Sức chứa — trước đây khách vượt sức chứa chỉ bị tính phụ thu, không bị chặn.
+    const capacity = Number(r.capacity ?? 0);
+    if (capacity > 0 && numGuests > capacity) {
+      throw new BadRequestException(
+        `Phòng này chứa tối đa ${capacity} khách, bạn đã chọn ${numGuests} khách`,
+      );
+    }
+
+    if (dto.bookingType === 'hourly') {
+      if (!dto.numHours) {
+        throw new BadRequestException('numHours bắt buộc cho bookingType=hourly');
+      }
+
+      // numHours quyết định số tiền, checkIn/checkOut quyết định thời gian khóa
+      // phòng. Không đối chiếu hai giá trị này thì khách giữ 12 giờ mà chỉ trả
+      // tiền 2 giờ.
+      const actualHours = diffMs / 3_600_000;
+      if (Math.abs(actualHours - dto.numHours) > HOURS_TOLERANCE) {
+        throw new BadRequestException(
+          `Số giờ đặt (${dto.numHours}) không khớp khoảng thời gian đã chọn (${actualHours.toFixed(1)} giờ)`,
+        );
+      }
+
+      const minHours = Math.max(
+        BOOKING_LIMITS.minHours,
+        Number(r.minHours ?? BOOKING_LIMITS.minHours),
+      );
+      if (dto.numHours < minHours) {
+        throw new BadRequestException(
+          `Phòng này yêu cầu đặt tối thiểu ${minHours} giờ`,
+        );
+      }
+      if (dto.numHours > BOOKING_LIMITS.maxHours) {
+        throw new BadRequestException(
+          `Đặt theo giờ tối đa ${BOOKING_LIMITS.maxHours} giờ mỗi lượt. Vui lòng chuyển sang đặt theo ngày.`,
+        );
+      }
+    } else {
+      const nights = Math.ceil(diffMs / 86_400_000);
+      if (nights > BOOKING_LIMITS.maxNights) {
+        throw new BadRequestException(
+          `Mỗi lượt đặt tối đa ${BOOKING_LIMITS.maxNights} đêm liên tục, bạn đã chọn ${nights} đêm`,
+        );
+      }
+    }
+
+    await this.assertCustomerQuota(dto, userId);
+  }
+
+  /**
+   * Giới hạn 03 đơn đang hiệu lực cho mỗi khách.
+   *
+   * Khách vãng lai không có tài khoản nên định danh theo số điện thoại — đó là
+   * trường bắt buộc và đã được validate định dạng ở DTO.
+   */
+  private async assertCustomerQuota(
+    dto: CreateBookingDto,
+    userId?: string,
+  ): Promise<void> {
+    const owner: Prisma.BookingWhereInput = userId
+      ? { userId }
+      : { guestPhone: dto.guestPhone };
+
+    const [, activeCount] = await this.repository.findAll({
+      take: 0,
+      where: {
+        ...owner,
+        bookingStatus: {
+          in: [
+            BookingStatus.pending,
+            BookingStatus.confirmed,
+            BookingStatus.checked_in,
+          ],
+        },
+      },
+    });
+    if (activeCount >= BOOKING_LIMITS.maxActivePerCustomer) {
+      throw new BadRequestException(
+        `Bạn đang có ${activeCount} đơn đặt phòng hiệu lực. Mỗi khách giữ tối đa ${BOOKING_LIMITS.maxActivePerCustomer} đơn cùng lúc.`,
+      );
+    }
+  }
 
   async create(dto: CreateBookingDto, userId?: string) {
     // 1. Verify room is active
@@ -44,21 +144,23 @@ export class BookingsService {
     const checkIn = new Date(dto.checkIn);
     const checkOut = new Date(dto.checkOut);
     const diffMs = checkOut.getTime() - checkIn.getTime();
+    if (diffMs <= 0) {
+      throw new BadRequestException('Thời gian trả phòng phải sau thời gian nhận phòng');
+    }
+
+    const numGuests = dto.numGuests ?? 1;
+
+    // 3a. Giới hạn số lượng đã công bố theo Điều 9d NĐ 248 — xem booking-limits.ts
+    await this.assertWithinPublishedLimits(dto, room, numGuests, diffMs, userId);
 
     let baseAmount: number;
     if (dto.bookingType === 'hourly') {
-      if (!dto.numHours) throw new BadRequestException('numHours bắt buộc cho bookingType=hourly');
-      const minHours = Number((room as any).minHours ?? 1);
-      if (dto.numHours < minHours) {
-        throw new BadRequestException(`Phòng này yêu cầu đặt tối thiểu ${minHours} giờ`);
-      }
-      baseAmount = Number((room as any).pricePerHour) * dto.numHours;
+      baseAmount = Number((room as any).pricePerHour) * dto.numHours!;
     } else {
       const nights = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
       baseAmount = Number((room as any).pricePerDay) * Math.max(1, nights);
     }
 
-    const numGuests = dto.numGuests ?? 1;
     const extraPersonPrice = Number((room as any).extraPersonPrice ?? 0);
     const extraAmount = Math.max(0, numGuests - 1) * extraPersonPrice;
 

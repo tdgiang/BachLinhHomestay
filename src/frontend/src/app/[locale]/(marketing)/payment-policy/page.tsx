@@ -13,6 +13,7 @@ import {
   Phone,
   Mail,
   ArrowRight,
+  Ticket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -217,6 +218,46 @@ const SECTIONS = [
           "Thẻ Visa/Mastercard quốc tế được tính theo tỷ giá USD/VNĐ tại thời điểm giao dịch do ngân hàng phát hành quy định.",
           "Ba.Li Homestay không chịu trách nhiệm về chênh lệch tỷ giá giữa thời điểm đặt phòng và thời điểm ngân hàng ghi nợ.",
           "Một số ngân hàng quốc tế có thể thu thêm phí chuyển đổi ngoại tệ — vui lòng kiểm tra với ngân hàng phát hành thẻ của bạn.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "vouchers",
+    icon: Ticket,
+    title: "8. Mã giảm giá và ưu đãi (Điều 10 khoản c)",
+    content: [
+      {
+        subtitle: "Cách thức hình thành",
+        items: [
+          "Ba.Li Homestay chỉ phát hành mã giảm giá (voucher) theo từng chương trình khuyến mại. Nền tảng KHÔNG vận hành cơ chế tích điểm, hoàn điểm hay ví điểm thưởng.",
+          "Mã được phát hành công khai trên website, fanpage hoặc gửi trực tiếp tới khách hàng qua email, tin nhắn.",
+          "Khách hàng không thể tự tạo, tự tích lũy hay mua mã giảm giá.",
+        ],
+      },
+      {
+        subtitle: "Cách sử dụng và phạm vi áp dụng",
+        items: [
+          "Nhập mã tại bước xác nhận đặt phòng, trước khi thanh toán. Hệ thống hiển thị ngay số tiền được giảm và tổng tiền phải trả.",
+          "Mỗi đơn đặt phòng chỉ áp dụng được một mã; các mã không cộng dồn với nhau.",
+          "Mã chỉ áp dụng cho đơn đặt phòng trên website Ba.Li Homestay, không áp dụng cho phụ thu phát sinh tại chỗ.",
+        ],
+      },
+      {
+        subtitle: "Điều kiện, tỷ lệ và giới hạn quy đổi",
+        items: [
+          "Mỗi mã công bố rõ: hình thức giảm (theo phần trăm hoặc số tiền cố định), giá trị giảm, mức giảm tối đa, giá trị đơn tối thiểu, thời gian hiệu lực và số lượt sử dụng còn lại.",
+          "Điều kiện cụ thể của từng mã được hiển thị ngay khi khách nhập mã, trước khi thanh toán.",
+          "Mã hết hạn, hết lượt sử dụng hoặc đơn hàng không đạt giá trị tối thiểu sẽ bị từ chối kèm lý do rõ ràng.",
+        ],
+      },
+      {
+        subtitle: "Trách nhiệm của các bên",
+        items: [
+          "Mã giảm giá KHÔNG được quy đổi thành tiền mặt, không được chuyển nhượng, mua bán hay rút tiền dưới bất kỳ hình thức nào.",
+          "Khi hủy đơn có áp dụng mã, số tiền hoàn lại tính trên số tiền khách đã thực trả; mã đã sử dụng không được khôi phục, trừ trường hợp Ba.Li Homestay là bên chủ động hủy.",
+          "Ba.Li Homestay chịu trách nhiệm thực hiện đúng ưu đãi đã công bố; khách hàng chịu trách nhiệm sử dụng mã đúng đối tượng và điều kiện.",
+          "Ba.Li Homestay có quyền thu hồi mã và hủy đơn nếu phát hiện hành vi gian lận, sử dụng mã sai mục đích.",
         ],
       },
     ],

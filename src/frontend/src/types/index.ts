@@ -168,6 +168,62 @@ export interface Review {
   room?: { id: string; name: string; roomNumber?: string };
 }
 
+// ─── Phản ánh, khiếu nại (Điều 7 NĐ 248/2026/NĐ-CP) ─────────────────────────
+
+export type ComplaintCategory =
+  | 'booking'
+  | 'payment'
+  | 'refund'
+  | 'service'
+  | 'privacy'
+  | 'other';
+
+export type ComplaintStatus = 'received' | 'in_progress' | 'resolved' | 'rejected';
+
+export interface Complaint {
+  id: string;
+  code: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  bookingCode: string | null;
+  category: ComplaintCategory;
+  subject: string;
+  content: string;
+  status: ComplaintStatus;
+  response: string | null;
+  respondedAt: string | null;
+  resolvedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Bản rút gọn trả về cho tra cứu công khai bằng mã phiếu. */
+export type ComplaintTracking = Pick<
+  Complaint,
+  'code' | 'category' | 'subject' | 'status' | 'response' | 'respondedAt' | 'resolvedAt' | 'createdAt'
+>;
+
+export interface CreateComplaintDto {
+  fullName: string;
+  email: string;
+  phone: string;
+  bookingCode?: string;
+  category: ComplaintCategory;
+  subject: string;
+  content: string;
+}
+
+export interface ComplaintReceipt {
+  code: string;
+  status: ComplaintStatus;
+  createdAt: string;
+  /** Thời hạn phản hồi ban đầu, tính bằng giờ — khác nhau theo nhóm vấn đề. */
+  initialResponseHours: number;
+  /** Thời hạn giải quyết, tính bằng ngày làm việc. */
+  resolutionDays: number;
+}
+
 export interface Booking {
   id: string;
   bookingCode: string;

@@ -33,6 +33,7 @@ const activeRoom = {
   id: 'room-1', status: 'active',
   pricePerHour: 150000, pricePerDay: 1200000,
   extraPersonPrice: 100000, name: 'Test Room',
+  capacity: 4, minHours: 2,
 };
 
 describe('BookingsService', () => {
@@ -40,6 +41,8 @@ describe('BookingsService', () => {
 
   beforeEach(async () => {
     jest.clearAllMocks();
+    // Quota theo khách (Điều 9d) đếm đơn qua findAll — mặc định khách chưa có đơn nào.
+    mockRepo.findAll.mockResolvedValue([[], 0]);
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         BookingsService,
@@ -113,6 +116,133 @@ describe('BookingsService', () => {
         expect.objectContaining({ discountAmount: 200000 }),
         'cash',
       );
+    });
+  });
+
+  // ── Giới hạn số lượng đã công bố (Điều 9d NĐ 248) ─────────────────────────
+
+  describe('giới hạn số lượng đã công bố', () => {
+    const base = {
+      roomId: 'room-1',
+      numGuests: 1,
+      guestName: 'Test',
+      guestPhone: '0901234567',
+      paymentMethod: 'cash',
+    } as any;
+
+    beforeEach(() => {
+      mockRoomsService.findOne.mockResolvedValue(activeRoom);
+      mockRoomsService.checkAvailability.mockResolvedValue({ available: true, conflicts: [] });
+      mockVouchersService.validate.mockResolvedValue({ valid: false, discountAmount: 0 });
+      mockRepo.createWithPayment.mockResolvedValue({ bookingCode: 'HMS-OK' });
+    });
+
+    const hourly = (from: string, to: string, numHours: number) => ({
+      ...base,
+      bookingType: 'hourly',
+      checkIn: from,
+      checkOut: to,
+      numHours,
+    });
+
+    it('chặn khai numHours thấp hơn khoảng thời gian thực giữ phòng', async () => {
+      // Giữ phòng 12 giờ nhưng chỉ khai 3 giờ để trả ít tiền.
+      await expect(
+        service.create(hourly('2026-12-01T01:00:00Z', '2026-12-01T13:00:00Z', 3)),
+      ).rejects.toThrow(/không khớp khoảng thời gian/);
+      expect(mockRepo.createWithPayment).not.toHaveBeenCalled();
+    });
+
+    it('cho qua khi numHours khớp khoảng thời gian', async () => {
+      await service.create(hourly('2026-12-01T01:00:00Z', '2026-12-01T04:00:00Z', 3));
+      expect(mockRepo.createWithPayment).toHaveBeenCalledWith(
+        expect.objectContaining({ baseAmount: 450000 }), // 3 × 150.000
+        'cash',
+      );
+    });
+
+    it('chặn đặt theo giờ vượt 12 giờ mỗi lượt', async () => {
+      await expect(
+        service.create(hourly('2026-12-01T00:00:00Z', '2026-12-01T13:00:00Z', 13)),
+      ).rejects.toThrow(/tối đa 12 giờ/);
+    });
+
+    it('áp sàn 2 giờ ngay cả khi phòng khai minHours thấp hơn', async () => {
+      mockRoomsService.findOne.mockResolvedValue({ ...activeRoom, minHours: 1 });
+      await expect(
+        service.create(hourly('2026-12-01T01:00:00Z', '2026-12-01T02:00:00Z', 1)),
+      ).rejects.toThrow(/tối thiểu 2 giờ/);
+    });
+
+    it('vẫn tôn trọng minHours cao hơn của từng phòng', async () => {
+      mockRoomsService.findOne.mockResolvedValue({ ...activeRoom, minHours: 3 });
+      await expect(
+        service.create(hourly('2026-12-01T01:00:00Z', '2026-12-01T03:00:00Z', 2)),
+      ).rejects.toThrow(/tối thiểu 3 giờ/);
+    });
+
+    it('chặn đặt quá 30 đêm liên tục', async () => {
+      await expect(
+        service.create({
+          ...base,
+          bookingType: 'daily',
+          checkIn: '2027-01-01T07:00:00Z',
+          checkOut: '2027-03-01T05:00:00Z',
+        }),
+      ).rejects.toThrow(/tối đa 30 đêm/);
+    });
+
+    it('chặn số khách vượt sức chứa của phòng', async () => {
+      await expect(
+        service.create({
+          ...base,
+          numGuests: 99,
+          bookingType: 'daily',
+          checkIn: '2027-01-01T07:00:00Z',
+          checkOut: '2027-01-02T05:00:00Z',
+        }),
+      ).rejects.toThrow(/chứa tối đa 4 khách/);
+    });
+
+    it('chặn khi khách đã có 3 đơn đang hiệu lực', async () => {
+      mockRepo.findAll.mockResolvedValueOnce([[], 3]);
+      await expect(
+        service.create({
+          ...base,
+          bookingType: 'daily',
+          checkIn: '2027-01-01T07:00:00Z',
+          checkOut: '2027-01-02T05:00:00Z',
+        }),
+      ).rejects.toThrow(/tối đa 3 đơn cùng lúc/);
+    });
+
+    it('đếm quota theo userId khi khách đã đăng nhập, theo SĐT khi chưa', async () => {
+      const daily = {
+        ...base,
+        bookingType: 'daily',
+        checkIn: '2027-01-01T07:00:00Z',
+        checkOut: '2027-01-02T05:00:00Z',
+      };
+
+      await service.create(daily, 'user-9');
+      expect(mockRepo.findAll.mock.calls[0][0].where).toMatchObject({ userId: 'user-9' });
+
+      mockRepo.findAll.mockClear();
+      await service.create(daily);
+      expect(mockRepo.findAll.mock.calls[0][0].where).toMatchObject({
+        guestPhone: '0901234567',
+      });
+    });
+
+    it('chặn checkOut không sau checkIn', async () => {
+      await expect(
+        service.create({
+          ...base,
+          bookingType: 'daily',
+          checkIn: '2027-01-02T07:00:00Z',
+          checkOut: '2027-01-01T07:00:00Z',
+        }),
+      ).rejects.toThrow(/phải sau/);
     });
   });
 

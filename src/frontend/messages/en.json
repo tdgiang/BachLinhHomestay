@@ -12,7 +12,7 @@
   "home": {
     "heroEyebrow": "Flexible booking by hour or by day",
     "heroTitle": "Experience space that fits your needs",
-    "heroSubtitle": "20+ rooms across 5+ beachside branches. Book by the hour or by the night — flexible and hassle-free.",
+    "heroSubtitle": "20+ rooms at our Cau Giay branch in Hanoi. Book by the hour or by the night — flexible and hassle-free.",
     "tabHourly": "By hour",
     "tabDaily": "By day",
     "selectBranch": "Select branch",
@@ -57,7 +57,7 @@
     "featurePaymentTitle": "Easy, secure payment",
     "featurePaymentDesc": "VNPay and more — your booking is confirmed right after payment.",
     "featureLocationTitle": "Near the coast",
-    "featureLocationDesc": "3 branches across Ha Noi — pick what's closest to you.",
+    "featureLocationDesc": "Right in central Cau Giay, Hanoi — easy to reach.",
     "featureSupportTitle": "We're here to help",
     "featureSupportDesc": "Stuck at check-in? Message or call — our team is happy to assist.",
     "howEyebrow": "Simple as that",
@@ -196,7 +196,7 @@
     "vsYesterday": "vs yesterday"
   },
   "footer": {
-    "tagline": "20+ rooms across 5+ branches. Book by the hour or by the night.",
+    "tagline": "20+ rooms at our Cau Giay branch, Hanoi. Book by the hour or by the night.",
     "navigation": "Navigation",
     "contact": "Contact",
     "phone": "Hotline",

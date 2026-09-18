@@ -3,6 +3,7 @@ import { Noto_Sans_KR } from "next/font/google";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { Providers } from "@/components/shared/Providers";
 import { Toaster } from "@/components/ui/sonner";
+import { APP_URL as SITE_URL } from "@/lib/constants";
 import "./globals.css";
 
 const notoSansKR = Noto_Sans_KR({
@@ -11,8 +12,6 @@ const notoSansKR = Noto_Sans_KR({
   variable: "--font-noto",
   display: "swap",
 });
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
   title: {

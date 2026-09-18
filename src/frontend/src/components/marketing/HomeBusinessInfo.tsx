@@ -1,36 +1,22 @@
 import { Building2, FileText, Phone, UserRound } from "lucide-react";
+import { COMPANY } from "@/lib/legal";
 
+/** Điều 4 NĐ 248 — thông tin chủ quản, đặt ở vị trí dễ thấy trên trang chủ. */
 const FIELDS = [
-  {
-    icon: Building2,
-    label: "Tên tổ chức",
-    value: "Công ty Cổ phần Sản xuất Thương mại Dịch vụ Bách Linh",
-  },
-  {
-    icon: FileText,
-    label: "Địa chỉ trụ sở chính",
-    value: "Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội, Việt Nam",
-  },
+  { icon: Building2, label: "Tên tổ chức", value: COMPANY.name },
+  { icon: FileText, label: "Địa chỉ trụ sở chính", value: COMPANY.headOffice },
   {
     icon: UserRound,
     label: "Người đại diện theo pháp luật",
-    value: "Nguyễn Lan Phương — Chức danh: Giám đốc",
+    value: `${COMPANY.legalRepName} — Chức danh: ${COMPANY.legalRepTitle}`,
   },
   {
     icon: FileText,
-    label: "Mã số doanh nghiệp / Mã số thuế",
-    value: "0111484606",
+    label: "Số GCN đăng ký doanh nghiệp / Mã số thuế",
+    value: COMPANY.businessCode,
   },
-  {
-    icon: FileText,
-    label: "Nơi cấp",
-    value: "Phòng Đăng ký kinh doanh và Tài chính doanh nghiệp — Sở Tài chính TP Hà Nội",
-  },
-  {
-    icon: FileText,
-    label: "Ngày cấp",
-    value: "04/05/2026 (đăng ký lần đầu)",
-  },
+  { icon: FileText, label: "Nơi cấp", value: COMPANY.businessRegIssuer },
+  { icon: FileText, label: "Ngày cấp", value: COMPANY.businessRegDate },
 ];
 
 export function HomeBusinessInfo() {
@@ -80,7 +66,8 @@ export function HomeBusinessInfo() {
                 Hỗ trợ trực tuyến
               </p>
               <p className="text-sm font-semibold" style={{ color: "var(--color-text-primary)" }}>
-                Hotline 0931 708 256 (24/7) · Email: admin@bachlinh.com.vn · Biểu mẫu &quot;Liên hệ&quot; trên website
+                Hotline {COMPANY.hotline} (24/7) · Email: {COMPANY.email} · Biểu
+                mẫu phản ánh trực tuyến tại trang &quot;Liên hệ&quot;
               </p>
             </div>
           </div>

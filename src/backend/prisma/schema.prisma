@@ -56,6 +56,22 @@ enum AmenityCategory {
   safety
 }
 
+enum ComplaintCategory {
+  booking
+  payment
+  refund
+  service
+  privacy
+  other
+}
+
+enum ComplaintStatus {
+  received
+  in_progress
+  resolved
+  rejected
+}
+
 // ─── MODELS ────────────────────────────────────────────────────────────────
 
 model Branch {
@@ -284,6 +300,31 @@ model Payment {
   booking Booking @relation(fields: [bookingId], references: [id])
 
   @@map("payments")
+}
+
+/// Phản ánh, yêu cầu, khiếu nại của người dùng — Điều 7 NĐ 248/2026/NĐ-CP.
+/// Khách gửi qua biểu mẫu trực tuyến ở /contact, tra cứu tiến độ bằng `code`.
+model Complaint {
+  id          String            @id @default(uuid())
+  code        String            @unique
+  fullName    String            @map("full_name")
+  email       String
+  phone       String
+  bookingCode String?           @map("booking_code")
+  category    ComplaintCategory @default(other)
+  subject     String
+  content     String
+  status      ComplaintStatus   @default(received)
+  response    String?
+  respondedAt DateTime?         @map("responded_at")
+  resolvedAt  DateTime?         @map("resolved_at")
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+  deletedAt   DateTime?         @map("deleted_at")
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("complaints")
 }
 
 model Review {

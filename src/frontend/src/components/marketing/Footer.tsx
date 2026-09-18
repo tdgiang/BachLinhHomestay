@@ -10,6 +10,7 @@ import {
   FileCheck,
 } from "lucide-react";
 import { BrandLogo } from "@/components/shared/BrandLogo";
+import { BRANCHES } from "@/lib/legal";
 import { Separator } from "@/components/ui/separator";
 
 export function Footer() {
@@ -20,17 +21,15 @@ export function Footer() {
     { label: tNav("findRoom"), href: "/rooms" },
     { label: tNav("about"), href: "/about" },
     { label: tNav("contact"), href: "/contact" },
+    { label: "Chính sách & Pháp lý", href: "/chinh-sach" },
     { label: "Chính sách bảo mật", href: "/privacy" },
     { label: "Điều khoản sử dụng", href: "/terms" },
     { label: "Chính sách thanh toán", href: "/payment-policy" },
     { label: "Chính sách hoạt động theo NĐ 248", href: "/chinh-sach-nd248" },
+    { label: "Gửi phản ánh, khiếu nại", href: "/contact#bieu-mau" },
   ];
 
-  const branches = [
-    { name: "Cầu Giấy", address: "66 Ngõ 61 Phạm Tuấn Tài" },
-    // { name: "Đống Đa", address: "60 Ngõ 128 Nguyễn Đình Chiểu" },
-    // { name: "Ba Đình", address: "105 Ngõ 103 Vũ Trọng Phụng" },
-  ];
+  const branches = BRANCHES;
 
   return (
     <footer

@@ -19,6 +19,7 @@ import { ReviewsSection } from "@/components/marketing/ReviewsSection";
 import { TimeSlotsSection } from "@/components/marketing/TimeSlotsSection";
 import { StickyBookingBar } from "@/components/marketing/StickyBookingBar";
 import { apiClient } from "@/lib/api-client";
+import { APP_URL } from "@/lib/constants";
 
 // ISR: revalidate room detail every hour
 export const revalidate = 3600;
@@ -63,7 +64,7 @@ export default async function RoomDetailPage({ params }: Props) {
   const reviewsRes = await apiClient.getReviews(id, 1);
 
   const branch = room.branch;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const siteUrl = APP_URL;
 
   const jsonLd = {
     "@context": "https://schema.org",

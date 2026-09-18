@@ -1,7 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { apiClient } from '@/lib/api-client';
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+import { APP_URL as SITE_URL } from '@/lib/constants';
 const LOCALES = ['vi', 'en'] as const;
 
 function loc(path: string): string[] {
@@ -31,6 +30,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.5,
     })),
+    // Nội dung công bố bắt buộc theo NĐ 248/2026/NĐ-CP — cần được index để
+    // cơ quan quản lý và người dùng tra cứu được.
+    ...['/chinh-sach', '/chinh-sach-nd248', '/privacy', '/terms', '/payment-policy']
+      .flatMap(loc)
+      .map((url) => ({
+        url,
+        changeFrequency: 'monthly' as const,
+        priority: 0.4,
+      })),
   ];
 
   // Dynamic room pages

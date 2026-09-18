@@ -262,8 +262,19 @@ const SECTIONS = [
       {
         subtitle: "Phạm vi địa lý và đối tượng",
         items: [
-          "Dịch vụ được cung cấp tại các chi nhánh của Ba.Li Homestay trên địa bàn TP Hà Nội.",
-          "Khách đặt phòng phải đủ 18 tuổi trở lên hoặc có sự đồng ý của người giám hộ hợp pháp.",
+          "Dịch vụ chỉ được cung cấp trực tiếp tại cơ sở lưu trú của Ba.Li Homestay: Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội. Nền tảng không cung cấp dịch vụ ngoài địa điểm này.",
+          "Khách có thể đặt phòng từ bất kỳ đâu, nhưng việc sử dụng dịch vụ phải thực hiện tại địa điểm nêu trên.",
+          "Khách đứng tên đặt phòng và nhận phòng phải đủ 18 tuổi trở lên, có giấy tờ tùy thân hợp lệ. Người dưới 18 tuổi phải đi cùng người giám hộ hợp pháp.",
+        ],
+      },
+      {
+        subtitle: "Giới hạn về số lượng",
+        items: [
+          "Mỗi lượt đặt áp dụng cho một phòng. Mỗi khách hàng giữ tối đa 03 đơn đặt phòng đang hiệu lực tại cùng thời điểm; nhu cầu nhiều phòng hơn (đoàn, sự kiện) vui lòng liên hệ hotline để được báo giá và xác nhận riêng.",
+          "Số khách lưu trú không vượt quá sức chứa tối đa công bố của từng phòng. Khách vượt số lượng đăng ký nhưng vẫn trong sức chứa chịu phụ thu theo bảng giá niêm yết.",
+          "Đặt theo giờ: tối thiểu 02 giờ, tối đa 12 giờ mỗi lượt. Một số phòng yêu cầu số giờ tối thiểu cao hơn và được ghi rõ tại trang phòng.",
+          "Đặt theo ngày: tối đa 30 đêm liên tục mỗi lần đặt.",
+          "Các giới hạn trên được hệ thống kiểm tra tự động khi tạo đơn.",
         ],
       },
       {
