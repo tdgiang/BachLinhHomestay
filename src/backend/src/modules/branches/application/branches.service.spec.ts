@@ -1,12 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { BranchesService } from './branches.service';
+import { BranchQueryDto } from '../interface/dto/branch-query.dto';
 import { BranchesRepository } from '../infrastructure/branches.repository';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 
+/** Tham số findAll mà service truyền xuống repository. */
+type FindAllArgs = { where: Prisma.BranchWhereInput };
+
 const mockRepo = {
   create: jest.fn(),
-  findAll: jest.fn(),
+  // Gõ kiểu để các assertion đọc `where` không bị coi là truy cập trên `any`.
+  findAll: jest.fn<Promise<[unknown[], number]>, [FindAllArgs]>(),
   findOne: jest.fn(),
   update: jest.fn(),
   remove: jest.fn(),
@@ -51,9 +57,11 @@ describe('BranchesService', () => {
     it('applies city filter when provided', async () => {
       mockCache.get.mockResolvedValue(null);
       mockRepo.findAll.mockResolvedValue([[], 0]);
-      await service.findAll({ city: 'Đà Nẵng' } as any);
+      await service.findAll({ city: 'Hà Nội' } as any);
       expect(mockRepo.findAll).toHaveBeenCalledWith(
-        expect.objectContaining({ where: expect.objectContaining({ city: 'Đà Nẵng' }) }),
+        expect.objectContaining({
+          where: expect.objectContaining({ city: 'Hà Nội' }),
+        }),
       );
     });
 
@@ -61,6 +69,41 @@ describe('BranchesService', () => {
       const cached = { items: [], meta: {} };
       mockCache.get.mockResolvedValue(cached);
       expect(await service.findAll({} as any)).toEqual(cached);
+    });
+
+    it('mặc định chỉ trả chi nhánh đang hoạt động (endpoint công khai)', async () => {
+      // Test cache-hit ở trên set mockCache.get; clearAllMocks không xoá
+      // implementation nên phải trả về cache miss tường minh.
+      mockCache.get.mockResolvedValue(null);
+      mockRepo.findAll.mockResolvedValue([[], 0]);
+      await service.findAll({} as BranchQueryDto);
+      expect(mockRepo.findAll).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({ isActive: true }),
+        }),
+      );
+    });
+
+    it('includeInactive cho trang quản trị thấy cả chi nhánh đã ẩn', async () => {
+      // Test cache-hit ở trên set mockCache.get; clearAllMocks không xoá
+      // implementation nên phải trả về cache miss tường minh.
+      mockCache.get.mockResolvedValue(null);
+      mockRepo.findAll.mockResolvedValue([[], 0]);
+      await service.findAll({ includeInactive: true } as BranchQueryDto);
+      expect(mockRepo.findAll.mock.calls[0][0].where.isActive).toBeUndefined();
+    });
+
+    it('isActive truyền tường minh vẫn được tôn trọng', async () => {
+      // Test cache-hit ở trên set mockCache.get; clearAllMocks không xoá
+      // implementation nên phải trả về cache miss tường minh.
+      mockCache.get.mockResolvedValue(null);
+      mockRepo.findAll.mockResolvedValue([[], 0]);
+      await service.findAll({ isActive: false } as BranchQueryDto);
+      expect(mockRepo.findAll).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({ isActive: false }),
+        }),
+      );
     });
   });
 

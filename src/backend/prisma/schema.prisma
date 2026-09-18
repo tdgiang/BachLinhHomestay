@@ -322,8 +322,10 @@ model Complaint {
   updatedAt   DateTime          @updatedAt @map("updated_at")
   deletedAt   DateTime?         @map("deleted_at")
 
-  @@index([status])
-  @@index([createdAt])
+  // Mọi truy vấn đều lọc deletedAt: null, nên index đơn trên status/createdAt
+  // không dùng được. Index tổ hợp khớp đúng hình dạng query của service.
+  @@index([deletedAt, status])
+  @@index([deletedAt, createdAt])
   @@map("complaints")
 }
 

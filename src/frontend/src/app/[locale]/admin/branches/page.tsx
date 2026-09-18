@@ -96,7 +96,8 @@ export default function AdminBranchesPage() {
   async function load() {
     setLoading(true);
     try {
-      const data = await apiClient.getBranches();
+      // Trang quản trị phải thấy cả chi nhánh đã ẩn để bật lại được.
+      const data = await apiClient.getBranches({ includeInactive: true });
       setBranches(data);
     } catch {
       // ignore

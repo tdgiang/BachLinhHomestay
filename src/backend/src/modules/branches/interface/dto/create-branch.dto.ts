@@ -1,43 +1,47 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
-  IsBoolean, IsDecimal, IsNotEmpty, IsOptional, IsString,
+  IsBoolean,
+  IsDecimal,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
 } from 'class-validator';
 
 export class CreateBranchDto {
-  @ApiProperty({ example: 'Homestay Ba.Li — Đà Nẵng Trung Tâm' })
+  @ApiProperty({ example: 'Ba.Li Homestay — Cầu Giấy' })
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @ApiPropertyOptional({ example: 'Ba.Li Homestay — Da Nang Center' })
+  @ApiPropertyOptional({ example: 'Ba.Li Homestay — Cau Giay' })
   @IsString()
   @IsOptional()
   nameEn?: string;
 
-  @ApiProperty({ example: '12 Bạch Đằng, Hải Châu' })
+  @ApiProperty({ example: 'Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô' })
   @IsString()
   @IsNotEmpty()
   address: string;
 
-  @ApiProperty({ example: 'Đà Nẵng' })
+  @ApiProperty({ example: 'Hà Nội' })
   @IsString()
   @IsNotEmpty()
   city: string;
 
-  @ApiPropertyOptional({ example: 16.0544 })
+  @ApiPropertyOptional({ example: 21.0384 })
   @IsOptional()
   latitude?: number;
 
-  @ApiPropertyOptional({ example: 108.2022 })
+  @ApiPropertyOptional({ example: 105.7899 })
   @IsOptional()
   longitude?: number;
 
-  @ApiPropertyOptional({ example: '0236 123 4567' })
+  @ApiPropertyOptional({ example: '0931 708 256' })
   @IsString()
   @IsOptional()
   phone?: string;
 
-  @ApiPropertyOptional({ example: 'Chi nhánh trung tâm Đà Nẵng' })
+  @ApiPropertyOptional({ example: 'Chi nhánh Cầu Giấy, Hà Nội' })
   @IsString()
   @IsOptional()
   description?: string;

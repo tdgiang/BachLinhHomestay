@@ -30,23 +30,6 @@ services:
       timeout: 5s
       retries: 5
 
-  # ── MinIO ────────────────────────────────────────────────────────────────────
-  minio:
-    image: minio/minio
-    restart: unless-stopped
-    command: server /data --console-address ":9001"
-    environment:
-      MINIO_ROOT_USER:     ${MINIO_ACCESS_KEY}
-      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
-    volumes:
-      - minio_data:/data
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  # ── Backend API ───────────────────────────────────────────────────────────────
   api:
     build:
       context: ./src/backend
@@ -64,18 +47,18 @@ services:
       JWT_EXPIRATION:          15m
       JWT_REFRESH_EXPIRATION:  30d
       CORS_ORIGIN:             ${SITE_URL}
-      MINIO_ENDPOINT:          minio
-      MINIO_PORT:              9000
-      MINIO_USE_SSL:           false
-      MINIO_ACCESS_KEY:        ${MINIO_ACCESS_KEY}
-      MINIO_SECRET_KEY:        ${MINIO_SECRET_KEY}
-      MINIO_BUCKET:            homestay-images
       VNPAY_TMN_CODE:          ${VNPAY_TMN_CODE}
       VNPAY_HASH_SECRET:       ${VNPAY_HASH_SECRET}
       VNPAY_URL:               ${VNPAY_URL}
       VNPAY_RETURN_URL:        ${SITE_URL}/payment/callback
       VNPAY_IPN_URL:           ${API_URL}/api/v1/payments/vnpay/ipn
       PUBLIC_URL:              ${API_URL}
+    volumes:
+      # Ảnh upload nằm trên đĩa của container (ImageService ghi vào
+      # process.cwd()/uploads = /app/uploads). Không có volume thì mỗi lần
+      # build lại hoặc restart container là toàn bộ ảnh phòng biến mất, trong
+      # khi bản ghi room_images trong DB vẫn trỏ tới URL đã chết.
+      - uploads_data:/app/uploads
     depends_on:
       postgres: { condition: service_healthy }
       redis:    { condition: service_healthy }
@@ -124,4 +107,4 @@ services:
 volumes:
   postgres_data:
   redis_data:
-  minio_data:
+  uploads_data:

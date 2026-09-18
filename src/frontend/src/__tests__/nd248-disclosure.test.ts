@@ -377,3 +377,63 @@ describe('Điều 9d — giới hạn số lượng phải được cưỡng ch�
     expect(terms).toContain(`0${BOOKING_LIMITS.maxActivePerCustomer} đơn đặt phòng đang hiệu lực`);
   });
 });
+
+describe('Điều 5 — thời hạn xử lý dữ liệu cá nhân chỉ có một con số', () => {
+  const privacy = readPage('privacy');
+
+  it('không còn mốc thời hạn cứng nào mâu thuẫn với bảng công bố', () => {
+    // Trang này từng nêu 07 ngày, 02–07 ngày, 7–14 ngày, 3 ngày và 14 ngày cho
+    // cùng một loại yêu cầu. Mọi mốc phải đọc từ COMPLAINT_SLA.privacy.
+    const hardcoded = [
+      /0?7\s*[–-]\s*14 ngày/,
+      /trong vòng 0?7 ngày làm việc/,
+      /0?2 ngày làm việc và giải quyết/,
+      /<strong>3 ngày làm việc<\/strong>/,
+      /lên đến 14 ngày làm việc/,
+    ];
+    const offenders = hardcoded.filter((re) => re.test(privacy)).map(String);
+    expect(offenders).toEqual([]);
+  });
+
+  it('đọc thời hạn từ nguồn công bố dùng chung', () => {
+    expect(privacy).toContain('COMPLAINT_SLA.privacy');
+    expect(privacy).toContain('PRIVACY_SLA.initialResponseHours');
+    expect(privacy).toContain('PRIVACY_SLA.resolutionDays');
+  });
+
+  it('con số công bố cho dữ liệu cá nhân là 72 giờ / 30 ngày', () => {
+    expect(COMPLAINT_SLA.privacy.initialResponseHours).toBe(72);
+    expect(COMPLAINT_SLA.privacy.resolutionDays).toBe(30);
+  });
+});
+
+describe('Chế độ mock không được gọi ra backend thật', () => {
+  const apiClientSrc = fs.readFileSync(path.join(ROOT, 'src/lib/api-client.ts'), 'utf-8');
+
+  it('createComplaint và trackComplaint đều có nhánh isMock', () => {
+    // Mọi hàm khác đều rẽ nhánh isMock; thiếu ở đây thì bật
+    // NEXT_PUBLIC_USE_MOCK=true vẫn POST thật lên backend.
+    for (const fn of ['createComplaint', 'trackComplaint']) {
+      const body = apiClientSrc.slice(
+        apiClientSrc.indexOf(`async function ${fn}`),
+        apiClientSrc.indexOf('\n}', apiClientSrc.indexOf(`async function ${fn}`)),
+      );
+      expect(body, `${fn} thiếu nhánh isMock`).toContain('if (isMock)');
+    }
+  });
+
+  it('mã phiếu giả lập cùng định dạng với backend', () => {
+    expect(apiClientSrc).toContain('KN-${date}-${suffix}');
+  });
+
+  it('SLA bản mock khớp bảng công bố', () => {
+    for (const [category, sla] of Object.entries(COMPLAINT_SLA)) {
+      const row = new RegExp(
+        `${category}: \\{ initialResponseHours: (\\d+), resolutionDays: (\\d+) \\}`,
+      ).exec(apiClientSrc);
+      expect(row, `mock thiếu nhóm ${category}`).not.toBeNull();
+      expect(Number(row![1]), category).toBe(sla.initialResponseHours);
+      expect(Number(row![2]), category).toBe(sla.resolutionDays);
+    }
+  });
+});

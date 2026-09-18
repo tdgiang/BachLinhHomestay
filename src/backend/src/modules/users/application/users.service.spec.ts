@@ -6,7 +6,9 @@ import { ConflictException, NotFoundException } from '@nestjs/common';
 
 describe('UsersService', () => {
   let service: UsersService;
-  let repository: Record<string, jest.Mock>;
+  // mockRepository có cả jest.Mock lẫn userSelect (object select của
+  // BaseRepository), nên kiểu phải suy ra từ chính nó thay vì ép Record<jest.Mock>.
+  let repository: typeof mockRepository;
 
   const mockRepository = {
     create:     jest.fn(),

@@ -15,6 +15,7 @@ import {
   FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { COMPLAINT_SLA } from "@/lib/legal";
 
 export const metadata: Metadata = {
   title: "Chính sách bảo vệ thông tin cá nhân | Ba.Li Homestay",
@@ -23,6 +24,15 @@ export const metadata: Metadata = {
 };
 
 type Props = { params: Promise<{ locale: string }> };
+
+/**
+ * Thời hạn cho yêu cầu về dữ liệu cá nhân — lấy từ bảng công bố duy nhất.
+ *
+ * Trang này từng nêu năm mốc thời hạn khác nhau cho cùng một loại yêu cầu,
+ * trong khi bảng công bố ở trang Liên hệ ghi một con số khác hẳn. Đọc từ
+ * COMPLAINT_SLA để không bao giờ lệch nữa.
+ */
+const PRIVACY_SLA = COMPLAINT_SLA.privacy;
 
 const SECTIONS = [
   {
@@ -153,7 +163,7 @@ const SECTIONS = [
         subtitle: "Cách thực hiện",
         items: [
           "Khách hàng có thể tự xem và chỉnh sửa thông tin trong mục \"Tài khoản\" trên website, hoặc gửi yêu cầu tới admin@bachlinh.com.vn.",
-          "Yêu cầu được xử lý trong vòng 07 ngày làm việc.",
+          `Yêu cầu được tiếp nhận và xử lý theo thời hạn công bố cho nhóm "Dữ liệu cá nhân": phản hồi ban đầu trong ${PRIVACY_SLA.initialResponseHours} giờ, hoàn tất trong tối đa ${PRIVACY_SLA.resolutionDays} ngày.`,
         ],
       },
     ],
@@ -167,7 +177,7 @@ const SECTIONS = [
         subtitle: "Cách thực hiện",
         items: [
           "Khách hàng có quyền yêu cầu xóa, hủy hoặc hạn chế xử lý dữ liệu cá nhân đã cung cấp bằng cách gửi yêu cầu qua hotline 0931 708 256 hoặc email admin@bachlinh.com.vn.",
-          "Ba.Li Homestay xác minh và phản hồi trong vòng 07 ngày làm việc; một số dữ liệu bắt buộc lưu theo pháp luật kế toán, thuế sẽ được giữ đến hết thời hạn luật định.",
+          `Ba.Li Homestay xác minh và phản hồi trong ${PRIVACY_SLA.initialResponseHours} giờ, hoàn tất trong tối đa ${PRIVACY_SLA.resolutionDays} ngày; một số dữ liệu bắt buộc lưu theo pháp luật kế toán, thuế sẽ được giữ đến hết thời hạn luật định.`,
         ],
       },
     ],
@@ -181,7 +191,7 @@ const SECTIONS = [
         subtitle: "Kênh tiếp nhận",
         items: [
           "Mọi khiếu nại liên quan đến bảo mật thông tin được tiếp nhận qua hotline 0931 708 256 hoặc email admin@bachlinh.com.vn.",
-          "Phản hồi ban đầu trong 02 ngày làm việc và giải quyết dứt điểm trong tối đa 07 ngày làm việc.",
+          `Phản hồi ban đầu trong ${PRIVACY_SLA.initialResponseHours} giờ và giải quyết dứt điểm trong tối đa ${PRIVACY_SLA.resolutionDays} ngày.`,
         ],
       },
     ],
@@ -217,7 +227,7 @@ const SECTIONS = [
         subtitle: "Quy trình xóa dữ liệu",
         items: [
           "Gửi yêu cầu qua email admin@bachlinh.com.vn với tiêu đề “Yêu cầu xóa dữ liệu”",
-          "Chúng tôi xác minh danh tính và xử lý trong vòng 7–14 ngày làm việc",
+          `Chúng tôi xác minh danh tính và xử lý trong tối đa ${PRIVACY_SLA.resolutionDays} ngày`,
           "Dữ liệu giao dịch tài chính được giữ lại theo đúng thời hạn pháp lý",
           "Bạn sẽ nhận xác nhận qua email sau khi hoàn tất",
         ],
@@ -508,9 +518,11 @@ export default async function PrivacyPage({ params }: Props) {
               className="mt-5 ml-[60px] text-xs leading-relaxed"
               style={{ color: "var(--color-text-muted)" }}
             >
-              Chúng tôi cam kết phản hồi trong vòng <strong>3 ngày làm việc</strong> kể từ khi
-              nhận được yêu cầu hợp lệ. Đối với yêu cầu xóa dữ liệu phức tạp,
-              thời gian xử lý có thể lên đến 14 ngày làm việc.
+              Chúng tôi phản hồi ban đầu trong{" "}
+              <strong>{PRIVACY_SLA.initialResponseHours} giờ</strong> kể từ khi nhận
+              được yêu cầu hợp lệ và hoàn tất trong tối đa{" "}
+              <strong>{PRIVACY_SLA.resolutionDays} ngày</strong>, đúng thời hạn công
+              bố tại trang Liên hệ.
             </p>
           </div>
         </div>

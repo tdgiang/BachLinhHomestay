@@ -1,0 +1,38 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - complementary [ref=f1e3]:
+      - generic [ref=f1e4]:
+        - img "Ba.Li Homestay" [ref=f1e5]
+        - generic [ref=f1e6]: Ba.LiAdmin
+      - navigation [ref=f1e7]:
+        - link "Dashboard" [ref=f1e8] [cursor=pointer]:
+          - /url: /vi/admin/dashboard
+        - link "Chi nhánh" [ref=f1e15] [cursor=pointer]:
+          - /url: /vi/admin/branches
+        - link "Phòng" [ref=f1e20] [cursor=pointer]:
+          - /url: /vi/admin/rooms
+        - link "Tiện ích" [ref=f1e25] [cursor=pointer]:
+          - /url: /vi/admin/amenities
+        - link "Đặt phòng" [ref=f1e31] [cursor=pointer]:
+          - /url: /vi/admin/bookings
+        - link "Voucher" [ref=f1e35] [cursor=pointer]:
+          - /url: /vi/admin/vouchers
+        - link "Báo cáo" [ref=f1e40] [cursor=pointer]:
+          - /url: /vi/admin/reports
+        - link "Đánh giá" [ref=f1e43] [cursor=pointer]:
+          - /url: /vi/admin/reviews
+        - link "Khiếu nại" [ref=f1e47] [cursor=pointer]:
+          - /url: /vi/admin/complaints
+      - button [ref=f1e51]
+    - generic [ref=f1e54]:
+      - banner [ref=f1e55]:
+        - generic [ref=f1e56]: Admin/Phòng
+        - generic [ref=f1e57]:
+          - button [ref=f1e58]
+          - button "A Admin" [ref=f1e59]:
+            - generic [ref=f1e60]: A
+            - generic [ref=f1e61]: Admin
+      - main [ref=f1e62]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f1e71] [cursor=pointer]
+  - alert [ref=f1e75]

@@ -194,9 +194,12 @@ export class RoomsService {
   async deleteImage(roomId: string, imageId: string) {
     const image = await this.prisma.roomImage.findFirst({ where: { id: imageId, roomId } });
     if (!image) throw new NotFoundException('Không tìm thấy ảnh');
-    // Try to delete from storage (best-effort)
+    // Xóa file trên đĩa (best-effort). Trước đây tách key bằng 'homestay-images/'
+    // — tên bucket MinIO của kiến trúc cũ. Từ khi ImageService chuyển sang ghi
+    // đĩa, URL có dạng <base>/uploads/rooms/<uuid>.webp nên chuỗi đó không bao
+    // giờ khớp, key luôn undefined và file rác tích tụ vĩnh viễn.
     try {
-      const key = image.url.split(`homestay-images/`)[1];
+      const key = this.imageService.extractKeyFromUrl(image.url);
       if (key) await this.imageService.delete(key);
     } catch { /* ignore storage error */ }
     await this.prisma.roomImage.delete({ where: { id: imageId } });

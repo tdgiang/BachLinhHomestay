@@ -1,5 +1,9 @@
 import {
-  Injectable, NotFoundException, BadRequestException, Inject, Logger,
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  Inject,
+  Logger,
 } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import type { Cache } from 'cache-manager';
@@ -20,7 +24,9 @@ export class BranchesService {
   ) {}
 
   async create(dto: CreateBranchDto) {
-    const branch = await this.repository.create(dto as Prisma.BranchCreateInput);
+    const branch = await this.repository.create(
+      dto as Prisma.BranchCreateInput,
+    );
     await this.invalidateListCache();
     this.logger.log(`Branch created: ${branch.id}`);
     return branch;
@@ -32,8 +38,14 @@ export class BranchesService {
     if (cached) return cached;
 
     const {
-      page = 1, limit = 20, sortBy = 'createdAt', sortOrder = 'desc',
-      search, city, isActive,
+      page = 1,
+      limit = 20,
+      sortBy = 'createdAt',
+      sortOrder = 'desc',
+      search,
+      city,
+      isActive,
+      includeInactive,
     } = query;
 
     const where: Prisma.BranchWhereInput = {};
@@ -44,7 +56,12 @@ export class BranchesService {
       ];
     }
     if (city) where.city = city;
+    // Mặc định chỉ trả chi nhánh đang hoạt động — GET /branches là endpoint
+    // @Public(). Không có mặc định này, chi nhánh đã tắt isActive vẫn hiển thị
+    // công khai, tức "ẩn chi nhánh" ở trang quản trị không có tác dụng gì.
+    // Cùng cách RoomsService mặc định lọc status = active.
     if (isActive !== undefined) where.isActive = isActive;
+    else if (!includeInactive) where.isActive = true;
 
     const [branches, total] = await this.repository.findAll({
       skip: (page - 1) * limit,
@@ -69,8 +86,12 @@ export class BranchesService {
     const cached = await this.cacheManager.get(cacheKey);
     if (cached) return cached;
 
-    const branch = await this.repository.findOne({ id }, this.repository.branchSelect);
-    if (!branch) throw new NotFoundException(`Không tìm thấy chi nhánh với ID: ${id}`);
+    const branch = await this.repository.findOne(
+      { id },
+      this.repository.branchSelect,
+    );
+    if (!branch)
+      throw new NotFoundException(`Không tìm thấy chi nhánh với ID: ${id}`);
 
     await this.cacheManager.set(cacheKey, branch, 60000);
     return branch;
@@ -89,8 +110,13 @@ export class BranchesService {
     try {
       await this.repository.remove({ id });
     } catch (err) {
-      if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2003') {
-        throw new BadRequestException('Không thể xóa chi nhánh vì vẫn còn phòng liên kết. Hãy xóa hoặc chuyển phòng trước.');
+      if (
+        err instanceof Prisma.PrismaClientKnownRequestError &&
+        err.code === 'P2003'
+      ) {
+        throw new BadRequestException(
+          'Không thể xóa chi nhánh vì vẫn còn phòng liên kết. Hãy xóa hoặc chuyển phòng trước.',
+        );
       }
       throw err;
     }
@@ -105,7 +131,9 @@ export class BranchesService {
   }
 
   private async invalidateListCache() {
-    await Promise.all([...this.listCacheKeys].map((k) => this.cacheManager.del(k)));
+    await Promise.all(
+      [...this.listCacheKeys].map((k) => this.cacheManager.del(k)),
+    );
     this.listCacheKeys.clear();
   }
 }

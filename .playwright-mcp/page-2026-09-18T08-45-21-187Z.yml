@@ -1,0 +1,134 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e35]:
+    - complementary [ref=e36]:
+      - generic [ref=e37]:
+        - img "Ba.Li Homestay" [ref=e38]
+        - generic [ref=e39]: Ba.LiAdmin
+      - navigation [ref=e40]:
+        - link "Dashboard" [ref=e41] [cursor=pointer]:
+          - /url: /vi/admin/dashboard
+        - link "Chi nhánh" [ref=e48] [cursor=pointer]:
+          - /url: /vi/admin/branches
+        - link "Phòng" [ref=e53] [cursor=pointer]:
+          - /url: /vi/admin/rooms
+        - link "Tiện ích" [ref=e58] [cursor=pointer]:
+          - /url: /vi/admin/amenities
+        - link "Đặt phòng" [ref=e64] [cursor=pointer]:
+          - /url: /vi/admin/bookings
+        - link "Voucher" [ref=e68] [cursor=pointer]:
+          - /url: /vi/admin/vouchers
+        - link "Báo cáo" [ref=e73] [cursor=pointer]:
+          - /url: /vi/admin/reports
+        - link "Đánh giá" [ref=e76] [cursor=pointer]:
+          - /url: /vi/admin/reviews
+        - link "Khiếu nại" [ref=e80] [cursor=pointer]:
+          - /url: /vi/admin/complaints
+      - button [ref=e84]
+    - generic [ref=e87]:
+      - banner [ref=e88]:
+        - generic [ref=e89]: Admin/Dashboard
+        - generic [ref=e90]:
+          - button [ref=e91]
+          - button "A Admin" [ref=e92]:
+            - generic [ref=e93]: A
+            - generic [ref=e94]: Admin
+      - main [ref=e95]:
+        - generic [ref=e96]:
+          - generic [ref=e97]:
+            - heading "Dashboard" [level=1] [ref=e98]
+            - paragraph [ref=e99]: Tổng quan hoạt động kinh doanh
+          - generic [ref=e100]:
+            - generic [ref=e105]:
+              - paragraph [ref=e106]: Doanh thu hôm nay
+              - paragraph [ref=e107]: 0₫
+              - generic [ref=e108]:
+                - generic [ref=e110]: 0%
+                - generic [ref=e111]: so với hôm qua
+            - generic [ref=e117]:
+              - paragraph [ref=e118]: Booking hôm nay
+              - paragraph [ref=e119]: "0"
+              - generic [ref=e120]:
+                - generic [ref=e122]: 0%
+                - generic [ref=e123]: so với hôm qua
+            - generic [ref=e129]:
+              - paragraph [ref=e130]: Đang được thuê
+              - paragraph [ref=e131]: "0"
+              - generic [ref=e132]: phòng
+            - generic [ref=e137]:
+              - paragraph [ref=e138]: Tỷ lệ lấp đầy
+              - paragraph [ref=e139]: 0%
+          - generic [ref=e140]:
+            - generic [ref=e142]:
+              - heading "Doanh thu 2026" [level=2] [ref=e143]
+              - paragraph [ref=e144]: Theo tháng
+            - application [ref=e147]:
+              - generic [ref=e151]:
+                - generic [ref=e152]:
+                  - generic [ref=e153]: Th1
+                  - generic [ref=e155]: Th2
+                  - generic [ref=e157]: Th3
+                  - generic [ref=e159]: Th4
+                  - generic [ref=e161]: Th5
+                  - generic [ref=e163]: Th6
+                  - generic [ref=e165]: Th7
+                  - generic [ref=e167]: Th8
+                  - generic [ref=e169]: Th9
+                  - generic [ref=e171]: Th10
+                  - generic [ref=e173]: Th11
+                  - generic [ref=e175]: Th12
+                - generic [ref=e177]:
+                  - generic [ref=e178]: "0"
+                  - generic [ref=e180]: "1"
+                  - generic [ref=e182]: "2"
+                  - generic [ref=e184]: "3"
+                  - generic [ref=e186]: "4"
+          - generic [ref=e188]:
+            - generic [ref=e189]:
+              - heading "Booking gần đây" [level=2] [ref=e190]
+              - link "Xem tất cả →" [ref=e191] [cursor=pointer]:
+                - /url: ./bookings
+            - table [ref=e193]:
+              - rowgroup [ref=e194]:
+                - row [ref=e195]:
+                  - columnheader "Mã" [ref=e196]
+                  - columnheader "Khách" [ref=e197]
+                  - columnheader "Phòng" [ref=e198]
+                  - columnheader "Check-in" [ref=e199]
+                  - columnheader "Tổng" [ref=e200]
+                  - columnheader "TT" [ref=e201]
+                  - columnheader "Booking" [ref=e202]
+              - rowgroup [ref=e203]:
+                - row [ref=e204]:
+                  - cell "HMS-A1B2C3" [ref=e205]
+                  - cell [ref=e206]:
+                    - paragraph [ref=e207]: Nguyễn Văn An
+                    - paragraph [ref=e208]: "0901234567"
+                  - cell "Phòng Superior Ban Công" [ref=e209]
+                  - cell "16/05/26 14:00" [ref=e210]
+                  - cell "2.100.000₫" [ref=e211]
+                  - cell "Đã TT" [ref=e212]
+                  - cell "Đã xác nhận" [ref=e214]
+                - row [ref=e216]:
+                  - cell "HMS-D4E5F6" [ref=e217]
+                  - cell [ref=e218]:
+                    - paragraph [ref=e219]: Khách vãng lai
+                    - paragraph [ref=e220]: "0987654321"
+                  - cell "Phòng Deluxe Hướng Phố" [ref=e221]
+                  - cell "16/05/26 14:00" [ref=e222]
+                  - cell "450.000₫" [ref=e223]
+                  - cell "Chưa TT" [ref=e224]
+                  - cell "Chờ xác nhận" [ref=e226]
+                - row [ref=e228]:
+                  - cell "HMS-G7H8I9" [ref=e229]
+                  - cell [ref=e230]:
+                    - paragraph [ref=e231]: Hoàng Đức Thịnh
+                    - paragraph [ref=e232]: "0912345678"
+                  - cell "Phòng Suite Bồn Tắm" [ref=e233]
+                  - cell "20/05/26 14:00" [ref=e234]
+                  - cell "2.900.000₫" [ref=e235]
+                  - cell "Đã TT" [ref=e236]
+                  - cell "Đang ở" [ref=e238]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e30] [cursor=pointer]
+  - alert [ref=e34]
+  - generic [aria-hidden] [ref=e240]: "0"

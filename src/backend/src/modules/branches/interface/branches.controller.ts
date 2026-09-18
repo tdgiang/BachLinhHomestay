@@ -1,9 +1,21 @@
 import {
-  Controller, Get, Post, Patch, Delete,
-  Body, Param, Query, HttpCode, HttpStatus,
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  Query,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import {
-  ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiParam,
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+  ApiParam,
 } from '@nestjs/swagger';
 import { BranchesService } from '../application/branches.service';
 import { CreateBranchDto } from './dto/create-branch.dto';
@@ -21,7 +33,10 @@ export class BranchesController {
   @Public()
   @Get()
   @ApiOperation({ summary: 'Danh sách chi nhánh' })
-  @ApiResponse({ status: 200, description: 'Danh sách chi nhánh với phân trang' })
+  @ApiResponse({
+    status: 200,
+    description: 'Danh sách chi nhánh với phân trang',
+  })
   async findAll(@Query() query: BranchQueryDto) {
     const data = await this.branchesService.findAll(query);
     return { message: 'Lấy danh sách chi nhánh thành công', data };

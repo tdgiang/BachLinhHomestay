@@ -103,9 +103,20 @@ async function syncRoomAmenities(roomId: string, amenities: RoomAmenityItem[], t
 
 // ─── Branches ─────────────────────────────────────────────────────────────────
 
-async function getBranches(): Promise<Branch[]> {
+/**
+ * Danh sách chi nhánh.
+ *
+ * Mặc định API chỉ trả chi nhánh đang hoạt động. Trang quản trị truyền
+ * `includeInactive` để còn thấy và bật lại chi nhánh đã ẩn.
+ */
+async function getBranches(
+  opts: { includeInactive?: boolean } = {},
+): Promise<Branch[]> {
   if (isMock) return mockDelay(MOCK_BRANCHES);
-  const res = await api.get<{ items: Branch[] }>('/api/v1/branches?limit=100');
+  const qs = opts.includeInactive ? '&includeInactive=true' : '';
+  const res = await api.get<{ items: Branch[] }>(
+    `/api/v1/branches?limit=100${qs}`,
+  );
   return (res.data.items ?? []).map(coerceBranch);
 }
 
@@ -410,12 +421,65 @@ async function deleteReview(id: string, token: string): Promise<void> {
 
 // ─── Complaints (Điều 7 NĐ 248) ───────────────────────────────────────────────
 
+/** Bản sao thời hạn công bố, dùng cho chế độ mock khi không có backend. */
+const MOCK_COMPLAINT_SLA: Record<
+  ComplaintCategory,
+  { initialResponseHours: number; resolutionDays: number }
+> = {
+  booking: { initialResponseHours: 24, resolutionDays: 2 },
+  payment: { initialResponseHours: 24, resolutionDays: 5 },
+  refund: { initialResponseHours: 48, resolutionDays: 7 },
+  service: { initialResponseHours: 48, resolutionDays: 7 },
+  privacy: { initialResponseHours: 72, resolutionDays: 30 },
+  other: { initialResponseHours: 48, resolutionDays: 7 },
+};
+
+/** Mã phiếu giả lập, cùng định dạng KN-YYYYMMDD-XXXXXXXX với backend. */
+function mockComplaintCode(): string {
+  const ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
+  const date = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+    .format(new Date())
+    .replace(/-/g, '');
+  const suffix = Array.from(
+    { length: 8 },
+    () => ALPHABET[Math.floor(Math.random() * ALPHABET.length)],
+  ).join('');
+  return `KN-${date}-${suffix}`;
+}
+
 async function createComplaint(dto: CreateComplaintDto): Promise<ComplaintReceipt> {
+  if (isMock) {
+    const sla = MOCK_COMPLAINT_SLA[dto.category];
+    return mockDelay({
+      code: mockComplaintCode(),
+      status: 'received' as const,
+      createdAt: new Date().toISOString(),
+      initialResponseHours: sla.initialResponseHours,
+      resolutionDays: sla.resolutionDays,
+    });
+  }
   const res = await api.post<ComplaintReceipt>('/api/v1/complaints', dto);
   return res.data;
 }
 
 async function trackComplaint(code: string): Promise<ComplaintTracking> {
+  if (isMock) {
+    return mockDelay({
+      code: code.trim().toUpperCase(),
+      category: 'booking' as const,
+      subject: 'Phiếu mẫu ở chế độ mock',
+      status: 'in_progress' as const,
+      response: null,
+      respondedAt: null,
+      resolvedAt: null,
+      createdAt: new Date().toISOString(),
+    });
+  }
   const res = await api.get<ComplaintTracking>(
     `/api/v1/complaints/track/${encodeURIComponent(code)}`,
   );

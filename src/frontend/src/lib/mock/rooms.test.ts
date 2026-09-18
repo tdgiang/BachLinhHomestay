@@ -8,22 +8,29 @@ const BANNED_LOCATIONS = [
 ];
 
 function roomText(room: (typeof MOCK_ROOMS)[number]): string {
-  const parts = [room.name, room.nameEn, room.description, room.descriptionEn];
-  for (const a of room.amenities) {
+  const parts: (string | null | undefined)[] = [
+    room.name,
+    room.nameEn,
+    room.description,
+    room.descriptionEn,
+  ];
+  // amenities / timeSlotSuggestions là optional trong type Room.
+  for (const a of room.amenities ?? []) {
     parts.push(a.amenity.name, a.amenity.nameEn);
   }
-  for (const t of room.timeSlotSuggestions) {
+  for (const t of room.timeSlotSuggestions ?? []) {
     parts.push(t.label);
   }
-  return parts.join(' ');
+  return parts.filter(Boolean).join(' ');
 }
 
 describe('MOCK_ROOMS', () => {
   it('every room links to a real Ha Noi branch', () => {
     const validBranchIds = new Set(MOCK_BRANCHES.map((b) => b.id));
     for (const room of MOCK_ROOMS) {
-      expect(validBranchIds.has(room.branchId)).toBe(true);
-      expect(room.branch.city).toBe('Hà Nội');
+      expect(validBranchIds.has(room.branchId), room.branchId).toBe(true);
+      expect(room.branch, `room ${room.id} thiếu branch`).toBeDefined();
+      expect(room.branch!.city).toBe('Hà Nội');
     }
   });
 

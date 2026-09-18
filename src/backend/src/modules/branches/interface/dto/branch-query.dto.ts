@@ -24,4 +24,23 @@ export class BranchQueryDto extends PaginationDto {
     return undefined;
   })
   isActive?: boolean;
+
+  /**
+   * Trả về cả chi nhánh đã tắt hoạt động.
+   *
+   * Mặc định danh sách chỉ gồm chi nhánh đang hoạt động vì `GET /branches` là
+   * endpoint công khai. Trang quản trị cần cờ này để còn bật lại chi nhánh đã ẩn.
+   */
+  @ApiPropertyOptional({
+    description: 'Gồm cả chi nhánh đã ẩn (dùng cho trang quản trị)',
+  })
+  @IsBoolean()
+  @IsOptional()
+  @Transform(({ obj, key }) => {
+    const raw = obj[key];
+    if (raw === 'true' || raw === true) return true;
+    if (raw === 'false' || raw === false) return false;
+    return undefined;
+  })
+  includeInactive?: boolean;
 }

@@ -1,0 +1,82 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - img "Ba.Li Homestay" [ref=e5]
+        - generic [ref=e6]: Ba.LiAdmin
+      - navigation [ref=e7]:
+        - link "Dashboard" [ref=e8] [cursor=pointer]:
+          - /url: /vi/admin/dashboard
+        - link "Chi nhánh" [ref=e15] [cursor=pointer]:
+          - /url: /vi/admin/branches
+        - link "Phòng" [ref=e20] [cursor=pointer]:
+          - /url: /vi/admin/rooms
+        - link "Tiện ích" [ref=e25] [cursor=pointer]:
+          - /url: /vi/admin/amenities
+        - link "Đặt phòng" [ref=e31] [cursor=pointer]:
+          - /url: /vi/admin/bookings
+        - link "Voucher" [ref=e35] [cursor=pointer]:
+          - /url: /vi/admin/vouchers
+        - link "Báo cáo" [ref=e40] [cursor=pointer]:
+          - /url: /vi/admin/reports
+        - link "Đánh giá" [ref=e43] [cursor=pointer]:
+          - /url: /vi/admin/reviews
+        - link "Khiếu nại" [ref=e47] [cursor=pointer]:
+          - /url: /vi/admin/complaints
+      - button [ref=e51]
+    - generic [ref=e54]:
+      - banner [ref=e55]:
+        - generic [ref=e56]: Admin/Phòng
+        - generic [ref=e57]:
+          - button [ref=e58]
+          - button "A Admin" [ref=e59]:
+            - generic [ref=e60]: A
+            - generic [ref=e61]: Admin
+      - main [ref=e62]:
+        - generic [ref=e63]:
+          - generic [ref=e75]:
+            - link [ref=e76] [cursor=pointer]:
+              - /url: /vi/admin/rooms
+              - button [ref=e77]
+            - generic [ref=e78]:
+              - heading "Phòng Deluxe Indochine" [level=1] [ref=e79]
+              - paragraph [ref=e80]: Phòng 101 · Tầng 1 · Ba.Li Homestay — Cầu Giấy
+            - generic [ref=e81]: Hoạt động
+          - generic [ref=e82]:
+            - button "Thông tin" [ref=e83]
+            - button "Giá" [ref=e86]
+            - button "Cài đặt" [ref=e89]
+            - button "Tiện ích 9" [ref=e93]:
+              - text: Tiện ích
+              - generic [ref=e98]: "9"
+            - button "Hình ảnh 5" [ref=e99]:
+              - text: Hình ảnh
+              - generic [ref=e104]: "5"
+          - generic [ref=e107]:
+            - generic [ref=e108] [cursor=pointer]:
+              - paragraph [ref=e182]: Kéo thả ảnh vào đây
+              - paragraph [ref=e183]: hoặc click để chọn file
+              - paragraph [ref=e184]: JPG · PNG · WebP · tối đa 5MB/ảnh
+            - generic [ref=e116]:
+              - paragraph [ref=e117]: 5 ảnh
+              - paragraph [ref=e118]: Click ảnh để đặt làm ảnh bìa
+            - generic [ref=e119]:
+              - generic [ref=e120] [cursor=pointer]:
+                - generic [ref=e121]: Bìa
+                - button "Xóa ảnh" [ref=e125]
+              - generic [ref=e130] [cursor=pointer]:
+                - button "Đặt làm ảnh bìa" [ref=e131]
+                - button "Xóa ảnh" [ref=e134]
+              - generic [ref=e139] [cursor=pointer]:
+                - button "Đặt làm ảnh bìa" [ref=e140]
+                - button "Xóa ảnh" [ref=e143]
+              - generic [ref=e148] [cursor=pointer]:
+                - button "Đặt làm ảnh bìa" [ref=e149]
+                - button "Xóa ảnh" [ref=e152]
+              - generic [ref=e157] [cursor=pointer]:
+                - button "Đặt làm ảnh bìa" [ref=e158]
+                - button "Xóa ảnh" [ref=e161]
+              - generic [ref=e165] [cursor=pointer]: Thêm ảnh
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e71] [cursor=pointer]
+  - alert [ref=e168]

@@ -3,7 +3,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = path.resolve(__dirname, '../..'); // src/frontend
-const SCAN_DIRS = ['src', 'messages'];
+// Quét cả backend: dữ liệu seed từng tạo chi nhánh ở Phú Quốc, Đà Lạt và
+// TP. Hồ Chí Minh trong khi trang Điều khoản công bố nền tảng chỉ cung cấp
+// dịch vụ tại Hà Nội. Guard cũ chỉ quét frontend nên không thấy.
+const SCAN_DIRS = ['src', 'messages', '../backend/src', '../backend/prisma'];
 const EXTENSIONS = new Set(['.ts', '.tsx', '.json']);
 
 // Vietnamese diacritic forms and their common ASCII/English transliterations.
@@ -15,6 +18,12 @@ const BANNED = [
   'Sài Gòn', 'Sai Gon',
 ];
 
+/**
+ * File có lý do chính đáng để chứa các địa danh trên: chúng dùng tên đó làm dữ
+ * liệu nhận diện chứ không phải nội dung hiển thị cho người dùng.
+ */
+const ALLOWLIST = ['hide-demo-branches.ts'];
+
 function listFiles(dir: string): string[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   return entries.flatMap((entry) => {
@@ -25,6 +34,7 @@ function listFiles(dir: string): string[] {
     }
     // Test files legitimately reference these banned strings as fixtures/comparisons.
     if (entry.name.includes('.test.')) return [];
+    if (ALLOWLIST.includes(entry.name)) return [];
     return EXTENSIONS.has(path.extname(entry.name)) ? [full] : [];
   });
 }
