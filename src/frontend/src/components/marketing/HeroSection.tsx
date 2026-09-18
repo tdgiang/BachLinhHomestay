@@ -26,6 +26,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import type { Branch } from "@/types";
+import { BRANCHES } from "@/lib/legal";
 
 const TIME_OPTIONS = [
   "07:00",
@@ -104,9 +105,12 @@ export function HeroSection({ branches }: HeroSectionProps) {
 
   const timeOptions = TIME_OPTIONS.map((opt) => ({ value: opt, label: opt }));
 
+  // Số chi nhánh lấy từ BRANCHES — không hardcode. Con số này là nội dung công
+  // bố theo Điều 9b NĐ 248 (phạm vi địa lý cung cấp dịch vụ), quảng cáo nhiều
+  // hơn thực tế là công bố sai.
   const stats = [
     { value: "20+", label: t("statRooms"), icon: Sparkles },
-    { value: "5+", label: t("statBranches"), icon: MapPin },
+    { value: String(BRANCHES.length), label: t("statBranches"), icon: MapPin },
     { value: "4.8", label: t("statRating"), icon: Star },
   ];
 

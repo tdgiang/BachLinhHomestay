@@ -146,6 +146,33 @@ describe('Điều 9b — phạm vi địa lý khớp với số chi nhánh thự
 
     expect(offenders).toEqual([]);
   });
+
+  it('không component nào hardcode số chi nhánh', () => {
+    // Badge "5+ Chi nhánh" ở hero nằm thẳng trong .tsx nên guard đọc file
+    // ngôn ngữ không thấy. Số chi nhánh phải lấy từ BRANCHES.
+    const offenders: string[] = [];
+
+    function walkDir(dir: string) {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          if (entry.name === 'node_modules') continue;
+          walkDir(full);
+          continue;
+        }
+        if (!entry.name.endsWith('.tsx') && !entry.name.endsWith('.ts')) continue;
+        if (entry.name.includes('.test.')) continue;
+
+        const content = fs.readFileSync(full, 'utf-8');
+        // Chuỗi literal kiểu "5+" / "3" đứng cạnh nhãn chi nhánh.
+        const m = /["'`]\d\+?["'`]\s*,\s*label:\s*t\(["']statBranches/.exec(content);
+        if (m) offenders.push(`${path.relative(ROOT, full)}: ${m[0]}`);
+      }
+    }
+
+    walkDir(path.join(ROOT, 'src'));
+    expect(offenders).toEqual([]);
+  });
 });
 
 describe('Điều 7a — kênh tiếp nhận trực tuyến phải tồn tại thật', () => {

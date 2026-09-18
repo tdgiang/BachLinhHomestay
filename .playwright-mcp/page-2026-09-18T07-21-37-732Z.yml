@@ -1,0 +1,263 @@
+- generic [active] [ref=f9e1]:
+  - generic [ref=f9e2]:
+    - banner [ref=f9e3]:
+      - generic [ref=f9e4]:
+        - link "Ba.Li Homestay Ba.Li Homestay" [ref=f9e5] [cursor=pointer]:
+          - /url: /vi
+          - generic [ref=f9e6]:
+            - img "Ba.Li Homestay" [ref=f9e7]
+            - generic [ref=f9e8]: Ba.Li Homestay
+        - navigation
+        - generic [ref=f9e9]:
+          - button "EN" [ref=f9e10]
+          - button "Đăng nhập" [ref=f9e11] [cursor=pointer]
+    - main [ref=f9e12]:
+      - generic [ref=f9e13]:
+        - generic [ref=f9e18]:
+          - generic [ref=f9e19]: Đặt phòng linh hoạt theo giờ & ngày
+          - heading "Không gian xứng tầm trải nghiệm" [level=1] [ref=f9e24]
+          - paragraph [ref=f9e26]: Hơn 20 phòng tại chi nhánh Cầu Giấy, Hà Nội. Đặt phòng theo giờ hoặc theo ngày — linh hoạt, tiện lợi.
+          - generic [ref=f9e27]:
+            - tablist [ref=f9e29]:
+              - tab "Theo giờ" [selected] [ref=f9e30] [cursor=pointer]
+              - tab "Theo ngày" [ref=f9e34] [cursor=pointer]
+            - generic [ref=f9e37]:
+              - generic [ref=f9e38]:
+                - generic [ref=f9e39]: Chọn chi nhánh
+                - generic [ref=f9e43]:
+                  - log [ref=f9e45]
+                  - generic [ref=f9e47] [cursor=pointer]:
+                    - generic [ref=f9e48]: Chọn chi nhánh
+                    - combobox [ref=f9e50]
+              - generic [ref=f9e55]:
+                - generic [ref=f9e56]: Ngày nhận phòng
+                - button "Chọn ngày" [ref=f9e59] [cursor=pointer]
+              - generic [ref=f9e61]:
+                - generic [ref=f9e62]: Giờ vào
+                - generic [ref=f9e66]:
+                  - log [ref=f9e68]
+                  - generic [ref=f9e70] [cursor=pointer]:
+                    - generic [ref=f9e71]: 14:00
+                    - combobox [ref=f9e72]
+              - generic [ref=f9e77]:
+                - generic [ref=f9e78]: Số giờ thuê
+                - generic [ref=f9e82]:
+                  - button "Giảm số giờ" [ref=f9e83] [cursor=pointer]
+                  - generic [ref=f9e86]: 2h
+                  - button "Tăng số giờ" [ref=f9e87] [cursor=pointer]
+            - button "Tìm phòng trống" [ref=f9e91] [cursor=pointer]
+          - generic [ref=f9e92]:
+            - generic [ref=f9e93]:
+              - generic [ref=f9e97]: 20+
+              - generic [ref=f9e98]: Phòng
+            - generic [ref=f9e99]:
+              - generic [ref=f9e103]: "1"
+              - generic [ref=f9e104]: Chi nhánh
+            - generic [ref=f9e105]:
+              - generic [ref=f9e108]: "4.8"
+              - generic [ref=f9e109]: Đánh giá
+        - generic [ref=f9e150]:
+          - generic [ref=f9e151]:
+            - paragraph [ref=f9e152]: Điều bạn sẽ thích
+            - heading "Ở thoải mái, đặt phòng cũng nhẹ nhàng" [level=2] [ref=f9e153]
+          - generic [ref=f9e154]:
+            - article [ref=f9e155]:
+              - heading "Linh hoạt theo giờ & ngày" [level=3] [ref=f9e160]
+              - paragraph [ref=f9e161]: Chỉ cần vài giờ nghỉ trưa hay cả tuần — bạn chọn, chúng tôi lo phần còn lại.
+            - article [ref=f9e162]:
+              - heading "Thanh toán dễ, an tâm" [level=3] [ref=f9e166]
+              - paragraph [ref=f9e167]: VNPay và nhiều hình thức — xác nhận đặt phòng ngay sau khi thanh toán.
+            - article [ref=f9e168]:
+              - heading "Gần biển, dễ di chuyển" [level=3] [ref=f9e174]
+              - paragraph [ref=f9e175]: Ngay trung tâm Cầu Giấy, Hà Nội — thuận tiện di chuyển.
+            - article [ref=f9e176]:
+              - heading "Luôn có người hỗ trợ" [level=3] [ref=f9e180]
+              - paragraph [ref=f9e181]: Gặp khó khi check-in? Nhắn hoặc gọi — đội ngũ sẵn sàng giúp bạn.
+        - generic [ref=f9e183]:
+          - generic [ref=f9e184]:
+            - paragraph [ref=f9e185]: Đơn giản thôi
+            - heading "Đặt phòng chỉ vài phút" [level=2] [ref=f9e186]
+          - generic [ref=f9e187]:
+            - generic [ref=f9e188]:
+              - generic [ref=f9e189]: "1"
+              - heading "Chọn phòng bạn thích" [level=3] [ref=f9e195]
+              - paragraph [ref=f9e196]: Lọc theo chi nhánh, giá hoặc tiện ích — xem ảnh và đánh giá thật.
+            - generic [ref=f9e197]:
+              - generic [ref=f9e198]: "2"
+              - heading "Điền thông tin & thanh toán" [level=3] [ref=f9e203]
+              - paragraph [ref=f9e204]: Không cần tài khoản cũng được. Có mã giảm giá thì nhập luôn nhé.
+            - generic [ref=f9e205]:
+              - generic [ref=f9e206]: "3"
+              - heading "Nhận phòng và tận hưởng" [level=3] [ref=f9e212]
+              - paragraph [ref=f9e213]: Nhận mã booking qua SMS/email, check-in theo hướng dẫn đơn giản.
+        - generic [ref=f9e217]:
+          - generic [ref=f9e218]:
+            - heading "Sẵn sàng nghỉ ngơi chưa?" [level=2] [ref=f9e219]
+            - paragraph [ref=f9e220]: Hàng trăm lượt đặt mỗi tháng — hôm nay có thể là lượt của bạn.
+          - generic [ref=f9e221]:
+            - button "Khám phá phòng ngay" [ref=f9e222] [cursor=pointer]
+            - button "Nhắn tư vấn cho tôi" [ref=f9e223] [cursor=pointer]
+        - generic [ref=f9e225]:
+          - heading "Thông tin doanh nghiệp" [level=2] [ref=f9e226]
+          - generic [ref=f9e227]:
+            - generic [ref=f9e234]:
+              - paragraph [ref=f9e235]: Tên tổ chức
+              - paragraph [ref=f9e236]: Công ty Cổ phần Sản xuất Thương mại Dịch vụ Bách Linh
+            - generic [ref=f9e242]:
+              - paragraph [ref=f9e243]: Địa chỉ trụ sở chính
+              - paragraph [ref=f9e244]: Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội, Việt Nam
+            - generic [ref=f9e250]:
+              - paragraph [ref=f9e251]: Người đại diện theo pháp luật
+              - paragraph [ref=f9e252]: "Nguyễn Lan Phương — Chức danh: Giám đốc"
+            - generic [ref=f9e258]:
+              - paragraph [ref=f9e259]: Số GCN đăng ký doanh nghiệp / Mã số thuế
+              - paragraph [ref=f9e260]: "0111484606"
+            - generic [ref=f9e266]:
+              - paragraph [ref=f9e267]: Nơi cấp
+              - paragraph [ref=f9e268]: Phòng Đăng ký kinh doanh và Tài chính doanh nghiệp — Sở Tài chính TP Hà Nội
+            - generic [ref=f9e274]:
+              - paragraph [ref=f9e275]: Ngày cấp
+              - paragraph [ref=f9e276]: 04/05/2026 (đăng ký lần đầu)
+            - generic [ref=f9e281]:
+              - paragraph [ref=f9e282]: Hỗ trợ trực tuyến
+              - paragraph [ref=f9e283]: "Hotline 0931 708 256 (24/7) · Email: admin@bachlinh.com.vn· Biểu mẫu phản ánh trực tuyến tại trang \"Liên hệ\""
+        - generic [ref=f9e285]:
+          - generic [ref=f9e286]:
+            - generic [ref=f9e287]: Công bố theo Nghị định 248/2026/NĐ-CP
+            - heading "Chính sách & Pháp lý" [level=2] [ref=f9e291]
+            - paragraph [ref=f9e292]: Toàn bộ nội dung bắt buộc phải công khai đối với nền tảng thương mại điện tử, theo Luật Thương mại điện tử 2025 và Nghị định 248/2026/NĐ-CP (hiệu lực từ 01/7/2026).
+          - generic [ref=f9e293]:
+            - link "Điều 4 Thông tin chủ quản nền tảng Tên, trụ sở, người đại diện, mã số doanh nghiệp, nơi và ngày cấp." [ref=f9e294] [cursor=pointer]:
+              - /url: /vi/chinh-sach#chu-quan
+              - generic [ref=f9e295]: Điều 4
+              - paragraph [ref=f9e299]: Thông tin chủ quản nền tảng
+              - paragraph [ref=f9e300]: Tên, trụ sở, người đại diện, mã số doanh nghiệp, nơi và ngày cấp.
+            - link "Điều 5 Chính sách bảo vệ thông tin cá nhân Mục đích, phạm vi thu thập và sử dụng, thời gian lưu trữ, quyền xem — sửa — xóa dữ liệu." [ref=f9e301] [cursor=pointer]:
+              - /url: /vi/privacy
+              - generic [ref=f9e302]: Điều 5
+              - paragraph [ref=f9e306]: Chính sách bảo vệ thông tin cá nhân
+              - paragraph [ref=f9e307]: Mục đích, phạm vi thu thập và sử dụng, thời gian lưu trữ, quyền xem — sửa — xóa dữ liệu.
+            - link "Điều 6 Quyền và nghĩa vụ của các bên Trách nhiệm của Ba.Li Homestay và quyền, nghĩa vụ của khách hàng." [ref=f9e308] [cursor=pointer]:
+              - /url: /vi/chinh-sach-nd248#rights-obligations
+              - generic [ref=f9e309]: Điều 6
+              - paragraph [ref=f9e313]: Quyền và nghĩa vụ của các bên
+              - paragraph [ref=f9e314]: Trách nhiệm của Ba.Li Homestay và quyền, nghĩa vụ của khách hàng.
+            - link "Điều 7 Tiếp nhận và giải quyết phản ánh, khiếu nại Biểu mẫu trực tuyến, quy trình 4 bước, thời hạn phản hồi và công cụ hỗ trợ." [ref=f9e315] [cursor=pointer]:
+              - /url: /vi/contact
+              - generic [ref=f9e316]: Điều 7
+              - paragraph [ref=f9e320]: Tiếp nhận và giải quyết phản ánh, khiếu nại
+              - paragraph [ref=f9e321]: Biểu mẫu trực tuyến, quy trình 4 bước, thời hạn phản hồi và công cụ hỗ trợ.
+            - link "Điều 8 Chính sách về giá Giá đã gồm thuế GTGT, không phụ phí ẩn, quy tắc thay đổi biểu giá." [ref=f9e322] [cursor=pointer]:
+              - /url: /vi/chinh-sach-nd248#pricing
+              - generic [ref=f9e323]: Điều 8
+              - paragraph [ref=f9e327]: Chính sách về giá
+              - paragraph [ref=f9e328]: Giá đã gồm thuế GTGT, không phụ phí ẩn, quy tắc thay đổi biểu giá.
+            - link "Điều 9 Điều kiện và hạn chế cung cấp dịch vụ Giới hạn thời gian, phạm vi địa lý, độ tuổi, số lượng và tính khả dụng." [ref=f9e329] [cursor=pointer]:
+              - /url: /vi/terms#conditions
+              - generic [ref=f9e330]: Điều 9
+              - paragraph [ref=f9e334]: Điều kiện và hạn chế cung cấp dịch vụ
+              - paragraph [ref=f9e335]: Giới hạn thời gian, phạm vi địa lý, độ tuổi, số lượng và tính khả dụng.
+            - link "Điều 10 Chính sách về thanh toán Phương thức thanh toán, hoàn tiền và quy định về mã giảm giá." [ref=f9e336] [cursor=pointer]:
+              - /url: /vi/payment-policy
+              - generic [ref=f9e337]: Điều 10
+              - paragraph [ref=f9e341]: Chính sách về thanh toán
+              - paragraph [ref=f9e342]: Phương thức thanh toán, hoàn tiền và quy định về mã giảm giá.
+            - link "Điều 11 Chính sách ưu tiên hiển thị Tiêu chí sắp xếp phòng trên trang chủ và trang tìm phòng." [ref=f9e343] [cursor=pointer]:
+              - /url: /vi/chinh-sach-nd248#display-ranking
+              - generic [ref=f9e344]: Điều 11
+              - paragraph [ref=f9e348]: Chính sách ưu tiên hiển thị
+              - paragraph [ref=f9e349]: Tiêu chí sắp xếp phòng trên trang chủ và trang tìm phòng.
+            - link "Điều 12 Quy chế livestream bán hàng Ba.Li Homestay không cung cấp chức năng livestream bán hàng." [ref=f9e350] [cursor=pointer]:
+              - /url: /vi/chinh-sach-nd248#livestream
+              - generic [ref=f9e351]: Điều 12
+              - paragraph [ref=f9e355]: Quy chế livestream bán hàng
+              - paragraph [ref=f9e356]: Ba.Li Homestay không cung cấp chức năng livestream bán hàng.
+            - link "Điều 13, 14 Giao hàng, đổi trả hàng hóa Không áp dụng — nền tảng cung cấp dịch vụ lưu trú, không kinh doanh hàng hóa." [ref=f9e357] [cursor=pointer]:
+              - /url: /vi/chinh-sach-nd248#goods-delivery
+              - generic [ref=f9e358]: Điều 13, 14
+              - paragraph [ref=f9e362]: Giao hàng, đổi trả hàng hóa
+              - paragraph [ref=f9e363]: Không áp dụng — nền tảng cung cấp dịch vụ lưu trú, không kinh doanh hàng hóa.
+            - 'link "Điều 15 Phương thức cung cấp dịch vụ Đặt trước — sử dụng sau: quy trình đặt, nhận phòng, chi phí phát sinh." [ref=f9e364] [cursor=pointer]':
+              - /url: /vi/chinh-sach-nd248#service-delivery
+              - generic [ref=f9e365]: Điều 15
+              - paragraph [ref=f9e369]: Phương thức cung cấp dịch vụ
+              - paragraph [ref=f9e370]: "Đặt trước — sử dụng sau: quy trình đặt, nhận phòng, chi phí phát sinh."
+            - link "Điều 16 Chấm dứt dịch vụ và hoàn tiền Các trường hợp chấm dứt, thời điểm hiệu lực và mức hoàn tiền." [ref=f9e371] [cursor=pointer]:
+              - /url: /vi/chinh-sach-nd248#termination
+              - generic [ref=f9e372]: Điều 16
+              - paragraph [ref=f9e376]: Chấm dứt dịch vụ và hoàn tiền
+              - paragraph [ref=f9e377]: Các trường hợp chấm dứt, thời điểm hiệu lực và mức hoàn tiền.
+            - link "Bổ sung Ngành nghề kinh doanh có điều kiện Điều kiện về an ninh, trật tự đối với dịch vụ lưu trú." [ref=f9e378] [cursor=pointer]:
+              - /url: /vi/chinh-sach-nd248#conditional-industry
+              - generic [ref=f9e379]: Bổ sung
+              - paragraph [ref=f9e383]: Ngành nghề kinh doanh có điều kiện
+              - paragraph [ref=f9e384]: Điều kiện về an ninh, trật tự đối với dịch vụ lưu trú.
+          - link "Xem trang tổng hợp toàn bộ chính sách" [ref=f9e386] [cursor=pointer]:
+            - /url: /vi/chinh-sach
+    - contentinfo [ref=f9e392]:
+      - generic [ref=f9e393]:
+        - generic [ref=f9e394]:
+          - generic [ref=f9e395]:
+            - link "Ba.Li Homestay Ba.Li Homestay" [ref=f9e396] [cursor=pointer]:
+              - /url: /vi
+              - generic [ref=f9e397]:
+                - img "Ba.Li Homestay" [ref=f9e398]
+                - generic [ref=f9e399]: Ba.Li Homestay
+            - paragraph [ref=f9e400]: Hơn 20 phòng tại chi nhánh Cầu Giấy, Hà Nội. Đặt phòng theo giờ hoặc theo ngày.
+            - generic [ref=f9e401]:
+              - link "0931 708 256" [ref=f9e402] [cursor=pointer]:
+                - /url: tel:0931708256
+              - link "admin@bachlinh.com.vn" [ref=f9e405] [cursor=pointer]:
+                - /url: mailto:admin@bachlinh.com.vn
+            - generic [ref=f9e409]:
+              - paragraph [ref=f9e410]: Công Ty Cổ Phần Sản Xuất Thương Mại Dịch Vụ Bách Linh
+              - paragraph [ref=f9e411]:
+                - generic [ref=f9e415]: "Mã số thuế: 0111484606"
+              - paragraph [ref=f9e416]:
+                - generic [ref=f9e421]: "Trụ sở: Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội, Việt Nam"
+              - paragraph [ref=f9e422]:
+                - generic [ref=f9e426]: "Người đại diện theo pháp luật: Nguyễn Lan Phương — Giám đốc"
+              - paragraph [ref=f9e427]:
+                - generic [ref=f9e432]: "GCN ĐKDN: Ngày cấp 04/05/2026 (đăng ký lần đầu) — Phòng Đăng ký kinh doanh và Tài chính doanh nghiệp — Sở Tài chính TP Hà Nội"
+          - generic [ref=f9e433]:
+            - heading "Điều hướng" [level=3] [ref=f9e434]
+            - list [ref=f9e435]:
+              - listitem [ref=f9e436]:
+                - link "Tìm phòng" [ref=f9e437] [cursor=pointer]:
+                  - /url: /vi/rooms
+              - listitem [ref=f9e438]:
+                - link "Về chúng tôi" [ref=f9e439] [cursor=pointer]:
+                  - /url: /vi/about
+              - listitem [ref=f9e440]:
+                - link "Liên hệ" [ref=f9e441] [cursor=pointer]:
+                  - /url: /vi/contact
+              - listitem [ref=f9e442]:
+                - link "Chính sách & Pháp lý" [ref=f9e443] [cursor=pointer]:
+                  - /url: /vi/chinh-sach
+              - listitem [ref=f9e444]:
+                - link "Chính sách bảo mật" [ref=f9e445] [cursor=pointer]:
+                  - /url: /vi/privacy
+              - listitem [ref=f9e446]:
+                - link "Điều khoản sử dụng" [ref=f9e447] [cursor=pointer]:
+                  - /url: /vi/terms
+              - listitem [ref=f9e448]:
+                - link "Chính sách thanh toán" [ref=f9e449] [cursor=pointer]:
+                  - /url: /vi/payment-policy
+              - listitem [ref=f9e450]:
+                - link "Chính sách hoạt động theo NĐ 248" [ref=f9e451] [cursor=pointer]:
+                  - /url: /vi/chinh-sach-nd248
+              - listitem [ref=f9e452]:
+                - link "Gửi phản ánh, khiếu nại" [ref=f9e453] [cursor=pointer]:
+                  - /url: /vi/contact#bieu-mau
+          - generic [ref=f9e454]:
+            - heading "Chi nhánh" [level=3] [ref=f9e455]
+            - list [ref=f9e456]:
+              - listitem [ref=f9e457]:
+                - paragraph [ref=f9e458]: Cầu Giấy
+                - paragraph [ref=f9e459]: Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội
+        - separator [ref=f9e463]
+        - generic [ref=f9e464]:
+          - paragraph [ref=f9e465]: © 2026 Ba.Li Homestay. Bảo lưu mọi quyền.
+          - paragraph [ref=f9e466]: Made with ❤️ in Hà Nội
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f9e472] [cursor=pointer]

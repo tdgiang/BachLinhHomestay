@@ -4,7 +4,7 @@ import { MOCK_BRANCHES } from './branches';
 export const MOCK_ROOMS: Room[] = [
   {
     id: 'room-001',
-    branchId: 'branch-da-nang-001',
+    branchId: 'branch-cau-giay-001',
     name: 'Phòng Deluxe Hướng Phố',
     nameEn: 'City View Deluxe Room',
     description: 'Phòng Deluxe rộng 30m², view phố, nội thất hiện đại, đầy đủ tiện nghi cao cấp. Không gian thoáng đãng, ánh sáng tự nhiên chan hòa.',
@@ -56,7 +56,7 @@ export const MOCK_ROOMS: Room[] = [
   },
   {
     id: 'room-002',
-    branchId: 'branch-da-nang-001',
+    branchId: 'branch-cau-giay-001',
     name: 'Phòng Studio Gác Xép',
     nameEn: 'Loft Studio Room',
     description: 'Studio 2 tầng độc đáo với gác xép, phù hợp cặp đôi hoặc 2 người. Thiết kế sáng tạo, không gian mở thoáng mát.',
@@ -98,7 +98,7 @@ export const MOCK_ROOMS: Room[] = [
   },
   {
     id: 'room-003',
-    branchId: 'branch-da-nang-002',
+    branchId: 'branch-cau-giay-001',
     name: 'Phòng Superior Ban Công',
     nameEn: 'Superior Balcony Room',
     description: 'Phòng Superior với ban công thoáng, nội thất cao cấp. Không gian yên tĩnh, phù hợp nghỉ dưỡng dài ngày.',
@@ -123,7 +123,7 @@ export const MOCK_ROOMS: Room[] = [
     ratingCount: 213,
     createdAt: '2026-01-01T00:00:00.000Z',
     updatedAt: '2026-01-01T00:00:00.000Z',
-    branch: MOCK_BRANCHES[1],
+    branch: MOCK_BRANCHES[0],
     images: [
       { id: 'img-003-1', roomId: 'room-003', url: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800', sortOrder: 0, isCover: true, createdAt: '2026-01-01T00:00:00.000Z' },
       { id: 'img-003-2', roomId: 'room-003', url: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800', sortOrder: 1, isCover: false, createdAt: '2026-01-01T00:00:00.000Z' },
@@ -146,7 +146,7 @@ export const MOCK_ROOMS: Room[] = [
   },
   {
     id: 'room-004',
-    branchId: 'branch-da-nang-002',
+    branchId: 'branch-cau-giay-001',
     name: 'Phòng Duplex Gia Đình',
     nameEn: 'Family Duplex Room',
     description: 'Phòng Duplex 2 tầng 60m² với 2 phòng ngủ, phù hợp gia đình 4 người. Không gian rộng rãi, tiện nghi đầy đủ cho cả gia đình.',
@@ -171,7 +171,7 @@ export const MOCK_ROOMS: Room[] = [
     ratingCount: 67,
     createdAt: '2026-01-01T00:00:00.000Z',
     updatedAt: '2026-01-01T00:00:00.000Z',
-    branch: MOCK_BRANCHES[1],
+    branch: MOCK_BRANCHES[0],
     images: [
       { id: 'img-004-1', roomId: 'room-004', url: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800', sortOrder: 0, isCover: true, createdAt: '2026-01-01T00:00:00.000Z' },
     ],
@@ -184,7 +184,7 @@ export const MOCK_ROOMS: Room[] = [
   },
   {
     id: 'room-005',
-    branchId: 'branch-hoi-an-001',
+    branchId: 'branch-cau-giay-001',
     name: 'Phòng Garden View',
     nameEn: 'Garden View Room',
     description: 'Phòng hướng vườn yên tĩnh, phong cách truyền thống Việt Nam. Không gian thư giãn, gần gũi thiên nhiên.',
@@ -209,7 +209,7 @@ export const MOCK_ROOMS: Room[] = [
     ratingCount: 156,
     createdAt: '2026-01-01T00:00:00.000Z',
     updatedAt: '2026-01-01T00:00:00.000Z',
-    branch: MOCK_BRANCHES[2],
+    branch: MOCK_BRANCHES[0],
     images: [
       { id: 'img-005-1', roomId: 'room-005', url: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800', sortOrder: 0, isCover: true, createdAt: '2026-01-01T00:00:00.000Z' },
     ],
@@ -221,7 +221,7 @@ export const MOCK_ROOMS: Room[] = [
   },
   {
     id: 'room-006',
-    branchId: 'branch-hoi-an-001',
+    branchId: 'branch-cau-giay-001',
     name: 'Phòng Suite Bồn Tắm',
     nameEn: 'Bathtub Suite Room',
     description: 'Suite cao cấp 50m² với bồn tắm freestanding và ban công riêng. Trải nghiệm nghỉ dưỡng sang trọng giữa lòng Thủ đô Hà Nội.',
@@ -246,7 +246,7 @@ export const MOCK_ROOMS: Room[] = [
     ratingCount: 98,
     createdAt: '2026-01-01T00:00:00.000Z',
     updatedAt: '2026-01-01T00:00:00.000Z',
-    branch: MOCK_BRANCHES[2],
+    branch: MOCK_BRANCHES[0],
     images: [
       { id: 'img-006-1', roomId: 'room-006', url: 'https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?w=800', sortOrder: 0, isCover: true, createdAt: '2026-01-01T00:00:00.000Z' },
       { id: 'img-006-2', roomId: 'room-006', url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800', sortOrder: 1, isCover: false, createdAt: '2026-01-01T00:00:00.000Z' },

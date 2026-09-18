@@ -1,0 +1,197 @@
+- generic [active] [ref=f10e1]:
+  - generic [ref=f10e2]:
+    - banner [ref=f10e3]:
+      - generic [ref=f10e4]:
+        - link "Ba.Li Homestay Ba.Li Homestay" [ref=f10e5] [cursor=pointer]:
+          - /url: /vi
+          - generic [ref=f10e6]:
+            - img "Ba.Li Homestay" [ref=f10e7]
+            - generic [ref=f10e8]: Ba.Li Homestay
+        - navigation
+        - generic [ref=f10e9]:
+          - button "EN" [ref=f10e10]
+          - button "A Admin" [ref=f10e263]:
+            - generic [ref=f10e264]: A
+            - generic [ref=f10e265]: Admin
+    - main [ref=f10e12]:
+      - generic [ref=f10e13]:
+        - generic [ref=f10e15]:
+          - generic [ref=f10e16]: Hỗ trợ trực tuyến
+          - heading "Liên hệ & tiếp nhận phản ánh, yêu cầu, khiếu nại" [level=1] [ref=f10e19]: Liên hệ & tiếp nhậnphản ánh, yêu cầu, khiếu nại
+          - paragraph [ref=f10e20]: "Công khai theo Điều 7 Nghị định 248/2026/NĐ-CP: kênh tiếp nhận, trình tự xử lý, thời hạn phản hồi và các công cụ hỗ trợ giải quyết."
+        - generic [ref=f10e22]:
+          - heading "Kênh tiếp nhận" [level=2] [ref=f10e23]
+          - paragraph [ref=f10e24]: Bạn có thể chọn bất kỳ kênh nào dưới đây. Kênh trực tuyến hoạt động 24/7 và có mã phiếu để theo dõi tiến độ.
+          - generic [ref=f10e25]:
+            - generic [ref=f10e31]:
+              - paragraph [ref=f10e32]: Biểu mẫu trực tuyến
+              - paragraph [ref=f10e33]: Ngay trên trang này — có mã phiếu để tra cứu tiến độ
+              - paragraph [ref=f10e34]: Hoạt động 24/7
+            - link [ref=f10e35] [cursor=pointer]:
+              - /url: mailto:admin@bachlinh.com.vn
+              - generic [ref=f10e40]:
+                - paragraph [ref=f10e41]: Email
+                - paragraph [ref=f10e42]: admin@bachlinh.com.vn
+                - paragraph [ref=f10e43]: Hoạt động 24/7
+            - link [ref=f10e44] [cursor=pointer]:
+              - /url: tel:0931708256
+              - generic [ref=f10e48]:
+                - paragraph [ref=f10e49]: Hotline
+                - paragraph [ref=f10e50]: 0931 708 256
+                - paragraph [ref=f10e51]: Trực 24/7
+            - generic [ref=f10e57]:
+              - paragraph [ref=f10e58]: Trực tiếp tại quầy lễ tân
+              - paragraph [ref=f10e59]: Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội
+              - paragraph [ref=f10e60]: Trong giờ hành chính
+        - generic [ref=f10e62]:
+          - generic [ref=f10e63]:
+            - heading "Gửi phản ánh trực tuyến" [level=2] [ref=f10e64]
+            - paragraph [ref=f10e65]: Điền biểu mẫu dưới đây. Sau khi gửi, bạn nhận ngay mã phiếu để tra cứu tiến độ xử lý.
+            - generic [ref=f10e266]:
+              - heading "Đã tiếp nhận phản ánh của bạn" [level=3] [ref=f10e271]
+              - paragraph [ref=f10e272]: Vui lòng lưu mã phiếu để tra cứu tiến độ xử lý.
+              - button "KN-20260918-J8KPXTVT" [ref=f10e273]
+              - generic [ref=f10e277]:
+                - paragraph [ref=f10e278]:
+                  - strong [ref=f10e279]: "Phản hồi ban đầu:"
+                  - text: trong 24 giờ.
+                - paragraph [ref=f10e280]:
+                  - strong [ref=f10e281]: "Thời hạn giải quyết:"
+                  - text: tối đa 2 ngày làm việc kể từ ngày tiếp nhận, theo nhóm vấn đề bạn đã chọn. Vụ việc phức tạp sẽ được thông báo gia hạn trước khi hết thời hạn.
+              - button "Gửi phản ánh khác" [ref=f10e282]
+          - generic [ref=f10e92]:
+            - heading "Tra cứu tiến độ xử lý" [level=3] [ref=f10e93]
+            - paragraph [ref=f10e94]: Nhập mã phiếu đã nhận khi gửi phản ánh.
+            - generic [ref=f10e95]:
+              - textbox "KN-20260918-A7K2M9PQ" [ref=f10e96]
+              - button "Tra cứu" [ref=f10e97]
+        - generic [ref=f10e99]:
+          - heading "Trình tự, thủ tục xử lý" [level=2] [ref=f10e100]
+          - generic [ref=f10e101]:
+            - generic [ref=f10e102]:
+              - generic [ref=f10e103]: BƯỚC 01
+              - paragraph [ref=f10e104]: Khách hàng gửi phản ánh
+              - paragraph [ref=f10e105]: Qua biểu mẫu trực tuyến, email, hotline hoặc trực tiếp tại quầy. Nêu rõ mã đặt phòng (nếu có), nội dung sự việc và đề nghị cụ thể.
+            - generic [ref=f10e106]:
+              - generic [ref=f10e107]: BƯỚC 02
+              - paragraph [ref=f10e108]: Ba.Li Homestay tiếp nhận
+              - paragraph [ref=f10e109]: Hệ thống cấp ngay mã phiếu và hiển thị trên màn hình — vui lòng lưu lại mã này để tra cứu tiến độ. Bộ phận phụ trách liên hệ phản hồi ban đầu qua điện thoại hoặc email trong thời hạn công bố ở bảng dưới.
+            - generic [ref=f10e110]:
+              - generic [ref=f10e111]: BƯỚC 03
+              - paragraph [ref=f10e112]: Xác minh và đề xuất phương án
+              - paragraph [ref=f10e113]: Bộ phận phụ trách đối chiếu dữ liệu đặt phòng, thanh toán, camera và ghi nhận tại chi nhánh, sau đó liên hệ khách để thống nhất phương án xử lý.
+            - generic [ref=f10e114]:
+              - generic [ref=f10e115]: BƯỚC 04
+              - paragraph [ref=f10e116]: Thực hiện và thông báo kết quả
+              - paragraph [ref=f10e117]: Thực hiện phương án đã thống nhất (hoàn tiền, đổi phòng, bồi hoàn, cải thiện dịch vụ). Kết quả được ghi vào phiếu — khách xem bằng mã phiếu tại mục tra cứu — và được nhân viên thông báo lại qua điện thoại hoặc email.
+        - generic [ref=f10e119]:
+          - heading "Thời hạn phản hồi và giải quyết" [level=2] [ref=f10e124]
+          - table [ref=f10e126]:
+            - rowgroup [ref=f10e127]:
+              - row [ref=f10e128]:
+                - columnheader "Loại vấn đề" [ref=f10e129]
+                - columnheader "Phản hồi ban đầu" [ref=f10e130]
+                - columnheader "Thời hạn giải quyết" [ref=f10e131]
+            - rowgroup [ref=f10e132]:
+              - row [ref=f10e133]:
+                - cell "Sai sót thông tin đặt phòng, chưa nhận được email xác nhận" [ref=f10e134]
+                - cell "24 giờ" [ref=f10e135]
+                - cell "02 ngày làm việc" [ref=f10e136]
+              - row [ref=f10e137]:
+                - cell "Giao dịch thanh toán bị treo, trừ tiền nhưng chưa ghi nhận" [ref=f10e138]
+                - cell "24 giờ" [ref=f10e139]
+                - cell "05 ngày làm việc" [ref=f10e140]
+              - row [ref=f10e141]:
+                - cell "Yêu cầu hủy phòng và hoàn tiền" [ref=f10e142]
+                - cell "48 giờ" [ref=f10e143]
+                - cell "07 ngày làm việc" [ref=f10e144]
+              - row [ref=f10e145]:
+                - cell "Chất lượng dịch vụ, cơ sở vật chất, thái độ nhân viên" [ref=f10e146]
+                - cell "48 giờ" [ref=f10e147]
+                - cell "07 ngày làm việc" [ref=f10e148]
+              - row [ref=f10e149]:
+                - cell "Dữ liệu cá nhân (xem, chỉnh sửa, xóa, hạn chế xử lý)" [ref=f10e150]
+                - cell "72 giờ" [ref=f10e151]
+                - cell "30 ngày" [ref=f10e152]
+              - row [ref=f10e153]:
+                - cell "Vấn đề khác" [ref=f10e154]
+                - cell "48 giờ" [ref=f10e155]
+                - cell "07 ngày làm việc" [ref=f10e156]
+          - paragraph [ref=f10e157]: Thời hạn tính theo ngày làm việc, không kể ngày nghỉ lễ theo quy định của pháp luật lao động.
+        - generic [ref=f10e159]:
+          - heading "Biện pháp và công cụ hỗ trợ giải quyết" [level=2] [ref=f10e165]
+          - list [ref=f10e166]:
+            - listitem [ref=f10e167]: Mã phiếu khiếu nại và trang tra cứu tiến độ trực tuyến ngay trên website, hoạt động 24/7 không cần đăng nhập.
+            - listitem [ref=f10e169]: Lịch sử đặt phòng và hóa đơn điện tử trong mục "Lịch sử đặt phòng" của tài khoản.
+            - listitem [ref=f10e171]: Đối soát giao dịch với VNPay và ngân hàng phát hành thẻ đối với khiếu nại thanh toán.
+            - listitem [ref=f10e173]: Hoàn tiền về đúng phương thức thanh toán ban đầu, hoặc bù voucher khi khách đồng ý.
+            - listitem [ref=f10e175]: Lưu trữ toàn bộ hồ sơ phản ánh tối thiểu 02 năm để phục vụ tra cứu và kiểm tra của cơ quan nhà nước.
+            - listitem [ref=f10e177]: "Trường hợp không đạt thỏa thuận: hòa giải qua tổ chức bảo vệ quyền lợi người tiêu dùng, hoặc khởi kiện tại Tòa án nhân dân có thẩm quyền tại TP Hà Nội."
+    - contentinfo [ref=f10e179]:
+      - generic [ref=f10e180]:
+        - generic [ref=f10e181]:
+          - generic [ref=f10e182]:
+            - link "Ba.Li Homestay Ba.Li Homestay" [ref=f10e183] [cursor=pointer]:
+              - /url: /vi
+              - generic [ref=f10e184]:
+                - img "Ba.Li Homestay" [ref=f10e185]
+                - generic [ref=f10e186]: Ba.Li Homestay
+            - paragraph [ref=f10e187]: Hơn 20 phòng tại chi nhánh Cầu Giấy, Hà Nội. Đặt phòng theo giờ hoặc theo ngày.
+            - generic [ref=f10e188]:
+              - link "0931 708 256" [ref=f10e189] [cursor=pointer]:
+                - /url: tel:0931708256
+              - link "admin@bachlinh.com.vn" [ref=f10e192] [cursor=pointer]:
+                - /url: mailto:admin@bachlinh.com.vn
+            - generic [ref=f10e196]:
+              - paragraph [ref=f10e197]: Công Ty Cổ Phần Sản Xuất Thương Mại Dịch Vụ Bách Linh
+              - paragraph [ref=f10e198]:
+                - generic [ref=f10e202]: "Mã số thuế: 0111484606"
+              - paragraph [ref=f10e203]:
+                - generic [ref=f10e208]: "Trụ sở: Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội, Việt Nam"
+              - paragraph [ref=f10e209]:
+                - generic [ref=f10e213]: "Người đại diện theo pháp luật: Nguyễn Lan Phương — Giám đốc"
+              - paragraph [ref=f10e214]:
+                - generic [ref=f10e219]: "GCN ĐKDN: Ngày cấp 04/05/2026 (đăng ký lần đầu) — Phòng Đăng ký kinh doanh và Tài chính doanh nghiệp — Sở Tài chính TP Hà Nội"
+          - generic [ref=f10e220]:
+            - heading "Điều hướng" [level=3] [ref=f10e221]
+            - list [ref=f10e222]:
+              - listitem [ref=f10e223]:
+                - link "Tìm phòng" [ref=f10e224] [cursor=pointer]:
+                  - /url: /vi/rooms
+              - listitem [ref=f10e225]:
+                - link "Về chúng tôi" [ref=f10e226] [cursor=pointer]:
+                  - /url: /vi/about
+              - listitem [ref=f10e227]:
+                - link "Liên hệ" [ref=f10e228] [cursor=pointer]:
+                  - /url: /vi/contact
+              - listitem [ref=f10e229]:
+                - link "Chính sách & Pháp lý" [ref=f10e230] [cursor=pointer]:
+                  - /url: /vi/chinh-sach
+              - listitem [ref=f10e231]:
+                - link "Chính sách bảo mật" [ref=f10e232] [cursor=pointer]:
+                  - /url: /vi/privacy
+              - listitem [ref=f10e233]:
+                - link "Điều khoản sử dụng" [ref=f10e234] [cursor=pointer]:
+                  - /url: /vi/terms
+              - listitem [ref=f10e235]:
+                - link "Chính sách thanh toán" [ref=f10e236] [cursor=pointer]:
+                  - /url: /vi/payment-policy
+              - listitem [ref=f10e237]:
+                - link "Chính sách hoạt động theo NĐ 248" [ref=f10e238] [cursor=pointer]:
+                  - /url: /vi/chinh-sach-nd248
+              - listitem [ref=f10e239]:
+                - link "Gửi phản ánh, khiếu nại" [ref=f10e240] [cursor=pointer]:
+                  - /url: /vi/contact#bieu-mau
+          - generic [ref=f10e241]:
+            - heading "Chi nhánh" [level=3] [ref=f10e242]
+            - list [ref=f10e243]:
+              - listitem [ref=f10e244]:
+                - paragraph [ref=f10e245]: Cầu Giấy
+                - paragraph [ref=f10e246]: Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội
+        - separator [ref=f10e250]
+        - generic [ref=f10e251]:
+          - paragraph [ref=f10e252]: © 2026 Ba.Li Homestay. Bảo lưu mọi quyền.
+          - paragraph [ref=f10e253]: Made with ❤️ in Hà Nội
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f10e259] [cursor=pointer]
+  - alert [ref=f10e283]
