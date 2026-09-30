@@ -8,6 +8,8 @@ export default withNextIntl({
     dangerouslyAllowLocalIP: true,
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'bachlinh.com.vn', pathname: '/uploads/**' },
+      { protocol: 'https', hostname: 'www.bachlinh.com.vn', pathname: '/uploads/**' },
       { protocol: 'http',  hostname: 'localhost' },
       { protocol: 'http',  hostname: 'localhost', port: '4000' },
       { protocol: 'http',  hostname: 'localhost', port: '9000' },
