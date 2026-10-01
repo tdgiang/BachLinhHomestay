@@ -156,29 +156,6 @@ export function LegalDocument({
               color: "var(--color-text-secondary)",
             }}
           >
-            <div className="grid sm:grid-cols-2 gap-6 text-center text-sm mb-10">
-              <div>
-                <p
-                  className="font-bold uppercase"
-                  style={{ color: "var(--color-text-primary)" }}
-                >
-                  Công ty Cổ phần Sản xuất Thương mại
-                  <br />
-                  Dịch vụ Bách Linh
-                </p>
-              </div>
-              <div>
-                <p
-                  className="font-bold uppercase"
-                  style={{ color: "var(--color-text-primary)" }}
-                >
-                  Cộng hòa Xã hội Chủ nghĩa Việt Nam
-                </p>
-                <p className="font-semibold">Độc lập - Tự do - Hạnh phúc</p>
-                <p className="italic mt-3">{ISSUED_AT}</p>
-              </div>
-            </div>
-
             <h2
               className="text-center text-xl md:text-2xl font-bold uppercase mb-2"
               style={{

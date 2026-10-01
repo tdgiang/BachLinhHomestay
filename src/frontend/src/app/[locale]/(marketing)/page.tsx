@@ -1,16 +1,16 @@
-import { setRequestLocale } from 'next-intl/server';
-import { Suspense } from 'react';
-import { HeroSection } from '@/components/marketing/HeroSection';
-import { HomeFiltersBar } from '@/components/marketing/HomeFiltersBar';
-import { FeaturedRooms } from '@/components/marketing/FeaturedRooms';
-import { HomeValueProps } from '@/components/marketing/HomeValueProps';
-import { HomeHowItWorks } from '@/components/marketing/HomeHowItWorks';
-import { HomeCtaSection } from '@/components/marketing/HomeCtaSection';
-import { HomeBusinessInfo } from '@/components/marketing/HomeBusinessInfo';
-import { HomePolicyHub } from '@/components/marketing/HomePolicyHub';
-import { Skeleton } from '@/components/ui/skeleton';
-import { apiClient } from '@/lib/api-client';
-import type { BookingType } from '@/types';
+import { setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
+import { HeroSection } from "@/components/marketing/HeroSection";
+import { HomeFiltersBar } from "@/components/marketing/HomeFiltersBar";
+import { FeaturedRooms } from "@/components/marketing/FeaturedRooms";
+import { HomeValueProps } from "@/components/marketing/HomeValueProps";
+import { HomeHowItWorks } from "@/components/marketing/HomeHowItWorks";
+import { HomeCtaSection } from "@/components/marketing/HomeCtaSection";
+import { HomeBusinessInfo } from "@/components/marketing/HomeBusinessInfo";
+import { HomePolicyHub } from "@/components/marketing/HomePolicyHub";
+import { Skeleton } from "@/components/ui/skeleton";
+import { apiClient } from "@/lib/api-client";
+import type { BookingType } from "@/types";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -41,7 +41,10 @@ export default async function HomePage({ params, searchParams }: Props) {
   const branches = await apiClient.getBranches().catch(() => []);
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--color-surface)' }}>
+    <div
+      className="min-h-screen"
+      style={{ background: "var(--color-surface)" }}
+    >
       <HeroSection branches={branches} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 -mt-2 relative z-20">
@@ -50,7 +53,10 @@ export default async function HomePage({ params, searchParams }: Props) {
         </Suspense>
       </div>
 
-      <Suspense key={JSON.stringify(query)} fallback={<FeaturedRoomsSkeleton />}>
+      <Suspense
+        key={JSON.stringify(query)}
+        fallback={<FeaturedRoomsSkeleton />}
+      >
         <FeaturedRooms query={query} />
       </Suspense>
 
@@ -58,7 +64,7 @@ export default async function HomePage({ params, searchParams }: Props) {
       <HomeHowItWorks />
       <HomeCtaSection />
       <HomeBusinessInfo />
-      <HomePolicyHub />
+      {/* <HomePolicyHub /> */}
     </div>
   );
 }
@@ -67,7 +73,10 @@ function FiltersSkeleton() {
   return (
     <div
       className="rounded-2xl border p-4 mb-2"
-      style={{ borderColor: 'var(--color-border)', background: 'rgba(255,255,255,0.9)' }}
+      style={{
+        borderColor: "var(--color-border)",
+        background: "rgba(255,255,255,0.9)",
+      }}
     >
       <Skeleton className="h-4 w-48 mb-3" />
       <div className="flex gap-2 overflow-hidden">
