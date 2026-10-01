@@ -9,7 +9,7 @@ export const MOCK_BRANCHES: Branch[] = [
     city: 'Hà Nội',
     latitude: 21.0384,
     longitude: 105.7899,
-    phone: '0931 708 256',
+    phone: '0904.641.289',
     description: 'Chi nhánh Cầu Giấy, gần các trường đại học lớn và trung tâm thương mại, thuận tiện di chuyển nội thành.',
     descriptionEn: 'Cau Giay branch, close to major universities and shopping centers, convenient for getting around the city.',
     isActive: true,

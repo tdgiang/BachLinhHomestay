@@ -23,7 +23,7 @@ const mockCache = { get: jest.fn(), set: jest.fn(), del: jest.fn() };
 const validDto: CreateComplaintDto = {
   fullName: 'Nguyễn Văn A',
   email: 'a@example.com',
-  phone: '0931708256',
+  phone: '0904641289',
   category: ComplaintCategory.booking,
   subject: 'Chưa nhận được email xác nhận',
   content: 'Tôi đã thanh toán nhưng chưa nhận được email xác nhận đặt phòng.',

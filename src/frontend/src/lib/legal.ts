@@ -22,8 +22,8 @@ export const COMPANY = {
   businessRegDate: '04/05/2026 (đăng ký lần đầu)',
   businessRegIssuer:
     'Phòng Đăng ký kinh doanh và Tài chính doanh nghiệp — Sở Tài chính TP Hà Nội',
-  hotline: '0931 708 256',
-  hotlineHref: 'tel:0931708256',
+  hotline: '0904.641.289',
+  hotlineHref: 'tel:0904641289',
   email: 'admin@bachlinh.com.vn',
   emailHref: 'mailto:admin@bachlinh.com.vn',
 } as const;

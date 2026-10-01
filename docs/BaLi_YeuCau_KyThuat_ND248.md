@@ -60,7 +60,7 @@ Hồ sơ đăng ký website TMĐT của Công ty CP SX TM DV Bách Linh trên On
 >
 > **Ngày cấp:** 04/05/2026 (đăng ký lần đầu)
 >
-> **Hỗ trợ trực tuyến:** Hotline 0931 708 256 (24/7) | Email: admin@bachlinh.com.vn | Biểu mẫu "Liên hệ" trên website
+> **Hỗ trợ trực tuyến:** Hotline 0904.641.289 (24/7) | Email: admin@bachlinh.com.vn | Biểu mẫu "Liên hệ" trên website
 
 ### CR-02 — Xử lý mâu thuẫn địa điểm kinh doanh (Ưu tiên CAO)
 
@@ -86,7 +86,7 @@ Hồ sơ đăng ký website TMĐT của Công ty CP SX TM DV Bách Linh trên On
 >
 > **II. Phương thức tiếp nhận và giải quyết phản ánh, yêu cầu, khiếu nại (Điều 7)**
 >
-> - Kênh tiếp nhận: email admin@bachlinh.com.vn và biểu mẫu "Liên hệ" (trực tuyến); hotline 0931 708 256; trực tiếp tại quầy lễ tân.
+> - Kênh tiếp nhận: email admin@bachlinh.com.vn và biểu mẫu "Liên hệ" (trực tuyến); hotline 0904.641.289; trực tiếp tại quầy lễ tân.
 > - Quy trình: (1) Khách gửi phản ánh kèm mã đặt phòng → (2) Ba.Li tiếp nhận, phản hồi ban đầu → (3) Xác minh và đề xuất phương án → (4) Thực hiện và thông báo kết quả.
 > - Thời hạn: phản hồi ban đầu trong 02 ngày làm việc; giải quyết trong tối đa 07 ngày làm việc (vụ việc phức tạp sẽ thông báo trước cho khách).
 > - Biện pháp hỗ trợ: nếu không đạt thỏa thuận, hai bên có thể hòa giải qua tổ chức bảo vệ quyền lợi người tiêu dùng, hoặc giải quyết tại Tòa án nhân dân có thẩm quyền tại TP Hà Nội.
@@ -131,11 +131,11 @@ Hồ sơ đăng ký website TMĐT của Công ty CP SX TM DV Bách Linh trên On
 >
 > **Quyền yêu cầu xóa, hủy hoặc hạn chế xử lý dữ liệu (mục g)**
 >
-> Khách hàng có quyền yêu cầu xóa, hủy hoặc hạn chế xử lý dữ liệu cá nhân đã cung cấp bằng cách gửi yêu cầu qua hotline 0931 708 256 hoặc email admin@bachlinh.com.vn. Ba.Li Homestay xác minh và phản hồi trong vòng 07 ngày làm việc; một số dữ liệu bắt buộc lưu theo pháp luật kế toán, thuế sẽ được giữ đến hết thời hạn luật định.
+> Khách hàng có quyền yêu cầu xóa, hủy hoặc hạn chế xử lý dữ liệu cá nhân đã cung cấp bằng cách gửi yêu cầu qua hotline 0904.641.289 hoặc email admin@bachlinh.com.vn. Ba.Li Homestay xác minh và phản hồi trong vòng 07 ngày làm việc; một số dữ liệu bắt buộc lưu theo pháp luật kế toán, thuế sẽ được giữ đến hết thời hạn luật định.
 >
 > **Tiếp nhận và giải quyết khiếu nại về bảo mật (mục h)**
 >
-> Mọi khiếu nại liên quan đến bảo mật thông tin được tiếp nhận qua hotline 0931 708 256 hoặc email admin@bachlinh.com.vn; phản hồi ban đầu trong 02 ngày làm việc và giải quyết dứt điểm trong tối đa 07 ngày làm việc.
+> Mọi khiếu nại liên quan đến bảo mật thông tin được tiếp nhận qua hotline 0904.641.289 hoặc email admin@bachlinh.com.vn; phản hồi ban đầu trong 02 ngày làm việc và giải quyết dứt điểm trong tối đa 07 ngày làm việc.
 
 ### CR-05 — Trang "Điều khoản sử dụng": 3 chỗ cần sửa
 

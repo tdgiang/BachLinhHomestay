@@ -22,7 +22,7 @@ describe('HomeBusinessInfo', () => {
   it('renders the support hotline and email', () => {
     render(<HomeBusinessInfo />);
 
-    expect(screen.getByText(/0931 708 256/)).toBeInTheDocument();
+    expect(screen.getByText(/0904.641.289/)).toBeInTheDocument();
     expect(screen.getByText(/admin@bachlinh\.com\.vn/)).toBeInTheDocument();
   });
 });

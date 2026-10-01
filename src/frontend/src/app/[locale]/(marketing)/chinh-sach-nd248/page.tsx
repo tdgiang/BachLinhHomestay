@@ -72,7 +72,7 @@ const SECTIONS = [
         items: [
           "Biểu mẫu trực tuyến tại trang Liên hệ — hoạt động 24/7, cấp mã phiếu để khách tự tra cứu tiến độ, không cần đăng nhập.",
           "Email admin@bachlinh.com.vn.",
-          "Hotline 0931 708 256 (trực 24/7).",
+          "Hotline 0904.641.289 (trực 24/7).",
           "Trực tiếp tại quầy lễ tân chi nhánh trong giờ hành chính.",
         ],
       },
@@ -570,7 +570,7 @@ export default async function Nd248PolicyPage({ params }: Props) {
               </a>
 
               <a
-                href="tel:0931708256"
+                href="tel:0904641289"
                 className="flex items-center gap-3 p-4 rounded-2xl bg-white transition-all hover:-translate-y-0.5"
                 style={{
                   border: "1px solid var(--color-border)",
@@ -597,7 +597,7 @@ export default async function Nd248PolicyPage({ params }: Props) {
                     className="text-sm font-semibold"
                     style={{ color: "var(--color-text-primary)" }}
                   >
-                    0931 708 256
+                    0904.641.289
                   </p>
                 </div>
               </a>

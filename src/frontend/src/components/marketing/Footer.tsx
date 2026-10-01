@@ -53,11 +53,11 @@ export function Footer() {
             </p>
             <div className="space-y-1.5">
               <a
-                href="tel:0931708256"
+                href="tel:0904641289"
                 className="flex items-center gap-2 text-sm transition-colors hover:text-[--color-primary]"
                 style={{ color: "var(--color-text-secondary)" }}
               >
-                <Phone className="w-3.5 h-3.5" /> 0931 708 256
+                <Phone className="w-3.5 h-3.5" /> 0904.641.289
               </a>
               <a
                 href="mailto:admin@bachlinh.com.vn"

@@ -215,7 +215,7 @@ export function HomeBusinessInfo() {
                 Hỗ trợ trực tuyến
               </p>
               <p className="text-sm font-semibold" style={{ color: "var(--color-text-primary)" }}>
-                Hotline 0931 708 256 (24/7) · Email: admin@bachlinh.com.vn · Biểu mẫu &quot;Liên hệ&quot; trên website
+                Hotline 0904.641.289 (24/7) · Email: admin@bachlinh.com.vn · Biểu mẫu &quot;Liên hệ&quot; trên website
               </p>
             </div>
           </div>
@@ -298,7 +298,7 @@ export const MOCK_BRANCHES: Branch[] = [
     city: 'Hà Nội',
     latitude: 21.0384,
     longitude: 105.7899,
-    phone: '0931 708 256',
+    phone: '0904.641.289',
     description: 'Chi nhánh Cầu Giấy, gần các trường đại học lớn và trung tâm thương mại, thuận tiện di chuyển nội thành.',
     descriptionEn: 'Cau Giay branch, close to major universities and shopping centers, convenient for getting around the city.',
     isActive: true,
@@ -313,7 +313,7 @@ export const MOCK_BRANCHES: Branch[] = [
     city: 'Hà Nội',
     latitude: 21.0136,
     longitude: 105.825,
-    phone: '0931 708 256',
+    phone: '0904.641.289',
     description: 'Chi nhánh Đống Đa, không gian yên tĩnh trong ngõ nhỏ, gần các tuyến phố ẩm thực sầm uất.',
     descriptionEn: 'Dong Da branch, quiet space in a small alley, near bustling food streets.',
     isActive: true,
@@ -328,7 +328,7 @@ export const MOCK_BRANCHES: Branch[] = [
     city: 'Hà Nội',
     latitude: 21.0022,
     longitude: 105.8069,
-    phone: '0931 708 256',
+    phone: '0904.641.289',
     description: 'Chi nhánh Ba Đình, vị trí trung tâm, thuận tiện kết nối tới các điểm tham quan và khu vực làm việc.',
     descriptionEn: 'Ba Dinh branch, central location, convenient access to sightseeing spots and business areas.',
     isActive: true,
@@ -925,7 +925,7 @@ const SECTIONS = [
         subtitle: "Kênh tiếp nhận",
         items: [
           "Email admin@bachlinh.com.vn và biểu mẫu \"Liên hệ\" (trực tuyến).",
-          "Hotline 0931 708 256.",
+          "Hotline 0904.641.289.",
           "Trực tiếp tại quầy lễ tân.",
         ],
       },
@@ -1263,7 +1263,7 @@ export default async function Nd248PolicyPage({ params }: Props) {
               </a>
 
               <a
-                href="tel:0931708256"
+                href="tel:0904641289"
                 className="flex items-center gap-3 p-4 rounded-2xl bg-white transition-all hover:-translate-y-0.5"
                 style={{
                   border: "1px solid var(--color-border)",
@@ -1290,7 +1290,7 @@ export default async function Nd248PolicyPage({ params }: Props) {
                     className="text-sm font-semibold"
                     style={{ color: "var(--color-text-primary)" }}
                   >
-                    0931 708 256
+                    0904.641.289
                   </p>
                 </div>
               </a>
@@ -1422,7 +1422,7 @@ Sau:
       {
         subtitle: "Cách thực hiện",
         items: [
-          "Khách hàng có quyền yêu cầu xóa, hủy hoặc hạn chế xử lý dữ liệu cá nhân đã cung cấp bằng cách gửi yêu cầu qua hotline 0931 708 256 hoặc email admin@bachlinh.com.vn.",
+          "Khách hàng có quyền yêu cầu xóa, hủy hoặc hạn chế xử lý dữ liệu cá nhân đã cung cấp bằng cách gửi yêu cầu qua hotline 0904.641.289 hoặc email admin@bachlinh.com.vn.",
           "Ba.Li Homestay xác minh và phản hồi trong vòng 07 ngày làm việc; một số dữ liệu bắt buộc lưu theo pháp luật kế toán, thuế sẽ được giữ đến hết thời hạn luật định.",
         ],
       },
@@ -1436,7 +1436,7 @@ Sau:
       {
         subtitle: "Kênh tiếp nhận",
         items: [
-          "Mọi khiếu nại liên quan đến bảo mật thông tin được tiếp nhận qua hotline 0931 708 256 hoặc email admin@bachlinh.com.vn.",
+          "Mọi khiếu nại liên quan đến bảo mật thông tin được tiếp nhận qua hotline 0904.641.289 hoặc email admin@bachlinh.com.vn.",
           "Phản hồi ban đầu trong 02 ngày làm việc và giải quyết dứt điểm trong tối đa 07 ngày làm việc.",
         ],
       },

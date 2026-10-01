@@ -68,7 +68,7 @@ async function main() {
       city: 'Hà Nội',
       latitude: 21.0384,
       longitude: 105.7899,
-      phone: '0931 708 256',
+      phone: '0904.641.289',
       description:
         'Nằm trong ngõ yên tĩnh trên phố Phạm Tuấn Tài, gần các trường đại học lớn và trung tâm thương mại khu Cầu Giấy. Thuận tiện di chuyển vào trung tâm thành phố, phù hợp cho cả khách nghỉ ngắn theo giờ lẫn lưu trú dài ngày.',
       descriptionEn:

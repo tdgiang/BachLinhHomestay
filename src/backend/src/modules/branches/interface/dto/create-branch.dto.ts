@@ -36,7 +36,7 @@ export class CreateBranchDto {
   @IsOptional()
   longitude?: number;
 
-  @ApiPropertyOptional({ example: '0931 708 256' })
+  @ApiPropertyOptional({ example: '0904.641.289' })
   @IsString()
   @IsOptional()
   phone?: string;

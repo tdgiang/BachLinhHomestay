@@ -22,7 +22,7 @@ export class CreateComplaintDto {
   @MaxLength(150)
   email: string;
 
-  @ApiProperty({ description: 'Số điện thoại liên hệ', example: '0931708256' })
+  @ApiProperty({ description: 'Số điện thoại liên hệ', example: '0904641289' })
   @Matches(/^(0|\+84)[0-9]{9,10}$/, {
     message: 'Số điện thoại không hợp lệ',
   })

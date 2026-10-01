@@ -77,11 +77,11 @@ const inputStyle = {
  */
 function describeSubmitError(err: unknown): string {
   const fallback =
-    'Không gửi được. Vui lòng thử lại hoặc gọi hotline 0931 708 256.';
+    'Không gửi được. Vui lòng thử lại hoặc gọi hotline 0904.641.289.';
   if (!(err instanceof ApiError)) return fallback;
 
   if (err.status === 429) {
-    return 'Bạn đã gửi quá nhiều phản ánh trong thời gian ngắn. Vui lòng thử lại sau ít phút, hoặc gọi hotline 0931 708 256 nếu việc gấp.';
+    return 'Bạn đã gửi quá nhiều phản ánh trong thời gian ngắn. Vui lòng thử lại sau ít phút, hoặc gọi hotline 0904.641.289 nếu việc gấp.';
   }
   if (err.isValidation) return err.message;
   if (err.isServer) return fallback;
