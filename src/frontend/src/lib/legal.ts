@@ -165,7 +165,7 @@ export const POLICY_INDEX = [
     article: 'Điều 9',
     title: 'Điều kiện và hạn chế cung cấp dịch vụ',
     description: 'Giới hạn thời gian, phạm vi địa lý, độ tuổi, số lượng và tính khả dụng.',
-    href: '/terms#conditions',
+    href: '/chinh-sach-nd248#conditions',
   },
   {
     id: 'thanh-toan',
@@ -201,14 +201,14 @@ export const POLICY_INDEX = [
     article: 'Điều 15',
     title: 'Phương thức cung cấp dịch vụ',
     description: 'Đặt trước — sử dụng sau: quy trình đặt, nhận phòng, chi phí phát sinh.',
-    href: '/chinh-sach-nd248#service-delivery',
+    href: '/service-refund-policy#cung-cap-dich-vu',
   },
   {
     id: 'cham-dut',
     article: 'Điều 16',
     title: 'Chấm dứt dịch vụ và hoàn tiền',
     description: 'Các trường hợp chấm dứt, thời điểm hiệu lực và mức hoàn tiền.',
-    href: '/chinh-sach-nd248#termination',
+    href: '/service-refund-policy#huy-dat-phong',
   },
   {
     id: 'nganh-co-dieu-kien',

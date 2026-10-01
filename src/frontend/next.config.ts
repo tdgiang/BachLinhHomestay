@@ -4,6 +4,13 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 export default withNextIntl({
   output: 'standalone',
+  // Điều 11.2 Điều khoản sử dụng (bản ký ban hành) công bố URL này.
+  async redirects() {
+    return [
+      { source: '/dieu-khoan-su-dung', destination: '/vi/terms', permanent: true },
+      { source: '/:locale(vi|en)/dieu-khoan-su-dung', destination: '/:locale/terms', permanent: true },
+    ];
+  },
   images: {
     dangerouslyAllowLocalIP: true,
     remotePatterns: [

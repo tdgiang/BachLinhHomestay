@@ -15,12 +15,14 @@ import {
   ListOrdered,
   Video,
   PackageX,
+  MapPin,
+  Ticket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { securityLicenseText } from "@/lib/legal";
 
 export const metadata: Metadata = {
-  title: "Chính sách hoạt động theo NĐ 248 | Ba.Li Homestay",
+  title: "Chính sách hoạt động theo NĐ 248",
   description:
     "Chính sách hoạt động của Ba.Li Homestay theo Nghị định 248/2026/NĐ-CP — quyền và nghĩa vụ các bên, khiếu nại, giá, phương thức cung cấp dịch vụ, chấm dứt dịch vụ và hoàn tiền.",
 };
@@ -258,6 +260,85 @@ const SECTIONS = [
           "Kinh doanh dịch vụ lưu trú thuộc ngành nghề đầu tư kinh doanh có điều kiện về an ninh, trật tự theo Nghị định 96/2016/NĐ-CP.",
           securityLicenseText(),
           "Cơ sở lưu trú thực hiện khai báo tạm trú cho khách theo quy định của Luật Cư trú; khách xuất trình giấy tờ tùy thân hợp lệ khi nhận phòng.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "conditions",
+    icon: MapPin,
+    title: "X. Điều kiện và giới hạn cung cấp dịch vụ (Điều 9)",
+    content: [
+      {
+        subtitle: "Giới hạn thời gian",
+        items: [
+          "Đặt theo giờ tối thiểu 2 giờ/lượt.",
+          "Đặt theo ngày nhận phòng từ 14:00, trả phòng trước 12:00.",
+        ],
+      },
+      {
+        subtitle: "Phạm vi địa lý và đối tượng",
+        items: [
+          "Dịch vụ chỉ được cung cấp trực tiếp tại cơ sở lưu trú của Ba.Li Homestay: Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, TP Hà Nội. Nền tảng không cung cấp dịch vụ ngoài địa điểm này.",
+          "Khách có thể đặt phòng từ bất kỳ đâu, nhưng việc sử dụng dịch vụ phải thực hiện tại địa điểm nêu trên.",
+          "Khách đứng tên đặt phòng và nhận phòng phải đủ 18 tuổi trở lên, có giấy tờ tùy thân hợp lệ. Người dưới 18 tuổi phải đi cùng người giám hộ hợp pháp.",
+        ],
+      },
+      {
+        subtitle: "Giới hạn về số lượng",
+        items: [
+          "Mỗi lượt đặt áp dụng cho một phòng. Mỗi khách hàng giữ tối đa 03 đơn đặt phòng đang hiệu lực tại cùng thời điểm; nhu cầu nhiều phòng hơn (đoàn, sự kiện) vui lòng liên hệ hotline để được báo giá và xác nhận riêng.",
+          "Số khách lưu trú không vượt quá sức chứa tối đa công bố của từng phòng. Khách vượt số lượng đăng ký nhưng vẫn trong sức chứa chịu phụ thu theo bảng giá niêm yết.",
+          "Đặt theo giờ: tối thiểu 02 giờ, tối đa 12 giờ mỗi lượt. Một số phòng yêu cầu số giờ tối thiểu cao hơn và được ghi rõ tại trang phòng.",
+          "Đặt theo ngày: tối đa 30 đêm liên tục mỗi lần đặt.",
+          "Các giới hạn trên được hệ thống kiểm tra tự động khi tạo đơn.",
+        ],
+      },
+      {
+        subtitle: "Tính khả dụng",
+        items: [
+          "Dịch vụ có thể tạm ngừng hoặc gián đoạn vì lý do kỹ thuật, bảo trì hoặc sự kiện bất khả kháng.",
+          "Ba.Li Homestay sẽ thông báo và cùng khách thỏa thuận phương án phù hợp.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "vouchers",
+    icon: Ticket,
+    title: "XI. Mã giảm giá và ưu đãi (Điều 10 khoản c)",
+    content: [
+      {
+        subtitle: "Cách thức hình thành",
+        items: [
+          "Ba.Li Homestay chỉ phát hành mã giảm giá (voucher) theo từng chương trình khuyến mại. Nền tảng KHÔNG vận hành cơ chế tích điểm, hoàn điểm hay ví điểm thưởng.",
+          "Mã được phát hành công khai trên website, fanpage hoặc gửi trực tiếp tới khách hàng qua email, tin nhắn.",
+          "Khách hàng không thể tự tạo, tự tích lũy hay mua mã giảm giá.",
+        ],
+      },
+      {
+        subtitle: "Cách sử dụng và phạm vi áp dụng",
+        items: [
+          "Nhập mã tại bước xác nhận đặt phòng, trước khi thanh toán. Hệ thống hiển thị ngay số tiền được giảm và tổng tiền phải trả.",
+          "Mỗi đơn đặt phòng chỉ áp dụng được một mã; các mã không cộng dồn với nhau.",
+          "Mã chỉ áp dụng cho đơn đặt phòng trên website Ba.Li Homestay, không áp dụng cho phụ thu phát sinh tại chỗ.",
+        ],
+      },
+      {
+        subtitle: "Điều kiện, tỷ lệ và giới hạn quy đổi",
+        items: [
+          "Mỗi mã công bố rõ: hình thức giảm (theo phần trăm hoặc số tiền cố định), giá trị giảm, mức giảm tối đa, giá trị đơn tối thiểu, thời gian hiệu lực và số lượt sử dụng còn lại.",
+          "Điều kiện cụ thể của từng mã được hiển thị ngay khi khách nhập mã, trước khi thanh toán.",
+          "Mã hết hạn, hết lượt sử dụng hoặc đơn hàng không đạt giá trị tối thiểu sẽ bị từ chối kèm lý do rõ ràng.",
+        ],
+      },
+      {
+        subtitle: "Trách nhiệm của các bên",
+        items: [
+          "Mã giảm giá KHÔNG được quy đổi thành tiền mặt, không được chuyển nhượng, mua bán hay rút tiền dưới bất kỳ hình thức nào.",
+          "Khi hủy đơn có áp dụng mã, số tiền hoàn lại tính trên số tiền khách đã thực trả; mã đã sử dụng không được khôi phục, trừ trường hợp Ba.Li Homestay là bên chủ động hủy.",
+          "Ba.Li Homestay chịu trách nhiệm thực hiện đúng ưu đãi đã công bố; khách hàng chịu trách nhiệm sử dụng mã đúng đối tượng và điều kiện.",
+          "Ba.Li Homestay có quyền thu hồi mã và hủy đơn nếu phát hiện hành vi gian lận, sử dụng mã sai mục đích.",
         ],
       },
     ],

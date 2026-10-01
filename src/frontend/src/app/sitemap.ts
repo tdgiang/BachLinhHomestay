@@ -32,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     // Nội dung công bố bắt buộc theo NĐ 248/2026/NĐ-CP — cần được index để
     // cơ quan quản lý và người dùng tra cứu được.
-    ...['/chinh-sach', '/chinh-sach-nd248', '/privacy', '/terms', '/payment-policy']
+    ...['/chinh-sach', '/chinh-sach-nd248', '/privacy', '/terms', '/payment-policy', '/service-refund-policy']
       .flatMap(loc)
       .map((url) => ({
         url,

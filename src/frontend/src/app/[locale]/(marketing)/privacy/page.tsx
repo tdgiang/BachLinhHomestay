@@ -1,586 +1,180 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import {
-  Shield,
-  Lock,
-  Eye,
-  Database,
-  UserCheck,
-  Bell,
-  Trash2,
-  Phone,
-  Mail,
-  ArrowRight,
-  FileText,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { COMPLAINT_SLA } from "@/lib/legal";
+  LegalDocument,
+  type LegalDocumentData,
+} from "@/components/marketing/LegalDocument";
+import { COMPANY } from "@/lib/legal";
 
 export const metadata: Metadata = {
-  title: "Chính sách bảo vệ thông tin cá nhân | Ba.Li Homestay",
+  title: "Chính sách bảo mật thông tin cá nhân",
   description:
-    "Chính sách bảo vệ thông tin cá nhân của Ba.Li Homestay — cam kết bảo mật dữ liệu khách hàng theo quy định pháp luật Việt Nam.",
+    "Chính sách bảo mật thông tin cá nhân áp dụng trên website thương mại điện tử bachlinh.com.vn — thu thập, sử dụng, lưu trữ, bảo vệ dữ liệu và quyền của khách hàng.",
 };
 
 type Props = { params: Promise<{ locale: string }> };
 
-/**
- * Thời hạn cho yêu cầu về dữ liệu cá nhân — lấy từ bảng công bố duy nhất.
- *
- * Trang này từng nêu năm mốc thời hạn khác nhau cho cùng một loại yêu cầu,
- * trong khi bảng công bố ở trang Liên hệ ghi một con số khác hẳn. Đọc từ
- * COMPLAINT_SLA để không bao giờ lệch nữa.
- */
-const PRIVACY_SLA = COMPLAINT_SLA.privacy;
-
-const SECTIONS = [
-  {
-    id: "collect",
-    icon: Database,
-    title: "1. Thông tin chúng tôi thu thập",
-    content: [
-      {
-        subtitle: "Thông tin bạn cung cấp trực tiếp",
-        items: [
-          "Họ tên, số điện thoại, địa chỉ email khi đăng ký tài khoản",
-          "Thông tin đặt phòng: ngày nhận phòng, ngày trả phòng, loại phòng",
-          "Thông tin thanh toán (được mã hóa qua cổng VNPay — chúng tôi không lưu trữ thông tin thẻ)",
-          "Nội dung phản hồi, đánh giá bạn để lại trên hệ thống",
-        ],
-      },
-      {
-        subtitle: "Thông tin thu thập tự động",
-        items: [
-          "Địa chỉ IP, loại trình duyệt, thiết bị truy cập",
-          "Cookie phiên đăng nhập và cookie phân tích (có thể tắt trong cài đặt trình duyệt)",
-          "Lịch sử đặt phòng và tương tác với hệ thống",
-        ],
-      },
-    ],
-  },
-  {
-    id: "use",
-    icon: Eye,
-    title: "2. Mục đích sử dụng thông tin",
-    content: [
-      {
-        subtitle: "Cung cấp và cải thiện dịch vụ",
-        items: [
-          "Xử lý và xác nhận đặt phòng, gửi thông báo liên quan",
-          "Hỗ trợ khách hàng và giải quyết khiếu nại",
-          "Cải thiện tính năng và trải nghiệm sử dụng nền tảng",
-        ],
-      },
-      {
-        subtitle: "Liên lạc và marketing",
-        items: [
-          "Gửi xác nhận đặt phòng và nhắc nhở check-in/check-out qua email, SMS",
-          "Thông báo ưu đãi, khuyến mãi (chỉ khi bạn đồng ý nhận)",
-          "Khảo sát sự hài lòng sau kỳ lưu trú",
-        ],
-      },
-      {
-        subtitle: "Tuân thủ pháp lý",
-        items: [
-          "Lưu trữ hồ sơ giao dịch theo yêu cầu của cơ quan thuế và pháp luật",
-          "Phòng chống gian lận và bảo vệ an toàn hệ thống",
-        ],
-      },
-    ],
-  },
-  {
-    id: "share",
-    icon: UserCheck,
-    title: "3. Chia sẻ thông tin với bên thứ ba",
-    content: [
-      {
-        subtitle: "Chúng tôi có thể chia sẻ thông tin với",
-        items: [
-          "Cổng thanh toán VNPay để xử lý giao dịch tài chính",
-          "Nhà cung cấp dịch vụ email/SMS hỗ trợ gửi thông báo (dữ liệu được ký hợp đồng bảo mật)",
-          "Cơ quan nhà nước có thẩm quyền khi có yêu cầu bằng văn bản theo quy định pháp luật",
-        ],
-      },
-      {
-        subtitle: "Chúng tôi KHÔNG bao giờ",
-        items: [
-          "Bán, cho thuê hoặc trao đổi thông tin cá nhân với bên thứ ba vì mục đích thương mại",
-          "Chia sẻ thông tin với đối tác quảng cáo không liên quan đến dịch vụ của bạn",
-        ],
-      },
-    ],
-  },
-  {
-    id: "storage",
-    icon: Lock,
-    title: "4. Bảo mật và lưu trữ dữ liệu",
-    content: [
-      {
-        subtitle: "Biện pháp bảo mật kỹ thuật",
-        items: [
-          "Mã hóa SSL/TLS cho toàn bộ dữ liệu truyền tải",
-          "Mật khẩu được băm bằng thuật toán bcrypt — chúng tôi không thể đọc mật khẩu của bạn",
-          "Hệ thống tường lửa và giám sát xâm nhập 24/7",
-          "Sao lưu dữ liệu định kỳ theo tiêu chuẩn bảo mật",
-        ],
-      },
-      {
-        subtitle: "Thời gian lưu trữ",
-        items: [
-          "Thông tin tài khoản: trong suốt thời gian tài khoản còn hoạt động",
-          "Lịch sử đặt phòng: 5 năm kể từ ngày giao dịch (theo quy định kế toán)",
-          "Log hệ thống: tối đa 12 tháng",
-          "Dữ liệu sẽ được xóa an toàn sau khi hết thời hạn lưu trữ",
-        ],
-      },
-    ],
-  },
-  {
-    id: "rights",
-    icon: Shield,
-    title: "5. Quyền của bạn đối với dữ liệu cá nhân",
-    content: [
-      {
-        subtitle: "Bạn có quyền",
-        items: [
-          "Truy cập và xem toàn bộ thông tin cá nhân chúng tôi đang lưu trữ",
-          "Yêu cầu chỉnh sửa thông tin không chính xác hoặc lỗi thời",
-          "Yêu cầu xóa tài khoản và dữ liệu cá nhân (trừ dữ liệu pháp lý bắt buộc)",
-          "Từ chối nhận email marketing bất kỳ lúc nào qua link hủy đăng ký",
-          "Phản đối việc xử lý dữ liệu trong trường hợp cụ thể",
-          "Nhận bản sao dữ liệu của bạn theo định dạng có thể đọc được",
-        ],
-      },
-    ],
-  },
-  {
-    id: "edit-data",
-    icon: UserCheck,
-    title: "5b. Quyền xem, chỉnh sửa dữ liệu (mục e)",
-    content: [
-      {
-        subtitle: "Cách thực hiện",
-        items: [
-          "Khách hàng có thể tự xem và chỉnh sửa thông tin trong mục \"Tài khoản\" trên website, hoặc gửi yêu cầu tới admin@bachlinh.com.vn.",
-          `Yêu cầu được tiếp nhận và xử lý theo thời hạn công bố cho nhóm "Dữ liệu cá nhân": phản hồi ban đầu trong ${PRIVACY_SLA.initialResponseHours} giờ, hoàn tất trong tối đa ${PRIVACY_SLA.resolutionDays} ngày.`,
-        ],
-      },
-    ],
-  },
-  {
-    id: "delete-restrict",
-    icon: Trash2,
-    title: "5c. Quyền yêu cầu xóa, hủy hoặc hạn chế xử lý dữ liệu (mục g)",
-    content: [
-      {
-        subtitle: "Cách thực hiện",
-        items: [
-          "Khách hàng có quyền yêu cầu xóa, hủy hoặc hạn chế xử lý dữ liệu cá nhân đã cung cấp bằng cách gửi yêu cầu qua hotline 0931 708 256 hoặc email admin@bachlinh.com.vn.",
-          `Ba.Li Homestay xác minh và phản hồi trong ${PRIVACY_SLA.initialResponseHours} giờ, hoàn tất trong tối đa ${PRIVACY_SLA.resolutionDays} ngày; một số dữ liệu bắt buộc lưu theo pháp luật kế toán, thuế sẽ được giữ đến hết thời hạn luật định.`,
-        ],
-      },
-    ],
-  },
-  {
-    id: "security-complaint",
-    icon: Bell,
-    title: "5d. Tiếp nhận và giải quyết khiếu nại về bảo mật (mục h)",
-    content: [
-      {
-        subtitle: "Kênh tiếp nhận",
-        items: [
-          "Mọi khiếu nại liên quan đến bảo mật thông tin được tiếp nhận qua hotline 0931 708 256 hoặc email admin@bachlinh.com.vn.",
-          `Phản hồi ban đầu trong ${PRIVACY_SLA.initialResponseHours} giờ và giải quyết dứt điểm trong tối đa ${PRIVACY_SLA.resolutionDays} ngày.`,
-        ],
-      },
-    ],
-  },
-  {
-    id: "cookies",
-    icon: Bell,
-    title: "6. Cookie và công nghệ theo dõi",
-    content: [
-      {
-        subtitle: "Các loại cookie chúng tôi sử dụng",
-        items: [
-          "Cookie cần thiết: duy trì phiên đăng nhập và giỏ đặt phòng (không thể tắt)",
-          "Cookie phân tích: đo lường lưu lượng truy cập ẩn danh để cải thiện dịch vụ",
-          "Cookie tùy chọn: lưu ngôn ngữ, giao diện ưa thích",
-        ],
-      },
-      {
-        subtitle: "Kiểm soát cookie",
-        items: [
-          "Bạn có thể tắt cookie phân tích và tùy chọn trong cài đặt trình duyệt",
-          "Tắt cookie cần thiết có thể ảnh hưởng đến chức năng đăng nhập và đặt phòng",
-        ],
-      },
-    ],
-  },
-  {
-    id: "delete",
-    icon: Trash2,
-    title: "7. Xóa tài khoản và dữ liệu",
-    content: [
-      {
-        subtitle: "Quy trình xóa dữ liệu",
-        items: [
-          "Gửi yêu cầu qua email admin@bachlinh.com.vn với tiêu đề “Yêu cầu xóa dữ liệu”",
-          `Chúng tôi xác minh danh tính và xử lý trong tối đa ${PRIVACY_SLA.resolutionDays} ngày`,
-          "Dữ liệu giao dịch tài chính được giữ lại theo đúng thời hạn pháp lý",
-          "Bạn sẽ nhận xác nhận qua email sau khi hoàn tất",
-        ],
-      },
-    ],
-  },
-];
+const DOC: LegalDocumentData = {
+  title: "Chính sách bảo mật thông tin cá nhân",
+  scope: "Áp dụng trên website thương mại điện tử bachlinh.com.vn",
+  bases: [
+    "Căn cứ Luật Giao dịch điện tử số 20/2023/QH15 ngày 22/06/2023;",
+    "Căn cứ Luật An toàn thông tin mạng số 86/2015/QH13 ngày 19/11/2015;",
+    "Căn cứ Luật Bảo vệ quyền lợi người tiêu dùng số 19/2023/QH15 ngày 20/06/2023;",
+    "Căn cứ Nghị định số 13/2023/NĐ-CP ngày 17/04/2023 của Chính phủ về bảo vệ dữ liệu cá nhân;",
+    "Căn cứ Nghị định số 52/2013/NĐ-CP và Nghị định số 85/2021/NĐ-CP của Chính phủ về thương mại điện tử;",
+    "Căn cứ Giấy chứng nhận ĐKDN số 0111484606 do Sở Kế hoạch và Đầu tư TP. Hà Nội cấp.",
+  ],
+  preamble: [
+    "CÔNG TY CỔ PHẦN SẢN XUẤT THƯƠNG MẠI DỊCH VỤ BÁCH LINH (sau đây gọi tắt là 'Bách Linh' hoặc 'Chúng tôi') cam kết bảo mật tuyệt đối dữ liệu và thông tin cá nhân của Quý khách hàng khi truy cập và giao dịch trên website thương mại điện tử bachlinh.com.vn.",
+    "Chính sách bảo mật này mô tả chi tiết mục đích, phạm vi thu thập, phương thức sử dụng, thời hạn lưu trữ, cơ chế bảo vệ và quyền của khách hàng đối với thông tin cá nhân của mình theo đúng quy định tại Điều 68 đến Điều 73 Nghị định số 52/2013/NĐ-CP (được sửa đổi, bổ sung bởi Nghị định số 85/2021/NĐ-CP) và Nghị định số 13/2023/NĐ-CP của Chính phủ.",
+  ],
+  articles: [
+    {
+      id: "cach-thu-thap",
+      title: "Điều 1. Cách thức Bách Linh thu thập thông tin",
+      blocks: [
+        "Thông tin cá nhân của Quý khách trên website bachlinh.com.vn được thu thập thông qua các phương thức sau:",
+        {
+          items: [
+            "Đăng ký tài khoản hoặc đăng nhập: Khi Quý khách tạo lập tài khoản thành viên trên hệ thống website.",
+            "Điền biểu mẫu đặt phòng: Khi Quý khách nhập thông tin để thực hiện lệnh đặt phòng dịch vụ lưu trú homestay.",
+            "Liên hệ hỗ trợ: Khi Quý khách gọi điện thoại, gửi email, nhắn tin hoặc gửi biểu mẫu yêu cầu tư vấn, giải quyết khiếu nại tới Bách Linh.",
+            "Đăng ký nhận tin: Khi Quý khách tự nguyện đăng ký nhận thông tin khuyến mãi, ưu đãi qua email hoặc tin nhắn.",
+            "Tự động qua máy chủ và Cookies: Hệ thống máy chủ tự động ghi chép các dữ liệu kỹ thuật về truy cập gồm địa chỉ IP, loại trình duyệt, hệ điều hành nhằm phục vụ công tác an ninh và tối ưu hóa trải nghiệm.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "pham-vi-du-lieu",
+      title: "Điều 2. Phạm vi các dữ liệu được thu thập",
+      blocks: [
+        "Các loại dữ liệu cá nhân Bách Linh có thể thu thập bao gồm:",
+        {
+          items: [
+            "Thông tin định danh và liên hệ: Họ và tên đầy đủ, số điện thoại liên lạc, địa chỉ email, địa chỉ cư trú/liên lạc.",
+            "Thông tin đặt dịch vụ homestay: Ngày nhận phòng (check-in), ngày trả phòng (check-out), loại phòng, số lượng khách (người lớn, trẻ em), các yêu cầu dịch vụ đặc biệt (nếu có).",
+            "Thông tin thanh toán: Phương thức thanh toán được lựa chọn. Trường hợp thanh toán qua thẻ quốc tế hoặc ví điện tử, thông tin thẻ/tài khoản do các tổ chức trung gian thanh toán bảo mật xử lý, Bách Linh không trực tiếp lưu trữ mã bảo mật CVC/CVV.",
+            "Quý khách không nhất thiết phải tạo tài khoản để xem thông tin dịch vụ. Tuy nhiên, khi thực hiện đặt phòng, việc cung cấp các thông tin cá nhân nêu trên là bắt buộc để Bách Linh hoàn tất giao dịch và phục vụ đón tiếp theo quy định cư trú.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "muc-dich",
+      title: "Điều 3. Mục đích và phạm vi sử dụng thông tin",
+      blocks: [
+        "Bách Linh chỉ thu thập và sử dụng thông tin cá nhân của Quý khách cho các mục đích hợp pháp sau đây:",
+        {
+          items: [
+            "Thực hiện giao dịch đặt phòng homestay và cung cấp dịch vụ lưu trú theo yêu cầu của Quý khách.",
+            "Xác nhận đơn đặt phòng, gửi mã đặt phòng và thông báo tình trạng thanh toán qua Email, SMS.",
+            "Liên hệ đón tiếp, bàn giao phòng và hướng dẫn nhận phòng tại cơ sở lưu trú.",
+            "Hỗ trợ khách hàng, giải đáp thắc mắc và giải quyết kịp thời các phản ánh, khiếu nại phát sinh.",
+            "Cung cấp các thông tin khuyến mãi, chương trình ưu đãi tri ân khách hàng (chỉ thực hiện khi có sự đồng ý của khách hàng).",
+            "Thống kê, khảo sát ý kiến khách hàng nhằm nâng cao chất lượng dịch vụ và tính năng công nghệ của website.",
+            "Ngăn ngừa các hành vi gian lận, phá hoại an ninh hệ thống mạng hoặc giả mạo tài khoản người dùng.",
+            "Thực hiện nghĩa vụ báo cáo, lưu trữ theo quy định của pháp luật thuế, kế toán và quản lý cư trú.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "chia-se",
+      title:
+        "Điều 4. Tổ chức, cá nhân được tiếp cận thông tin cá nhân (Chia sẻ cho bên thứ ba)",
+      blocks: [
+        "Bách Linh cam kết bảo mật thông tin khách hàng, tuyệt đối KHÔNG bán, chia sẻ hoặc tiết lộ thông tin cho bên thứ ba vì mục đích thương mại trái phép. Dữ liệu chỉ được tiếp cận hoặc cung cấp cho các đối tượng sau:",
+        {
+          items: [
+            "Chủ cơ sở homestay (Host) / Quản lý cơ sở: Tiếp nhận họ tên, số điện thoại, thời gian lưu trú và số lượng khách nhằm mục đích trực tiếp chuẩn bị phòng, làm thủ tục check-in và đón tiếp khách lưu trú tại chỗ.",
+            "Đối tác cổng thanh toán / Ngân hàng: Tiếp nhận thông tin giao dịch cần thiết để đối soát, xác thực lệnh thanh toán trực tuyến bảo đảm tính chính xác và an toàn.",
+            "Cơ quan nhà nước có thẩm quyền: Bách Linh có nghĩa vụ cung cấp dữ liệu cá nhân của khách hàng khi có yêu cầu bằng văn bản chính thức từ Cơ quan Công an, Viện kiểm sát, Tòa án hoặc cơ quan quản lý nhà nước có thẩm quyền theo quy định của pháp luật Việt Nam.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "lien-lac",
+      title: "Điều 5. Phương thức liên lạc giữa Bách Linh và khách hàng",
+      blocks: [
+        "Bách Linh liên lạc với Quý khách thông qua các kênh chính thức gồm: Email, tin nhắn SMS, gọi điện thoại hoặc trao đổi trực tiếp để:",
+        {
+          items: [
+            "Thông báo tình trạng xử lý đơn đặt phòng, gửi mã xác nhận và hướng dẫn check-in.",
+            "Hướng dẫn hoàn tất thanh toán hoặc thông báo kết quả đối soát hoàn tiền.",
+            "Thăm dò chất lượng dịch vụ, tiếp thu ý kiến đóng góp sau kỳ nghỉ.",
+            "Gửi bản tin chương trình khuyến mãi (Quý khách có toàn quyền hủy đăng ký nhận tin bất kỳ lúc nào).",
+          ],
+        },
+      ],
+    },
+    {
+      id: "quyen-khach-hang",
+      title: "Điều 6. Quyền của Quý khách đối với dữ liệu cá nhân",
+      blocks: [
+        "Căn cứ Nghị định số 13/2023/NĐ-CP và pháp luật bảo vệ quyền lợi người tiêu dùng, Quý khách có đầy đủ các quyền sau:",
+        {
+          items: [
+            "Quyền được biết và đồng ý: Được thông báo rõ ràng về hoạt động xử lý dữ liệu cá nhân và có quyền thể hiện sự đồng ý hoặc từ chối.",
+            "Quyền kiểm tra, chỉnh sửa: Tự kiểm tra, cập nhật thông tin cá nhân qua tài khoản trên website hoặc yêu cầu Bách Linh hỗ trợ chỉnh sửa qua email/hotline.",
+            "Quyền xóa, hủy bỏ dữ liệu: Yêu cầu Bách Linh xóa bỏ vĩnh viễn thông tin cá nhân của mình khi không còn nhu cầu sử dụng dịch vụ.",
+            "Quyền từ chối quảng cáo: Từ chối nhận bản tin, tin nhắn tiếp thị quảng cáo bằng cách bấm nút hủy đăng ký ở cuối email hoặc thông báo cho Bách Linh.",
+            "Bách Linh cam kết tiếp nhận và thực hiện các yêu cầu điều chỉnh, xóa dữ liệu hợp lệ trong vòng 07 ngày làm việc kể từ khi nhận được yêu cầu.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "thoi-gian-luu-tru",
+      title: "Điều 7. Thời gian lưu trữ dữ liệu cá nhân",
+      blocks: [
+        "7.1. Dữ liệu cá nhân của khách hàng được lưu trữ an toàn trong suốt thời gian khách hàng duy trì tài khoản hoặc sử dụng dịch vụ tại bachlinh.com.vn.",
+        "7.2. Khi khách hàng gửi yêu cầu xóa bỏ thông tin, Bách Linh sẽ tiến hành xóa dữ liệu trong vòng 30 ngày kể từ ngày nhận được yêu cầu, ngoại trừ các dữ liệu chứng từ giao dịch, hóa đơn kế toán, nghĩa vụ thuế bắt buộc phải lưu trữ theo luật định trong thời hạn quy định (5 đến 10 năm).",
+      ],
+    },
+    {
+      id: "an-toan",
+      title: "Điều 8. Biện pháp kỹ thuật và an toàn bảo mật dữ liệu",
+      blocks: [
+        "8.1. Toàn bộ thông tin truyền tải giữa trình duyệt của khách hàng và hệ thống máy chủ của Bách Linh đều được mã hóa bằng chứng chỉ bảo mật SSL (Secure Socket Layer) 256-bit tiêu chuẩn quốc tế.",
+        "8.2. Dữ liệu được lưu trữ trên hệ thống máy chủ đặt tại trung tâm dữ liệu bảo đảm tiêu chuẩn an toàn thông tin, có hệ thống tường lửa (Firewall) và các giải pháp phòng chống xâm nhập trái phép.",
+        "8.3. Chỉ những nhân sự được phân công nhiệm vụ và có thẩm quyền mới được cấp quyền truy cập dữ liệu khách hàng theo nguyên tắc bảo mật tối cao.",
+        "8.4. Trường hợp máy chủ dữ liệu bị tin tặc tấn công dẫn đến rủi ro rò rỉ dữ liệu cá nhân, Bách Linh có trách nhiệm thông báo ngay cho cơ quan chức năng chuyên trách (Cục An ninh mạng và phòng, chống tội phạm sử dụng công nghệ cao - Bộ Công an) để xử lý trong vòng 72 giờ và thông báo kịp thời cho khách hàng.",
+      ],
+    },
+    {
+      id: "don-vi-quan-ly",
+      title: "Điều 9. Thông tin đơn vị thu thập và quản lý thông tin",
+      blocks: [
+        "CÔNG TY CỔ PHẦN SẢN XUẤT THƯƠNG MẠI DỊCH VỤ BÁCH LINH",
+        {
+          items: [
+            "Mã số doanh nghiệp / Mã số thuế: 0111484606",
+            "Địa chỉ trụ sở chính: Số 66, Ngõ 61 Phạm Tuấn Tài, Phường Nghĩa Đô, Thành phố Hà Nội, Việt Nam",
+            `Điện thoại hotline: ${COMPANY.hotline}`,
+            `Hộp thư điện tử (Email): ${COMPANY.email}`,
+            "Đại diện theo pháp luật: Bà NGUYỄN LAN PHƯƠNG - Giám đốc.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "hieu-luc",
+      title: "Điều 10. Hiệu lực thi hành và cam kết",
+      blocks: [
+        "10.1. Chính sách bảo mật này có hiệu lực chính thức kể từ ngày ký và được đăng tải công khai trên website thương mại điện tử bachlinh.com.vn.",
+        "10.2. Bách Linh có quyền sửa đổi, bổ sung Chính sách này để phù hợp với quy định mới của pháp luật và thực tiễn vận hành. Mọi sửa đổi sẽ được công bố công khai trên website và có hiệu lực ngay tại thời điểm đăng tải.",
+        "10.3. Việc khách hàng tiếp tục sử dụng website bachlinh.com.vn đồng nghĩa với việc khách hàng hoàn toàn nhất trí và chấp thuận với toàn bộ nội dung của Chính sách bảo mật này.",
+      ],
+    },
+  ],
+};
 
 export default async function PrivacyPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return (
-    <div style={{ background: "var(--color-surface)" }}>
-      {/* ── HERO ─────────────────────────────────────────────────────── */}
-      <section
-        className="relative overflow-hidden py-20 md:py-28"
-        style={{
-          background:
-            "linear-gradient(135deg, #0F2D50 0%, #1A4A7A 50%, #2E6FAA 100%)",
-        }}
-      >
-        <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          <div
-            className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full opacity-[0.06]"
-            style={{ border: "1px solid white" }}
-          />
-          <div
-            className="absolute -top-16 -right-16 w-[320px] h-[320px] rounded-full opacity-[0.08]"
-            style={{ border: "1px solid white" }}
-          />
-          <div
-            className="absolute bottom-0 left-0 right-0 h-16 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(90deg, white 0, white 1px, transparent 0, transparent 60px)",
-            }}
-          />
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <div
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-6"
-            style={{
-              background: "rgba(255,255,255,0.1)",
-              border: "1px solid rgba(255,255,255,0.2)",
-              color: "rgba(255,255,255,0.85)",
-            }}
-          >
-            <FileText className="w-3.5 h-3.5" />
-            Chính sách
-          </div>
-
-          <h1
-            className="text-4xl sm:text-5xl font-bold text-white mb-5 leading-tight"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            Chính sách bảo vệ
-            <br />
-            <span style={{ color: "rgba(147,205,255,1)" }}>
-              thông tin cá nhân
-            </span>
-          </h1>
-
-          <p
-            className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-8"
-            style={{ color: "rgba(255,255,255,0.72)" }}
-          >
-            Ba.Li Homestay cam kết bảo vệ quyền riêng tư và dữ liệu cá nhân của
-            bạn theo đúng quy định Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá
-            nhân tại Việt Nam.
-          </p>
-
-          <p
-            className="text-sm"
-            style={{ color: "rgba(255,255,255,0.45)" }}
-          >
-            Cập nhật lần cuối: 18 tháng 6 năm 2025
-          </p>
-        </div>
-      </section>
-
-      {/* ── TABLE OF CONTENTS ────────────────────────────────────────── */}
-      <section className="bg-white border-b" style={{ borderColor: "var(--color-border)" }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-          <p
-            className="text-xs font-semibold uppercase tracking-widest mb-4"
-            style={{ color: "var(--color-text-muted)" }}
-          >
-            Mục lục
-          </p>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {SECTIONS.map(({ id, icon: Icon, title }) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm transition-colors hover:bg-[--color-surface]"
-                style={{ color: "var(--color-text-secondary)" }}
-              >
-                <Icon
-                  className="w-4 h-4 shrink-0"
-                  style={{ color: "var(--color-primary)" }}
-                />
-                {title}
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CONTENT ──────────────────────────────────────────────────── */}
-      <section className="py-14 md:py-20 px-4 sm:px-6 bg-white">
-        <div className="max-w-4xl mx-auto space-y-14">
-          {SECTIONS.map(({ id, icon: Icon, title, content }) => (
-            <div key={id} id={id} className="scroll-mt-24">
-              {/* Section header */}
-              <div className="flex items-start gap-4 mb-6">
-                <div
-                  className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 mt-0.5"
-                  style={{
-                    background:
-                      "linear-gradient(145deg, rgba(26,74,122,0.10), rgba(46,111,170,0.05))",
-                  }}
-                >
-                  <Icon
-                    className="w-5 h-5"
-                    style={{ color: "var(--color-primary)" }}
-                  />
-                </div>
-                <h2
-                  className="text-xl md:text-2xl font-bold pt-1.5"
-                  style={{
-                    color: "var(--color-text-primary)",
-                    fontFamily: "var(--font-heading)",
-                  }}
-                >
-                  {title}
-                </h2>
-              </div>
-
-              {/* Sub-sections */}
-              <div className="ml-[60px] space-y-6">
-                {content.map((block) => (
-                  <div key={block.subtitle}>
-                    <p
-                      className="text-sm font-semibold mb-3"
-                      style={{ color: "var(--color-text-primary)" }}
-                    >
-                      {block.subtitle}
-                    </p>
-                    <ul className="space-y-2.5">
-                      {block.items.map((item, i) => (
-                        <li
-                          key={i}
-                          className="flex items-start gap-2.5 text-sm leading-relaxed"
-                          style={{ color: "var(--color-text-secondary)" }}
-                        >
-                          <span
-                            className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
-                            style={{ background: "var(--color-primary-light)" }}
-                          />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-
-              {/* Divider */}
-              <div
-                className="mt-14 h-px"
-                style={{ background: "var(--color-border)" }}
-              />
-            </div>
-          ))}
-
-          {/* Contact section */}
-          <div
-            id="contact"
-            className="scroll-mt-24 rounded-3xl p-8 md:p-10"
-            style={{
-              background: "var(--color-surface)",
-              border: "1px solid var(--color-border)",
-            }}
-          >
-            <div className="flex items-start gap-4 mb-5">
-              <div
-                className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0"
-                style={{
-                  background:
-                    "linear-gradient(145deg, rgba(26,74,122,0.10), rgba(46,111,170,0.05))",
-                }}
-              >
-                <Phone
-                  className="w-5 h-5"
-                  style={{ color: "var(--color-primary)" }}
-                />
-              </div>
-              <h2
-                className="text-xl md:text-2xl font-bold pt-1.5"
-                style={{
-                  color: "var(--color-text-primary)",
-                  fontFamily: "var(--font-heading)",
-                }}
-              >
-                8. Liên hệ về quyền riêng tư
-              </h2>
-            </div>
-
-            <p
-              className="text-sm leading-relaxed mb-6 ml-[60px]"
-              style={{ color: "var(--color-text-secondary)" }}
-            >
-              Nếu bạn có bất kỳ câu hỏi, thắc mắc hoặc muốn thực hiện quyền
-              của mình về dữ liệu cá nhân, hãy liên hệ với chúng tôi qua:
-            </p>
-
-            <div className="ml-[60px] grid sm:grid-cols-2 gap-4">
-              <a
-                href="mailto:admin@bachlinh.com.vn"
-                className="flex items-center gap-3 p-4 rounded-2xl bg-white transition-all hover:-translate-y-0.5"
-                style={{
-                  border: "1px solid var(--color-border)",
-                  boxShadow: "var(--shadow-sm)",
-                }}
-              >
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: "rgba(26,74,122,0.08)" }}
-                >
-                  <Mail
-                    className="w-4 h-4"
-                    style={{ color: "var(--color-primary)" }}
-                  />
-                </div>
-                <div>
-                  <p
-                    className="text-xs font-medium mb-0.5"
-                    style={{ color: "var(--color-text-muted)" }}
-                  >
-                    Email bảo mật
-                  </p>
-                  <p
-                    className="text-sm font-semibold"
-                    style={{ color: "var(--color-text-primary)" }}
-                  >
-                    admin@bachlinh.com.vn
-                  </p>
-                </div>
-              </a>
-
-              <a
-                href="tel:0931708256"
-                className="flex items-center gap-3 p-4 rounded-2xl bg-white transition-all hover:-translate-y-0.5"
-                style={{
-                  border: "1px solid var(--color-border)",
-                  boxShadow: "var(--shadow-sm)",
-                }}
-              >
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: "rgba(26,74,122,0.08)" }}
-                >
-                  <Phone
-                    className="w-4 h-4"
-                    style={{ color: "var(--color-primary)" }}
-                  />
-                </div>
-                <div>
-                  <p
-                    className="text-xs font-medium mb-0.5"
-                    style={{ color: "var(--color-text-muted)" }}
-                  >
-                    Hotline hỗ trợ
-                  </p>
-                  <p
-                    className="text-sm font-semibold"
-                    style={{ color: "var(--color-text-primary)" }}
-                  >
-                    0931 708 256
-                  </p>
-                </div>
-              </a>
-            </div>
-
-            <p
-              className="mt-5 ml-[60px] text-xs leading-relaxed"
-              style={{ color: "var(--color-text-muted)" }}
-            >
-              Chúng tôi phản hồi ban đầu trong{" "}
-              <strong>{PRIVACY_SLA.initialResponseHours} giờ</strong> kể từ khi nhận
-              được yêu cầu hợp lệ và hoàn tất trong tối đa{" "}
-              <strong>{PRIVACY_SLA.resolutionDays} ngày</strong>, đúng thời hạn công
-              bố tại trang Liên hệ.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── FOOTER CTA ───────────────────────────────────────────────── */}
-      <section
-        className="relative overflow-hidden py-20 px-4 sm:px-6 text-center"
-        style={{
-          background:
-            "linear-gradient(135deg, #0F2D50 0%, #1A4A7A 50%, #2E6FAA 100%)",
-        }}
-      >
-        <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full opacity-[0.05]"
-            style={{ border: "1px solid white" }}
-          />
-        </div>
-        <div className="relative z-10 max-w-xl mx-auto">
-          <h2
-            className="text-2xl md:text-3xl font-bold text-white mb-4"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            Còn thắc mắc?
-          </h2>
-          <p
-            className="text-base mb-8 leading-relaxed"
-            style={{ color: "rgba(255,255,255,0.70)" }}
-          >
-            Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giải đáp mọi câu hỏi về
-            quyền riêng tư và bảo mật dữ liệu của bạn.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link href="/contact">
-              <Button
-                className="h-11 px-7 font-semibold rounded-xl text-sm gap-2 text-white border-0"
-                style={{
-                  background: "rgba(255,255,255,0.15)",
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  backdropFilter: "blur(8px)",
-                }}
-              >
-                Liên hệ chúng tôi <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
-            <Link href="/rooms">
-              <Button
-                variant="ghost"
-                className="h-11 px-7 font-semibold rounded-xl text-sm"
-                style={{ color: "rgba(255,255,255,0.70)" }}
-              >
-                Khám phá phòng
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+  return <LegalDocument doc={DOC} currentHref="/privacy" />;
 }

@@ -10,7 +10,7 @@ import {
 } from "@/lib/legal";
 
 export const metadata: Metadata = {
-  title: "Chính sách & Pháp lý | Ba.Li Homestay",
+  title: "Chính sách & Pháp lý",
   description:
     "Trang tổng hợp toàn bộ nội dung công bố bắt buộc của Ba.Li Homestay theo Luật Thương mại điện tử 2025 và Nghị định 248/2026/NĐ-CP.",
 };

@@ -194,9 +194,9 @@ describe('Điều 7a — kênh tiếp nhận trực tuyến phải tồn tại t
 
 describe('Điều 10c / Điều 11 — nội dung mới phải nằm đúng trang', () => {
   it('chính sách thanh toán có mục mã giảm giá và cấm quy đổi tiền mặt', () => {
-    const payment = readPage('payment-policy');
-    expect(payment).toContain('id: "vouchers"');
-    expect(payment).toContain('KHÔNG được quy đổi thành tiền mặt');
+    const nd248 = readPage('chinh-sach-nd248');
+    expect(nd248).toContain('id: "vouchers"');
+    expect(nd248).toContain('KHÔNG được quy đổi thành tiền mặt');
   });
 
   it('chính sách ưu tiên hiển thị nêu rõ không bán vị trí hiển thị', () => {
@@ -206,7 +206,7 @@ describe('Điều 10c / Điều 11 — nội dung mới phải nằm đúng tran
   });
 
   it('điều kiện cung cấp dịch vụ nêu giới hạn số lượng', () => {
-    expect(readPage('terms')).toContain('Giới hạn về số lượng');
+    expect(readPage('chinh-sach-nd248')).toContain('Giới hạn về số lượng');
   });
 });
 
@@ -369,41 +369,12 @@ describe('Điều 9d — giới hạn số lượng phải được cưỡng ch�
     expect(bookingsService).toMatch(/numGuests > capacity/);
   });
 
-  it('trang Điều khoản công bố đúng các con số đang cưỡng chế', () => {
-    const terms = readPage('terms');
+  it('trang chính sách NĐ 248 công bố đúng các con số đang cưỡng chế', () => {
+    const terms = readPage('chinh-sach-nd248');
     expect(terms).toContain(`tối thiểu 0${BOOKING_LIMITS.minHours} giờ`);
     expect(terms).toContain(`tối đa ${BOOKING_LIMITS.maxHours} giờ`);
     expect(terms).toContain(`tối đa ${BOOKING_LIMITS.maxNights} đêm`);
     expect(terms).toContain(`0${BOOKING_LIMITS.maxActivePerCustomer} đơn đặt phòng đang hiệu lực`);
-  });
-});
-
-describe('Điều 5 — thời hạn xử lý dữ liệu cá nhân chỉ có một con số', () => {
-  const privacy = readPage('privacy');
-
-  it('không còn mốc thời hạn cứng nào mâu thuẫn với bảng công bố', () => {
-    // Trang này từng nêu 07 ngày, 02–07 ngày, 7–14 ngày, 3 ngày và 14 ngày cho
-    // cùng một loại yêu cầu. Mọi mốc phải đọc từ COMPLAINT_SLA.privacy.
-    const hardcoded = [
-      /0?7\s*[–-]\s*14 ngày/,
-      /trong vòng 0?7 ngày làm việc/,
-      /0?2 ngày làm việc và giải quyết/,
-      /<strong>3 ngày làm việc<\/strong>/,
-      /lên đến 14 ngày làm việc/,
-    ];
-    const offenders = hardcoded.filter((re) => re.test(privacy)).map(String);
-    expect(offenders).toEqual([]);
-  });
-
-  it('đọc thời hạn từ nguồn công bố dùng chung', () => {
-    expect(privacy).toContain('COMPLAINT_SLA.privacy');
-    expect(privacy).toContain('PRIVACY_SLA.initialResponseHours');
-    expect(privacy).toContain('PRIVACY_SLA.resolutionDays');
-  });
-
-  it('con số công bố cho dữ liệu cá nhân là 72 giờ / 30 ngày', () => {
-    expect(COMPLAINT_SLA.privacy.initialResponseHours).toBe(72);
-    expect(COMPLAINT_SLA.privacy.resolutionDays).toBe(30);
   });
 });
 

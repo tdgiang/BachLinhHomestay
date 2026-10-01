@@ -25,6 +25,7 @@ export function Footer() {
     { label: "Chính sách bảo mật", href: "/privacy" },
     { label: "Điều khoản sử dụng", href: "/terms" },
     { label: "Chính sách thanh toán", href: "/payment-policy" },
+    { label: "Cung cấp dịch vụ & hoàn tiền", href: "/service-refund-policy" },
     { label: "Chính sách hoạt động theo NĐ 248", href: "/chinh-sach-nd248" },
     { label: "Gửi phản ánh, khiếu nại", href: "/contact#bieu-mau" },
   ];
